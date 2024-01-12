@@ -10,6 +10,7 @@ import { UserProvider } from "./lib/context/user";
 import RequireAuth from "./views/RequireAuth";
 
 import LoadingPage from "./pages/LoadingPage";
+import PublishedNote from "./pages/PublishedNote";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
                 <Route index element={<LandingPage/>} />
                 <Route path="login" element={<LoginPage />} />
                 <Route path="app" element={<RequireAuth><NoteApp/></RequireAuth>} />
+                <Route path="note" element={<PublishedNote/>}>
+                  <Route path="*" element={<PublishedNote/>}/>
+                </Route>
                 <Route path="*" element={<NoPage />} />
                 </Route>
             </Routes>

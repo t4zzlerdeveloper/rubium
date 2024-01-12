@@ -1,8 +1,13 @@
+import { useNavigate } from 'react-router'
 import './LandingPage.css'
 
 function LandingPage(){
+
+    const navigate = useNavigate();
     return (<>
-    under development
+    This page is still under development.
+    <button onClick={()=>{navigate("/app")}}>Jump to App</button>
+
     </>)
 }
 

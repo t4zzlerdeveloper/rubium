@@ -16,7 +16,7 @@ function ShareDialog(props){
     const user = useUser();
 
     useEffect(()=>{
-        if(props.display) setConfirmed(false);
+        if(props.display) fetchNote();setConfirmed(false);
     },[props.display])
 
     useEffect(()=>{
@@ -156,7 +156,12 @@ function ShareDialog(props){
                     <br></br>
                     <p>You can also publish it on the web, creating a share-able link</p>
                     {isPublished ?
-                    <button className="share-can-btn" onClick={()=>{unpublishNote()}}>Un-Publish</button>:
+                    <>
+                      <div>
+                        <a onClick={()=>{navigator.clipboard.writeText(`${window.location.host}/note/${note.$id}`)}}>{`${window.location.host}/note/${note.$id}` }</a>
+                      </div>
+                      <button className="share-can-btn" onClick={()=>{unpublishNote()}}>Un-Publish</button>
+                    </>:
                     <button className="share-can-btn" onClick={()=>{publishNote()}}>Publish</button>}
                   
                    
