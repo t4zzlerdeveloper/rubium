@@ -1,0 +1,103 @@
+.login-page{
+    background-color: rgb(10, 0, 0);
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.login-back{
+    width: 100vw;
+    height: 100vh;
+    background-size:contain;
+    position: absolute;
+    opacity: 0.6;
+    top:0;
+    left:0;
+    z-index: 1;
+}
+
+.login-card{
+    position: relative;
+    z-index: 999;
+    margin:auto;
+    background: linear-gradient(45deg, rgba(0, 10, 10, 0.65), rgba(10, 0, 0, 0.45));
+    /* background-color: rgba(10, 0, 0, 0.45); */
+    width: 30vw;
+    padding:50px 30px;
+
+    border: 1px solid rgba(211, 111, 111, 0.4);
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    /* filter:drop-shadow(0 0 16px rgba(255, 0, 0, 0.25)); */
+}
+
+.login-card > h1{
+ font-size: 30px;
+}
+
+.login-card > input{
+    font-size: 16px;
+    font-family: inherit;
+    padding:8px 18px;
+    border-radius: 12px;
+    border:none;
+    margin-top:4px;
+    margin-bottom:20px;
+    background-color: rgb(6, 8, 6);
+    outline: 1px solid rgba(211, 111, 111, 0.2);
+}
+
+.login-card > input:focus{
+    outline: 1px solid rgba(211, 111,111, 0.8);
+}
+
+.login-buttons{
+    text-align: right;
+}
+
+.login-buttons > button{
+    transition: 0.4s;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: rgb(6, 8, 6);
+}
+
+.login-buttons > button:hover{
+    transition: 0.4s;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(6, 8, 6);
+    outline: 1px solid rgba(211, 111, 111, 0.2);
+}
+
+.login-logo-con{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    place-items: center;
+    
+}
+
+.login-logo-con > img{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (max-width: 600px) {
+    .login-card {
+        width: 80vw;
+        padding:50px 20px;
+    
+        border: 1px solid rgba(211, 111, 111, 0.4);
+        display: flex;
+        flex-direction: column;
+        border-radius: 20px;
+    }
+}

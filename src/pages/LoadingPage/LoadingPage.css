@@ -1,0 +1,9 @@
+.loading-page{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    background-color: rgb(10,0,0);
+}

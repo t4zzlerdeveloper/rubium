@@ -1,0 +1,117 @@
+#toast {
+    visibility: hidden;
+    max-width: 40px;
+    height: 40px;
+    margin: auto;
+    outline: 1px solid rgba(111, 111, 111, 0.215);
+    background: linear-gradient(45deg, rgba(10, 0, 0,0.5), rgba(6, 8, 6,0.5));
+    color: #c2c2c2;
+    text-align: center;
+    border-radius: 12px;
+    overflow: hidden;
+
+    position: fixed;
+    z-index: 1;
+    left: 0;right:0;
+    top: 20px;
+    font-size: 16px;
+    white-space: nowrap;
+}
+#toast #img{
+	width: 40px;
+	height: 40px;
+    
+    float: left;
+    
+    padding-top: 12px;
+    padding-bottom: 12px;
+    
+    box-sizing: border-box;
+
+    border-right: 1px solid rgba(211, 111, 111, 0.115);
+    background: rgba(10, 0, 0, 0.5);
+    color: #c2c2c2;
+    filter: grayscale() brightness(180%)
+}
+#toast #desc{
+
+    
+    color: #c2c2c2;
+   
+    padding: 16px;
+    padding-top: 8px;
+    
+    overflow: hidden;
+	white-space: nowrap;
+}
+
+#toast.show {
+    filter: drop-shadow(0 0 16px rgba(255,200, 200,0.05));
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+}
+
+#toast.success{
+    filter: grayscale(0%) drop-shadow(0 0 1px rgba(99, 248, 163, 0.4));
+}
+
+#toast.info{
+    filter: grayscale(0%) drop-shadow(0 0 1px rgba(99, 181, 248, 0.4));
+}
+
+#toast.warning{
+    filter: grayscale(0%) drop-shadow(0 0 1px rgba(248, 198, 99, 0.4));
+}
+
+#toast.error{
+    filter: grayscale(0%) drop-shadow(0 0 1px rgba(248, 99, 99, 0.4));
+}
+
+@-webkit-keyframes fadein {
+    from {top: 0; opacity: 0;border-radius: 40px;} 
+    to {top: 20px; opacity: 1;border-radius: 12px;}
+}
+
+@keyframes fadein {
+    from {top: 0; opacity: 0;border-radius: 40px;} 
+    to {top: 20px; opacity: 1;border-radius: 12px;}
+}
+
+@-webkit-keyframes expand {
+    from {min-width: 40px;} 
+    to {min-width: 350px}
+}
+
+@keyframes expand {
+    from {min-width: 40px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes stay {
+    from {min-width: 350px} 
+    to {min-width: 350px}
+}
+
+@keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes shrink {
+    from {min-width: 350px;} 
+    to {min-width: 40px;}
+}
+
+@keyframes shrink {
+    from {min-width: 350px;} 
+    to {min-width: 40px;}
+}
+
+@-webkit-keyframes fadeout {
+    from {top: 20px; opacity: 1;border-radius: 12px;} 
+    to {top: 60px; opacity: 0;border-radius: 40px;}
+}
+
+@keyframes fadeout {
+    from {top: 20px; opacity: 1;border-radius: 12px;} 
+    to {top: 60px; opacity: 0;border-radius: 40px;}
+}

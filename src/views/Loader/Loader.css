@@ -1,0 +1,24 @@
+.loader{
+    display: flex;
+    justify-content: center;
+}
+
+.loader > img{
+    filter:brightness(200);
+    width: 30px;
+    height: 30px;
+    animation: loader-rotate 1.6s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes loader-rotate {
+    0%{
+        transform: rotate(0deg);
+    }
+    70%{
+        transform: rotate(360deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
