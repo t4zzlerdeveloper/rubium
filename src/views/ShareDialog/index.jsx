@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import './ShareDialog.css'
 
-import { databases } from '../../lib/appwrite'
+import { client, databases } from '../../lib/appwrite'
 import { useUser } from '../../lib/context/user';
 
 import removePerson from '../../assets/person_remove.svg'
 import closeIcon from '../../assets/close.svg'
-import { Permission, Role } from 'appwrite';
+import { Functions, Permission, Role } from 'appwrite';
+
+const functions = new Functions(client);
 
 function ShareDialog(props){
 
@@ -47,7 +49,7 @@ function ShareDialog(props){
         .then((res)=>{
           //showToast("Note is now publicly visible!","warning")
           //loadNotes();
-          setIsPublished(true);
+          setIsPublished(true);      
         })
         .catch(()=>{
           //showToast("Error sharing note...","error")
