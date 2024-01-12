@@ -329,15 +329,21 @@ const [sharing,setSharing] = useState(false);
       <div className='main-div'>
         <div className='main-controls'>
           {loadingCurrentNote ? <></>:<>
-            <a>{charPosLog}</a>
+            {/* <a>{charPosLog}</a> */}
             {note.owner == user.current.$id || note.$id == "draft" ?
-            <img className='edit-icon' onClick={()=>{
-              if(editable){saveCurrentNote()};setEditable(!editable)}}
-              src={editable ? saveIcon : editIcon} />
-            : <></>}Edit/Save
+              <div className='edit-icon' onClick={()=>{
+                if(editable){saveCurrentNote()};setEditable(!editable)}}>
+                <img 
+                src={editable ? saveIcon : editIcon} />
+                <p>{editable ?  "Save" : "Edit"}</p>
+              </div>
+            : <></>}
             {note.owner == user.current.$id ? 
-            <img className="share-icon" onClick={()=>{setSharing(true)}} src={shareIcon}/>
-            : <></>}Share
+            <div  className="share-icon" onClick={()=>{setSharing(true)}}>
+              <img src={shareIcon}/>
+              <p>Share</p>
+            </div>
+            : <></>}
           </>}
         </div>
         {loadingCurrentNote ? <Loader/> : <>

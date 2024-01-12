@@ -280,36 +280,65 @@ hr.rounded {
   gap:12px;
 }
 
-.main-controls > img{
+.main-controls > div{
   outline: none;
   border: none;
   border-radius: 14px;
-  width: 22px;
-  height: 22px;
-  padding:8px;
   transition: 0.4s;
   cursor: pointer;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  padding:2px 8px; 
+  padding:0;
+  gap:6px;
+  padding:6px 10px;
 }
-
-.edit-icon{
-  color:white;
-  background-color: transparent;
-  outline: 1px solid #F45B69 !important;
-}
-
-.edit-icon:hover{
-  transition: 0.4s;
-  filter: drop-shadow(0 0 6px #f45b689a );
-}
-
 
 .share-icon{
+
   background-color:white;
   color:black;
+}
+
+.share-icon > p{
+  padding: 0;
+  margin: 0;
+  font-weight: 500;
+}
+
+.share-icon > img{
+  width: 20px;
+  height: 20px;
 }
 
 .share-icon:hover{
   transition: 0.4s;
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.455) );
+}
+
+
+.edit-icon{
+  color:#F45B69;
+  background-color: transparent;
+  outline: 1px solid #F45B69 !important;
+}
+
+.edit-icon > p{
+  font-weight: 500;
+  padding: 0;
+  margin: 0;
+}
+
+
+.edit-icon > img{
+  width: 20px;
+  height: 20px;
+}
+
+
+.edit-icon:hover{
+  transition: 0.4s;
+  filter: drop-shadow(0 0 6px #f45b689a );
 }
 
