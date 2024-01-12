@@ -6,9 +6,9 @@ import { useUser } from '../../lib/context/user';
 
 import removePerson from '../../assets/person_remove.svg'
 import closeIcon from '../../assets/close.svg'
-import { Functions, Permission, Role } from 'appwrite';
+import { Avatars, Permission, Role } from 'appwrite';
 
-const functions = new Functions(client);
+const avatars = new Avatars(client);
 
 function ShareDialog(props){
 
@@ -32,6 +32,7 @@ function ShareDialog(props){
         .then((res)=>{
             setNote(res);
             setIsPublished(note.$permissions.includes(Permission.read(Role.any())))
+            setQr(avatars.getQR(`${window.location.host}/note/${note.$id}`)); 
         })
         .catch(()=>{
 
@@ -41,6 +42,7 @@ function ShareDialog(props){
 
 
     const [isPublished,setIsPublished ] = useState(false);
+    const [qr,setQr] = useState(null);
 
     function publishNote(){
         const permissions = note.$permissions;
@@ -49,7 +51,7 @@ function ShareDialog(props){
         .then((res)=>{
           //showToast("Note is now publicly visible!","warning")
           //loadNotes();
-          setIsPublished(true);      
+          setIsPublished(true);
         })
         .catch(()=>{
           //showToast("Error sharing note...","error")
@@ -160,6 +162,7 @@ function ShareDialog(props){
                     {isPublished ?
                     <>
                       <div>
+                        <img style={{height:"50px",width:"50px"}} src={qr}/>
                         <a onClick={()=>{navigator.clipboard.writeText(`${window.location.host}/note/${note.$id}`)}}>{`${window.location.host}/note/${note.$id}` }</a>
                       </div>
                       <button className="share-can-btn" onClick={()=>{unpublishNote()}}>Un-Publish</button>
