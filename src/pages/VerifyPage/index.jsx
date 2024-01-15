@@ -5,7 +5,6 @@ import { account } from '../../lib/appwrite';
 function VerifyPage(){
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const navigate = useNavigate();
 
     const [text,setText] = useState("Verifying...");
 
@@ -16,9 +15,7 @@ function VerifyPage(){
         account.updateVerification(userId,secret)
         .then((res)=>{
             setText("Verified Sucessfully! Redirecting...")
-            setTimeout(()=>{
-                navigate("/app");
-            },1000)
+            document.location.reload()
         })
         .catch(()=>{
             setText("This link is invalid or has expired!")
