@@ -23,6 +23,10 @@ export function UserProvider(props) {
   async function register(name,email, password) {
     await account.create(ID.unique(),email, password,name);
     await login(email, password);
+    await sendVerification();
+  }
+
+  async function sendVerification(){
     await account.createVerification("https://rubium.vercel.app/verify");
   }
 
@@ -41,7 +45,7 @@ export function UserProvider(props) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ current: user, login, logout, register }}>
+    <UserContext.Provider value={{ current: user, login, logout, register,sendVerification }}>
       {props.children}
     </UserContext.Provider>
   );

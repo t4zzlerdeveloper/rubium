@@ -314,7 +314,10 @@ useEffect(()=>{
       title={"Account Verification"}
       cancelText={"Re-send email"}
       confirmText={"Done"}
-      handleCancelation={()=>{document.location.reload()}}
+      handleCancelation={async () => {
+        user.sendVerification();
+        document.location.reload();
+      }}
       handleConfirmation={()=>{document.location.reload()}} />
 
       {userVerified ? <>
