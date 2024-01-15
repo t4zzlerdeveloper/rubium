@@ -316,7 +316,6 @@ useEffect(()=>{
       confirmText={"Done"}
       handleCancelation={async () => {
         user.sendVerification();
-        document.location.reload();
       }}
       handleConfirmation={()=>{document.location.reload()}} />
 
