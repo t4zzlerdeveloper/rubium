@@ -16,7 +16,9 @@ function VerifyPage(){
         account.updateVerification(userId,secret)
         .then((res)=>{
             setText("Verified Sucessfully! Redirecting...")
-            navigate("/app");
+            setTimeout(()=>{
+                navigate("/app");
+            },1000)
         })
         .catch(()=>{
             setText("This link is invalid or has expired!")
