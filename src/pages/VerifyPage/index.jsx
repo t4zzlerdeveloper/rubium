@@ -14,8 +14,7 @@ function VerifyPage(){
 
         account.updateVerification(userId,secret)
         .then((res)=>{
-            setText("Verified Sucessfully! Redirecting...")
-            document.location.reload()
+            setText("Account sucessfully verified! You are now free to use Rubium.")
         })
         .catch(()=>{
             setText("This link is invalid or has expired!")
