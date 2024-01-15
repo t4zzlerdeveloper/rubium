@@ -1,6 +1,6 @@
-import './LoginPage.css'
+import './RegisterPage.css'
 import rubiumLogo from '../../assets/rubium-logomark.svg'
-import loginBack from '../../assets/login-back.jpg'
+import registerBack from '../../assets/register-back.jpg'
 import { useEffect, useState } from 'react'
 
 import { useUser } from "../../lib/context/user";
@@ -8,10 +8,12 @@ import Loader from '../../views/Loader';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../../views/Toast';
 
-function LoginPage(){
 
-   const navigate = useNavigate();
+function RegisterPage(){
 
+    const navigate = useNavigate();
+
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -23,14 +25,14 @@ function LoginPage(){
       if(user.current) navigate("/app")
     },[user])
   
-    function login(email, password) {
+    function register(name,email, password) {
       setLoading(true)
-      user.login(email, password)
+      user.register(name,email, password)
       .then((res)=>{
         setLoading(false)
       })
       .catch(()=>{
-        showToast("Invalid credentials or account does not exist...","error")
+        showToast("Invalid details or connection error...","error")
         setLoading(false)
       });
      
@@ -45,28 +47,28 @@ function LoginPage(){
       setTimeout(function(){ x.className = x.className.replace(newClassName, ""); }, 4900);
     }
 
-
-    return (<div className='login-page'>
+    return (<div className='register-page'>
     
-    <div className='login-card'>
+    <div className='register-card'>
        <Toast message={toastMessage}/>
-        <div className='login-logo-con'>
+        <div className='register-logo-con'>
             <img src={rubiumLogo}/>
         </div>
-        <h1>Sign in to Rubium</h1>
-        <input type="text" placeholder="Email" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
+        <h1>Create your Rubium's Account </h1>
+        <input stype="text" placeholder="Name*" value={name} onChange={(e)=>{setName(e.target.value)}}/>
+        <input type="text" placeholder="Email*" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
         <br/>
-        <input type="password" placeholder="Password" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
+        <input type="password" placeholder="Password*" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
         <br></br>
         {loading ? <Loader/> :
-        <div className='login-buttons'>
-             <a  onClick={() => navigate("/register")}>Not yet registered?</a>
-            <button  onClick={() => login(email, password)}>Sign in</button>
+        <div className='register-buttons'>
+             <a  onClick={() => navigate("/login")}>Already have an account?</a>
+            <button  onClick={() => register(name,email, password)}>Sign up</button>
         </div>} 
     </div>
-    <div className="login-back" style={{background: `url(${loginBack})`}}></div>
+    <div className="register-back" style={{background: `url(${registerBack})`}}></div>
 
     </div>)
 }
 
-export default LoginPage
+export default RegisterPage

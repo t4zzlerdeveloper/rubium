@@ -11,6 +11,7 @@ import RequireAuth from "./views/RequireAuth";
 
 import LoadingPage from "./pages/LoadingPage";
 import PublishedNote from "./pages/PublishedNote";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/">
                 <Route index element={<LandingPage/>} />
                 <Route path="login" element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
                 <Route path="app" element={<RequireAuth><NoteApp/></RequireAuth>} />
                 <Route path="note" element={<PublishedNote/>}>
                   <Route path="*" element={<PublishedNote/>}/>

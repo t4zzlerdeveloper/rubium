@@ -1,4 +1,4 @@
-.login-page{
+.register-page{
     background-color: rgb(10, 0, 0);
     display: flex;
     place-items: center;
@@ -8,22 +8,22 @@
     overflow: hidden;
 }
 
-.login-back{
+.register-back{
     width: 100vw;
     height: 100vh;
     background-size:contain;
     position: absolute;
-    opacity: 0.6;
+    opacity:0.7;
     top:0;
     left:0;
     z-index: 1;
 }
 
-.login-card{
+.register-card{
     position: relative;
     z-index: 999;
     margin:auto;
-    background: linear-gradient(45deg, rgba(0, 10, 10, 0.65), rgba(10, 0, 0, 0.45));
+    background: linear-gradient(45deg, rgba(0, 10, 10, 0.85), rgba(10, 0, 0, 0.65));
     /* background-color: rgba(10, 0, 0, 0.45); */
     width: 30vw;
     padding:50px 30px;
@@ -35,11 +35,11 @@
     /* filter:drop-shadow(0 0 16px rgba(255, 0, 0, 0.25)); */
 }
 
-.login-card > h1{
+.register-card > h1{
  font-size: 30px;
 }
 
-.login-card > input{
+.register-card > input{
     font-size: 16px;
     font-family: inherit;
     padding:8px 18px;
@@ -51,11 +51,11 @@
     outline: 1px solid rgba(211, 111, 111, 0.2);
 }
 
-.login-card > input:focus{
+.register-card > input:focus{
     outline: 1px solid rgba(211, 111,111, 0.8);
 }
 
-.login-buttons{
+.register-buttons{
     /* text-align: right; */
     display: flex;
     justify-content: space-between;
@@ -63,7 +63,7 @@
     margin-top: 10px;
 }
 
-.login-buttons > a{
+.register-buttons > a{
     font-size: 12px;
     color:gray;
     padding:5px;
@@ -71,19 +71,19 @@
 }
 
 
-.login-buttons > a:hover{
+.register-buttons > a:hover{
     color:rgba(211, 111,111, 0.8);
     text-decoration: underline;
 }
 
-.login-buttons > button{
+.register-buttons > button{
     transition: 0.4s;
     border: none;
     background-color: rgba(255, 255, 255, 0.8);
     color: rgb(6, 8, 6);
 }
 
-.login-buttons > button:hover{
+.register-buttons > button:hover{
     transition: 0.4s;
     border: none;
     color: rgba(255, 255, 255, 0.8);
@@ -91,7 +91,7 @@
     outline: 1px solid rgba(211, 111, 111, 0.2);
 }
 
-.login-logo-con{
+.register-logo-con{
     display: flex;
     justify-content: center;
     text-align: center;
@@ -100,7 +100,7 @@
     
 }
 
-.login-logo-con > img{
+.register-logo-con > img{
     width: 50px;
     height: 50px;
     display: flex;
@@ -108,7 +108,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .login-card {
+    .register-card {
         width: 80vw;
         padding:50px 20px;
     

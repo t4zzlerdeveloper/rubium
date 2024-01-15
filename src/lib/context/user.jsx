@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { account } from "../appwrite";
+import { ID, account } from "../appwrite";
 
 const UserContext = createContext();
 
@@ -20,9 +20,10 @@ export function UserProvider(props) {
     setUser(null);
   }
 
-  async function register(email, password) {
-    await account.create(email, password);
+  async function register(name,email, password) {
+    await account.create(ID.unique(),email, password,name);
     await login(email, password);
+    await account.createVerification("https://rubium.vercel.app/verify");
   }
 
 

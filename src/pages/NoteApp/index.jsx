@@ -162,6 +162,11 @@ function NoteApp() {
   }
 
 
+  function parseLeadingZeros(number){
+    const n = number.toString();
+    return n.length == 1 ? "0" + n : n
+  }
+
   function parseDateTime(datetime){
     const d = new Date(datetime);
     const n = new Date();
@@ -176,8 +181,8 @@ function NoteApp() {
       dateString = "Yesterday at ";
     }
 
-    return dateString +
-      d.getHours() + ":" + d.getMinutes();
+    return dateString + " " +
+      parseLeadingZeros(d.getHours()) + ":" + parseLeadingZeros(d.getMinutes());
    
   }
   
@@ -284,6 +289,11 @@ function showToast(msg,type) {
 
 const [noteToDelete,setNoteToDelete] = useState(null);
 const [sharing,setSharing] = useState(false);
+const [userVerified,setUserVerified] = useState(true); 
+
+useEffect(()=>{
+  if(user.current && !user.current.emailVerification) setUserVerified(false)
+},[user])
 
   return (
     <div className='app'>
@@ -299,19 +309,29 @@ const [sharing,setSharing] = useState(false);
       handleCancelation={()=>{setNoteToDelete(null);}} 
       handleConfirmation={()=>{deleteNote(noteToDelete);setNoteToDelete(null);}} />
 
+      <ConfirmationDialog display={!userVerified} 
+      text={`Verify your account with the link sent to your email to continue using Rubium`} 
+      title={"Account Verification"}
+      cancelText={"Re-send email"}
+      confirmText={"Done"}
+      handleCancelation={()=>{document.location.reload()}}
+      handleConfirmation={()=>{document.location.reload()}} />
+
+      {userVerified ? <>
       <div className='sidebar'>
         <div className='side-title'>
           <img src={rubiumLogo}/>
           <p><strong>{user.current && user.current.name + "'s"}</strong><br/>Rubium</p>
         </div>
+
         <div className='note-create'>
           <button onClick={()=>{createNewNote()}}>+</button>
           <input type="text" placeholder="Search notes..." className='side-search' value={searchQuery} onChange={handleSearch}/>
         </div>
         
         {loadingNotes ? <Loader/>
-        :  notes.length !== 0 ? notes.map((nt)=>{
-          return <div className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
+         : notes.length !== 0 ? notes.map((nt)=>{
+          return <div key={nt.$id} className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
             <p>{nt.title}
               <a className={nt.$id == "draft" ? "draft" : (user.current && nt.owner == user.current.$id) ? "private" : "shared"}>&nbsp;
                {(user.current && nt.owner == user.current.$id) || nt.$id == "draft" ? nt.$id == "draft" ? "Draft Note" : parseDateTime(nt.$updatedAt) : "Shared with me"} </a>
@@ -330,7 +350,7 @@ const [sharing,setSharing] = useState(false);
         <div className='main-controls'>
           {loadingCurrentNote ? <></>:<>
             {/* <a>{charPosLog}</a> */}
-            {note.owner == user.current.$id || note.$id == "draft" ?
+            {user.current && (note.owner == user.current.$id || note.$id == "draft") ?
               <div className='edit-icon' onClick={()=>{
                 if(editable){saveCurrentNote()};setEditable(!editable)}}>
                 <img 
@@ -338,7 +358,7 @@ const [sharing,setSharing] = useState(false);
                 <p>{editable ?  "Save" : "Edit"}</p>
               </div>
             : <></>}
-            {note.owner == user.current.$id ? 
+            {user.current && note.owner == user.current.$id ? 
             <div  className="share-icon" onClick={()=>{setSharing(true)}}>
               <img src={shareIcon}/>
               <p>Share</p>
@@ -352,6 +372,7 @@ const [sharing,setSharing] = useState(false);
           <div id="note" dangerouslySetInnerHTML={{__html: note.content || ""}} className='note-content' contentEditable={editable} onKeyUp={(e)=>{handleKeyUp(e)}} ></div>
         </>}
       </div>
+      </>: <></>}
     </div>
   )
 }
