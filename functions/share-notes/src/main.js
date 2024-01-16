@@ -9,16 +9,18 @@ export default async ({ req, res, log, error }) => {
 
   const databases =  new Databases(client);
 
-
-  databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
-  .then((response)=>{
-    let perms = response.$permissions;
+  try{
+   const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
+  
+   let perms = response.$permissions;
     
     const role = Role.user(req.query.userId);
-    perms = [...perms,Permission.read(role),Permission.update(role)]
+    perms = [...perms,Permission.read(role)]
+    perms = [...perms,Permission.update(role)]
+
 
     return res.json({perms:perms});
-    
+
     databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
     .then((response)=>{
 
@@ -26,11 +28,11 @@ export default async ({ req, res, log, error }) => {
     .catch(()=>{
 
     })
-  })
-  .catch((err)=>{
+    
+  }
+  catch(err){
     error(err)
-  })
-
+  }
 
   // // The `req` object contains the request data
   // if (req.method === 'GET') {
