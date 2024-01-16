@@ -9,7 +9,7 @@
 
 Rubium is a Secure, Fast and Open-Source Note-taking app, an alternative to other ridiculously-expensive apps. 
 
-  <img style="object-fit:contain" height="500" src="/src/assets/screenshots/landing.png"/>
+  <img style="object-fit:contain" height="500" src="/src/assets/screenshots/landing.gif"/>
 
 #### Proudly built with Appwrite
 
@@ -17,9 +17,9 @@ Rubium is a Secure, Fast and Open-Source Note-taking app, an alternative to othe
 
 ### TODO
 
-- [ ] Landing Page
+- [x] ~~Landing Page~~
 - [ ] Block Editor
-- [ ] Shareable Notes
+- [ ] Shareable Notes (By Email or Link)
 - [ ] On-board Pomodoro Timer
 
 ---

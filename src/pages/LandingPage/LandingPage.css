@@ -185,9 +185,6 @@
         transform: translateY(10vh);
         letter-spacing: 5px;
     }
-    40%{
-        letter-spacing: 3px;
-    }
     100%{
         opacity: 0.9;
         filter: drop-shadow(0 0 56px rgba(235, 79, 79, 0.8));
