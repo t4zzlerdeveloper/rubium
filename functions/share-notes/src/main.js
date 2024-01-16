@@ -18,16 +18,14 @@ export default async ({ req, res, log, error }) => {
     perms = [...perms,Permission.read(role)]
     perms = [...perms,Permission.update(role)]
 
-
-    return res.json({perms:perms});
-
-    databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
-    .then((response)=>{
-
-    })
-    .catch(()=>{
-
-    })
+    try{
+      const response2 = databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
+      return res.json({success:true});
+    }
+    catch(err){
+      error(err)
+      return res.json({success:false});
+    }
     
   }
   catch(err){
