@@ -14,7 +14,8 @@
     justify-content: space-between;
     opacity: 0.5;
     transition: 1s;
-z-index: 999;
+    z-index: 999;
+    background:linear-gradient(180deg,#fd6f6f1e,#6c6c6c00);
 }
 
 .navbar:hover{opacity: 0.9;}
@@ -239,6 +240,7 @@ z-index: 999;
     grid-template-columns: 1fr 2fr;
     gap:10vw;
     padding:10vw;
+    cursor: pointer;
 }
 
 
@@ -278,7 +280,7 @@ z-index: 999;
     display: flex;
     flex-direction: column;
     place-content: center;
-    border: 1px solid rgb(37, 37, 37)
+    border: 1px solid rgb(28, 28, 28)
 }
 
 .scr-app-div > img{
@@ -294,26 +296,79 @@ z-index: 999;
     font-weight: 500;
 }
 
+
+footer > .newsletter{
+    padding:50px;
+    background-color: rgba(255, 120, 120, 0.04);
+    width: 100%;
+    text-align: center;
+    border-bottom:1px solid rgb(28, 28, 28);
+}
+
+footer > .newsletter > h4{
+    font-size: 30px;
+    padding: 0;
+    margin:0px;
+}
+
+footer > .newsletter > p{
+    font-size: 16px;
+    font-weight: 200;
+    padding:0;
+    margin:0;
+}
+
+
+footer > .newsletter > input,footer > .newsletter > button{
+    font-family: inherit;
+    border: none;
+    outline:none;
+    border-radius: 12px;
+    font-size:16px;
+    padding: 10px 18px;
+    margin:20px 0px;
+}
+
+footer > .newsletter > input{
+    border-radius: 12px 0px 0px 12px;
+}
+
+footer > .newsletter > button{
+    border-radius: 0px 12px 12px 0px;
+    transition: 0.4s;
+
+}
+
+
+footer > .newsletter > button:hover{
+    background: white;
+    color:black;
+}
+
+
+
 footer{
+    border-top:1px solid rgb(28, 28, 28);
+    margin-top:10vh;
     display: flex;
     flex-direction: column;
     place-content: center;
     place-items: center;
     background-color: rgb(0, 10, 10);
-    filter:drop-shadow(0 0 70px rgb(20, 19, 19))
+    filter:drop-shadow(0 0 70px rgb(20, 19, 19));
+    overflow:hidden;
 }
 
 footer > .socials {
-    padding:20px;
+    padding:18px;
     display: flex;
     gap:30px;
- 
 }
 
 footer > .socials > img{
     width: 20px;
     height: 20px;
-    opacity: 0.6;
+    opacity: 0.4;
     transition: 0.4s;
     cursor: pointer;
 }
