@@ -13,8 +13,13 @@ export default async ({ req, res, log, error }) => {
   databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
   .then((response)=>{
     let perms = response.$permissions;
+
+    log(perms)
+    
     const role = Role.user(req.query.userId);
     perms = [...perms,Permission.read(role),Permission.update(role)]
+
+    log(perms)
 
     return res.json({perms:perms});
     
