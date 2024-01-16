@@ -7,10 +7,20 @@
 ![](https://img.shields.io/github/issues/t4zzlerdeveloper/rubium?color=f45b69)
 ![](https://img.shields.io/github/license/t4zzlerdeveloper/rubium?color=f45b69)
 
-Rubium is Secure, Fast and Open-Source Note-taking app, an alternative to other ridiculously-expensive apps. 
+Rubium is a Secure, Fast and Open-Source Note-taking app, an alternative to other ridiculously-expensive apps. 
 
-  <img height="500" src="/src/assets/screenshots/login-page.png"/>
+  <img style="object-fit:contain" height="500" src="/src/assets/screenshots/login-page.png"/>
+
 #### Proudly built with Appwrite
+
+---
+
+### TODO
+
+- [ ] Landing Page
+- [ ] Block Editor
+- [ ] Shareable Notes
+- [ ] On-board Pomodoro Timer
 
 ---
 
