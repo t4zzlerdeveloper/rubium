@@ -11,12 +11,13 @@
 .register-back{
     width: 100vw;
     height: 100vh;
-    background-size:contain;
+    background-size:cover;
     position: absolute;
     opacity:0.7;
     top:0;
     left:0;
     z-index: 1;
+
 }
 
 .register-card{
