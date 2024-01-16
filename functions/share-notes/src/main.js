@@ -11,14 +11,14 @@ export default async ({ req, res, log, error }) => {
 
 
   databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
-  .then((res)=>{
-    let perms = res.$permissions;
+  .then((response)=>{
+    let perms = response.$permissions;
     const role = Role.user(req.query.userId);
     perms = [...perms,Permission.read(role),Permission.update(role)]
 
     return res.json({perms:perms});
     
-    databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,res.data,perms)
+    databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
     .then((res)=>{
 
     })
