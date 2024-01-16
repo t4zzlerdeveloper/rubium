@@ -9,6 +9,8 @@ export default async ({ req, res, log, error }) => {
 
   const databases =  new Databases(client);
 
+  log(req)
+
 
   databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.data.noteId)
   .then((res)=>{
