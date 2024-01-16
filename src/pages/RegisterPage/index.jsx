@@ -66,7 +66,7 @@ function RegisterPage(){
             <button  onClick={() => register(name,email, password)}>Sign up</button>
         </div>} 
     </div>
-    <div className="register-back" style={{background: `url(${registerBack})`}}></div>
+    <div className="register-back" style={{background: `url(${registerBack})`,backgroundSize:"cover"}}></div>
 
     </div>)
 }

@@ -218,7 +218,16 @@
     animation-direction: alternate;
     margin-top:100px;
     margin-bottom: 60vh;
+    border-radius: 35px;
+    cursor: pointer;
+    transition: 0.4s;
 }
+
+.arrow-down:hover{
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+
 
 @keyframes arrow-anim {
     0%{

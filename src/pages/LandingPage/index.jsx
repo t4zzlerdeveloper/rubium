@@ -13,11 +13,16 @@ import linkedin from '../../assets/socials/linkedin.svg'
 import screenshotApp from '../../assets/screenshots/login-page.png'
 import screenshotNote from '../../assets/screenshots/note-page.png'
 import './LandingPage.css'
+import { useEffect } from 'react'
 
 const DEV_GITHUB = "https://github.com/t4zzlerdeveloper";
 const RUBIUM_GITHUB = DEV_GITHUB + "/rubium";
 
 function LandingPage(){
+
+    useEffect(()=>{
+        window.scrollTo(0,0);
+    },[])
 
     const navigate = useNavigate();
     return (<div className='landing-page' >
@@ -46,7 +51,12 @@ function LandingPage(){
       <p></p>
       {/* <button  onClick={()=>{navigate("/app")}}>Start Rubiuming</button> */}
 
-      <img className="arrow-down" src={arrow}/>
+      <img className="arrow-down" src={arrow} 
+      onClick={()=>{window.scrollTo({
+                top: 1000,
+                left: 0,
+                behavior: "smooth",
+    })}}/>
 
     
     </div>

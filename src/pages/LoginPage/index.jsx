@@ -64,7 +64,7 @@ function LoginPage(){
             <button  onClick={() => login(email, password)}>Sign in</button>
         </div>} 
     </div>
-    <div className="login-back" style={{background: `url(${loginBack})`}}></div>
+    <div className="login-back" style={{background: `url(${loginBack})`,backgroundSize:"cover"}}></div>
 
     </div>)
 }
