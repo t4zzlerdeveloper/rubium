@@ -58,7 +58,7 @@ function NoteApp() {
 
   function loadNotes(last = false){
     setLoadingNotes(true);
-    const queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","owner"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","owner"]),Query.orderDesc("$updatedAt")]
+    const queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")]
     databases.listDocuments(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID, queries)
     .then((res)=>{
       //console.log(res.documents)
@@ -278,6 +278,14 @@ function setCurSelectionOffset(offset, forEnd = false) {
   }
 }
 
+function checkUpdate(note){
+  return user.current && note.$permissions.includes(Permission.update(Role.user(user.current.$id)))
+}
+
+function checkDelete(note){
+  return user.current && note.$permissions.includes(Permission.delete(Role.user(user.current.$id)))
+}
+
 const [toastMessage,setToastMessage] = useState("");
 function showToast(msg,type) {
   setToastMessage(msg)
@@ -332,12 +340,16 @@ useEffect(()=>{
         </div>
         
         {loadingNotes ? <Loader/>
-         : notes.length !== 0 ? notes.map((nt)=>{
+         : notes.length !== 0 ? notes.filter((n)=>{
+          //Remove public link notes
+          if(checkUpdate(n)) return n;
+         }).map((nt)=>{
           return <div key={nt.$id} className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
             <p>{nt.title}
-              <a className={nt.$id == "draft" ? "draft" : (user.current && nt.owner == user.current.$id) ? "private" : "shared"}>&nbsp;
-               {(user.current && nt.owner == user.current.$id) || nt.$id == "draft" ? nt.$id == "draft" ? "Draft Note" : parseDateTime(nt.$updatedAt) : "Shared with me"} </a>
-            </p><img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/>
+              <a className={nt.$id == "draft" ? "draft" : checkDelete(nt) ? "private" : "shared"}>&nbsp;
+               {checkDelete(nt) || nt.$id == "draft" ? nt.$id == "draft" ? "Draft Note" : parseDateTime(nt.$updatedAt) : "Shared with me"} </a>
+            </p>
+            {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/> : <></>}
             </div>
         }): <></>}
         <button
@@ -352,7 +364,7 @@ useEffect(()=>{
         <div className='main-controls'>
           {loadingCurrentNote ? <></>:<>
             {/* <a>{charPosLog}</a> */}
-            {user.current && (note.owner == user.current.$id || note.$id == "draft") ?
+            {checkUpdate(note) || note.$id == "draft" ?
               <div className='edit-icon' onClick={()=>{
                 if(editable){saveCurrentNote()};setEditable(!editable)}}>
                 <img 
@@ -360,7 +372,7 @@ useEffect(()=>{
                 <p>{editable ?  "Save" : "Edit"}</p>
               </div>
             : <></>}
-            {user.current && note.owner == user.current.$id ? 
+            {checkDelete(note) ? 
             <div  className="share-icon" onClick={()=>{setSharing(true)}}>
               <img src={shareIcon}/>
               <p>Share</p>

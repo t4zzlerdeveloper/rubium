@@ -8,40 +8,34 @@ export default async ({ req, res, log, error }) => {
      .setKey(process.env.APPWRITE_API_KEY);
 
   const databases =  new Databases(client);
+  return res.send("Temporarily disabled until fully developed")
 
-  try{
-   const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
-  
-   let perms = response.$permissions;
-    
-    const role = Role.user(req.query.userId);
-    perms = [...perms,Permission.read(role)]
-    perms = [...perms,Permission.update(role)]
-
+  if(req.method == "POST"){
     try{
-      const response2 = databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
-      return res.json({success:true});
-    }
-    catch(err){
-      error(err)
-      return res.json({success:false});
-    }
-    
+      const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
+     
+      let perms = response.$permissions;
+       
+       const role = Role.user(req.query.userId);
+       perms = [...perms,Permission.read(role)]
+       perms = [...perms,Permission.update(role)]
+   
+       try{
+         const response2 = databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
+         return res.json({success:true});
+       }
+       catch(err){
+         error(err)
+         return res.json({success:false});
+       }
+       
+     }
+     catch(err){
+       error(err)
+     }
   }
-  catch(err){
-    error(err)
+  else if(req.method == "DELETE"){
+
   }
-
-  // // The `req` object contains the request data
-  // if (req.method === 'GET') {
-  //   return res.send('Hello, World!');
-  // }
-
-  // // `res.json()` is a handy helper for sending JSON
-  // return res.json({
-  //   motto: 'Build like a team of hundreds_',
-  //   learn: 'https://appwrite.io/docs',
-  //   connect: 'https://appwrite.io/discord',
-  //   getInspired: 'https://builtwith.appwrite.io',
-  // });
+  
 };
