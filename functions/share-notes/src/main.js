@@ -9,18 +9,16 @@ export default async ({ req, res, log, error }) => {
 
   const databases =  new Databases(client);
 
-  log(req)
 
-
-  databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.data.noteId)
+  databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
   .then((res)=>{
     let perms = res.$permissions;
-    const role = Role.user(req.data.userId);
+    const role = Role.user(req.query.userId);
     perms = [...perms,Permission.read(role),Permission.update(role)]
 
     return res.json({perms:perms});
     
-    databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.data.noteId,res.data,)
+    databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,res.data,perms)
     .then((res)=>{
 
     })
