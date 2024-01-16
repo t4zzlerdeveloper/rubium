@@ -1,5 +1,4 @@
-import { Databases, Permission, Role } from 'appwrite';
-import { Client } from 'node-appwrite';
+import { Databases, Permission, Role ,Client } from 'node-appwrite';
 
 export default async ({ req, res, log, error }) => {
 
@@ -17,7 +16,7 @@ export default async ({ req, res, log, error }) => {
     const role = Role.user(req.data.userId);
     perms = [...perms,Permission.read(role),Permission.update(role)]
 
-    return res.json(perms);
+    return res.json({perms:perms});
     
     databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.data.noteId,res.data,)
     .then((res)=>{
