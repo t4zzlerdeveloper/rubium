@@ -28,20 +28,20 @@ export default async ({ req, res, log, error }) => {
     })
   })
   .catch(()=>{
-
+    return res.json({error:true});
   })
 
 
-  // The `req` object contains the request data
-  if (req.method === 'GET') {
-    return res.send('Hello, World!');
-  }
+  // // The `req` object contains the request data
+  // if (req.method === 'GET') {
+  //   return res.send('Hello, World!');
+  // }
 
-  // `res.json()` is a handy helper for sending JSON
-  return res.json({
-    motto: 'Build like a team of hundreds_',
-    learn: 'https://appwrite.io/docs',
-    connect: 'https://appwrite.io/discord',
-    getInspired: 'https://builtwith.appwrite.io',
-  });
+  // // `res.json()` is a handy helper for sending JSON
+  // return res.json({
+  //   motto: 'Build like a team of hundreds_',
+  //   learn: 'https://appwrite.io/docs',
+  //   connect: 'https://appwrite.io/discord',
+  //   getInspired: 'https://builtwith.appwrite.io',
+  // });
 };
