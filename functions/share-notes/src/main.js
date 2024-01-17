@@ -14,8 +14,8 @@ export default async ({ req, res, log, error }) => {
     const response = await users.list(req.query.email);
     return res.json({users:response.users})
   }
-  catch{
-
+  catch(err){
+    error(err)
   }
 
   //add auth
