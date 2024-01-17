@@ -52,12 +52,12 @@ export default async ({ req, res, log, error }) => {
   if(req.method == "GET"){
 
     try{
-      const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.body.noteId)
+      const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
 
       let perms = response.$permissions;
 
-      const isOwner = perms.includes(Permission.delete(Role.user(req.body.ownerId)));
-      const authed = await validateSession(req.body.ownerId,req.body.sessionId);
+      const isOwner = perms.includes(Permission.delete(Role.user(req.query.ownerId)));
+      const authed = await validateSession(req.query.ownerId,req.query.sessionId);
 
 
       if(!isOwner || !authed){
@@ -68,7 +68,7 @@ export default async ({ req, res, log, error }) => {
       perms.map( async (p)=>{
         if(p.includes('update("user:') ){
           const userId = p.replace('update("user:','').replace('")','');
-          if(!sharedUsers.includes(userId) && userId !== req.body.ownerId){
+          if(!sharedUsers.includes(userId) && userId !== req.query.ownerId){
 
             try{
               const user = await users.get(userId);
