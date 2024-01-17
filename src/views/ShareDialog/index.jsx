@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './ShareDialog.css'
 
-import { client, databases,functions } from '../../lib/appwrite'
+import { avatars, client, databases,functions } from '../../lib/appwrite'
 import { useUser } from '../../lib/context/user';
 
 import removePerson from '../../assets/person_remove.svg'
@@ -129,7 +129,7 @@ function ShareDialog(props){
           'POST',
           headers
           ).then((res)=>{
-            console.log(res)
+            setEmail("");
             fetchNote();
           })
           .catch(()=>{
@@ -179,8 +179,8 @@ function ShareDialog(props){
                         <p>You haven´t shared this note with anyone yet.</p>
                        : sharedUsers.map((u)=>{
                         return <div className='sh-list-item'>
-                                  <img className="sh-profile" src={u.avatar}/>
-                                  <p>{u.email}</p>
+                                  <img className="sh-profile" src={avatars.getInitials(u.name)}/>
+                                  <p>{u.name + " (" + u.email + ")"}</p>
                                   <img className="sh-remove" src={removePerson} onClick={()=>{removeUserSharing(u.email)}}/>
                                 </div>
                       })}
