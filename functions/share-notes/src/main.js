@@ -11,7 +11,7 @@ export default async ({ req, res, log, error }) => {
   const users = new sdk.Users(client);
 
   try{
-    const response = await users.list();
+    const response = await users.list(req.query.email);
     log(response);
   }
   catch{
