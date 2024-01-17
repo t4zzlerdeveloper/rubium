@@ -56,11 +56,11 @@ export default async ({ req, res, log, error }) => {
       let perms = response.$permissions;
 
       const userId = await getUserIdByEmail(req.query.email);
-      return res.json({authed:await validateSession(req.query.ownerId,req.query.sessionId)});
+      const isOwner = perms.include(Permission.delete(Role.user(req.query.ownerId)));
+      const authed = await validateSession(req.query.ownerId,req.query.sessionId);
 
 
-      // Simple Auth (with possible flaws)
-      if(!isOwner || userId == null){
+      if(!isOwner || !authed || userId == null){
           return res.json({success:false/*,debug:"Auth owner error uId: " + userId */})
       }
 
