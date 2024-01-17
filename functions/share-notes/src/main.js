@@ -49,7 +49,7 @@ export default async ({ req, res, log, error }) => {
   }
 
 
-  if(req.method == "GET"){
+  if(req.method == "POST"){
     try{
       const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
 
@@ -61,7 +61,7 @@ export default async ({ req, res, log, error }) => {
 
 
       if(!isOwner || !authed || userId == null){
-          return res.json({success:false,debug:"Auth owner error uId: " + userId})
+          return res.json({success:false,debug:"err2"})
       }
 
       const role = Role.user(userId);
@@ -74,12 +74,12 @@ export default async ({ req, res, log, error }) => {
       }
       catch(err){
         error(err)
-        return res.json({success:false});
+        return res.json({success:false,debug:"err3"});
       } 
     }
     catch(err){
       error(err)
-      return res.json({success:false});
+      return res.json({success:false,debug:"err4"});
     }
   }
   else if(req.method == "DELETE"){
