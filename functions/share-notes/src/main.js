@@ -28,6 +28,19 @@ export default async ({ req, res, log, error }) => {
     }
   }
 
+  async function validateSession(userId,sessionId){
+    try{
+      const response = await users.listSessions(userId)
+      return response;
+     
+    }
+    catch(err){
+      error(err)
+      return null;
+    }
+    
+  }
+
 
   if(req.method == "GET"){
     try{
@@ -36,10 +49,12 @@ export default async ({ req, res, log, error }) => {
       let perms = response.$permissions;
 
       const userId = await getUserIdByEmail(req.query.email);
-      const isOwner = !perms.includes(Permission.delete(Role.user(req.query.authId)));
+      return await validateSession(req.query.authId);
 
+
+      // Simple Auth (with possible flaws)
       if(!isOwner || userId == null){
-          return res.json({success:false,debug:"Auth owner error uId: " + userId })
+          return res.json({success:false/*,debug:"Auth owner error uId: " + userId */})
       }
 
       const role = Role.user(userId);
@@ -67,9 +82,14 @@ export default async ({ req, res, log, error }) => {
       let perms = response.$permissions;
        
       const userId = await getUserIdByEmail(req.query.email);
-      const role = Role.user(userId);
+      const isOwner = !perms.includes(Permission.delete(Role.user(req.query.authId)));
+      
+      if(!isOwner || userId == null){
+        return res.json({success:false/*,debug:"Auth owner error uId: " + userId */})
+      }
 
-       permissions = permissions.filter(function(e) {
+      const role = Role.user(userId);
+      permissions = permissions.filter(function(e) {
         return e !== Permission.read(role) && e !==Permission.update(role);
       });
    
