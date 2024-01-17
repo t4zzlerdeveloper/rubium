@@ -65,10 +65,10 @@ export default async ({ req, res, log, error }) => {
       }
 
       let sharedUsers = [];
-      await perms.map( async (p)=>{
+      await Promise.all(perms.map( async (p)=>{
         if(p.includes('update("user:') ){
           const userId = p.replace('update("user:','').replace('")','');
-          if(!sharedUsers.includes(userId) && userId !== req.query.ownerId){
+          if(userId !== req.query.ownerId){
 
             try{
               const user = await users.get(userId);
@@ -85,7 +85,7 @@ export default async ({ req, res, log, error }) => {
           }
           
         }
-      })
+      }))
       return res.json(sharedUsers);
     }
     catch{
