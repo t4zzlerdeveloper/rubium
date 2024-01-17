@@ -37,9 +37,8 @@ export default async ({ req, res, log, error }) => {
 
       const userId = await getUserIdByEmail(req.query.email);
 
-      log(req)
 
-      if(response.owner !== userId || userId == null){
+      if(response.owner !== req.query.myId || userId == null){
           return res.json({success:false})
       }
 
