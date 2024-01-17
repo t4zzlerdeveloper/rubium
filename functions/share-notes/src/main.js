@@ -55,9 +55,9 @@ export default async ({ req, res, log, error }) => {
 
       let perms = response.$permissions;
 
+      return res.send("Testing");
       const userId = await getUserIdByEmail(req.query.email);
       const isOwner = perms.include(Permission.delete(Role.user(req.query.ownerId)));
-      return res.send("Testing");
       const authed = await validateSession(req.query.ownerId,req.query.sessionId);
 
 
