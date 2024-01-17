@@ -17,12 +17,25 @@ export default async ({ req, res, log, error }) => {
     if(response.total !== 1){
       return res.json({success:false})
     }
+
+    try{
+      const avatar = await avatars.getInitials(response.users[0].name);
     
-    return res.json({
-      $id: response.users[0].$id,
-      email: response.users[0].email,
-      avatar: await avatars.getInitials(response.users[0].name)
-    })  
+      return res.json({
+        $id: response.users[0].$id,
+        email: response.users[0].email,
+        avatar: avatar
+      })  
+    }
+    catch(err){
+      return res.json({
+        $id: response.users[0].$id,
+        email: response.users[0].email,
+        avatar:  null
+      })  
+    }
+
+   
    
   }
   catch(err){
