@@ -148,7 +148,7 @@ function ShareDialog(props){
                     <div className='shared-list'>
                       {note && getSharedUsers(note).length == 0 ? 
                         <p>You haven´t shared this note with anyone yet.</p>
-                       : getSharedUsers(note).map((u)=>{
+                       : note && getSharedUsers(note).map((u)=>{
                         return <div className='sh-list-item'>
                                   <img className="sh-profile" src={"//unsplash.it/20/20"}/>
                                   <p>{u}</p>

@@ -28,8 +28,6 @@ export default async ({ req, res, log, error }) => {
     }
   }
 
-  //add auth
-  //return res.send("Temporarily disabled until fully developed")
 
   if(req.method == "GET"){
     try{
@@ -38,8 +36,15 @@ export default async ({ req, res, log, error }) => {
       let perms = response.$permissions;
 
       const userId = await getUserIdByEmail(req.query.email);
+
+      log(req)
+
+      if(response.owner !== userId || userId == null){
+          return res.json({success:false})
+      }
+
       const role = Role.user(userId);
-      
+
        perms = [...perms,Permission.read(role)]
        perms = [...perms,Permission.update(role)]
    
