@@ -65,7 +65,7 @@ export default async ({ req, res, log, error }) => {
       }
 
       let sharedUsers = [];
-      perms.map( async (p)=>{
+      await perms.map( async (p)=>{
         if(p.includes('update("user:') ){
           const userId = p.replace('update("user:','').replace('")','');
           if(!sharedUsers.includes(userId) && userId !== req.query.ownerId){
