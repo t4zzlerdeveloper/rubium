@@ -19,7 +19,7 @@ export default async ({ req, res, log, error }) => {
         return null;
       }
   
-      return response.users[0].$id
+      return response.users[0].$id;
      
     }
     catch(err){
@@ -57,9 +57,7 @@ export default async ({ req, res, log, error }) => {
 
     
       const userId = await getUserIdByEmail(req.body.email);
-      const isOwner = perms.include(Permission.delete(Role.user(req.body.ownerId)));
-      return res.send("trte 2")
-
+      const isOwner = perms.includes(Permission.delete(Role.user(req.body.ownerId)));
       const authed = await validateSession(req.body.ownerId,req.body.sessionId);
 
 
