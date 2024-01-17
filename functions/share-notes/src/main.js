@@ -49,7 +49,7 @@ export default async ({ req, res, log, error }) => {
       let perms = response.$permissions;
 
       const userId = await getUserIdByEmail(req.query.email);
-      return await validateSession(req.query.authId);
+      return res.json({response:await validateSession(req.query.authId)});
 
 
       // Simple Auth (with possible flaws)
