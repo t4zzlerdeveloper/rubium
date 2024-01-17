@@ -49,7 +49,54 @@ export default async ({ req, res, log, error }) => {
   }
 
 
-  if(req.method == "POST"){
+  if(req.method == "GET"){
+
+    try{
+      const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.body.noteId)
+
+      let perms = response.$permissions;
+
+      const isOwner = perms.includes(Permission.delete(Role.user(req.body.ownerId)));
+      const authed = await validateSession(req.body.ownerId,req.body.sessionId);
+
+
+      if(!isOwner || !authed){
+          return res.json([])
+      }
+
+      let sharedUsers = [];
+      perms.map((p)=>{
+        if(p.includes('update("user:') ){
+          const userId = p.replace('update("user:','').replace('")','');
+          if(!sharedUsers.includes(userId) && userId !== req.body.ownerId){
+
+              users.get(userId)
+              .then((res)=>{
+                avatars.getInitials(res.name)
+                .then((res2)=>{
+                  sharedUsers.push({
+                    email: res.email,
+                    avatar: res2
+                  })
+                })
+                
+              })
+              .catch(()=>{
+                return res.json([])
+              })
+          }
+          
+        }
+      })
+      return res.json(sharedUsers);
+    }
+    catch{
+      return res.json([])
+    }
+
+
+  }
+  else if(req.method == "POST"){
     try{
       const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.body.noteId)
 
