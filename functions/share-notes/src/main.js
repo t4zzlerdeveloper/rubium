@@ -38,7 +38,7 @@ export default async ({ req, res, log, error }) => {
       const userId = await getUserIdByEmail(req.query.email);
 
 
-      if(!perms.includes(Permission.delete(Role.user(userId))) || userId == null){
+      if(!perms.includes(Permission.delete(Role.user(req.query.authId))) || userId == null){
           return res.json({success:false})
       }
 
