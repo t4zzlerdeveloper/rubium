@@ -1,4 +1,4 @@
-import { Query, Databases, Permission, Role ,Client,Users } from 'node-appwrite';
+import { Avatars,Query, Databases, Permission, Role ,Client,Users } from 'node-appwrite';
 
 export default async ({ req, res, log, error }) => {
 
@@ -9,10 +9,21 @@ export default async ({ req, res, log, error }) => {
 
   const databases = new Databases(client);
   const users = new Users(client);
+  const avatars = new Avatars(client);
 
   try{
     const response = await users.list([Query.equal("email", [req.query.email])]);
-    return res.json(response)
+    
+    if(response.total !== 1){
+      return res.json({success:false})
+    }
+    
+    return res.json({
+      $id: response.users[0].$id,
+      email: response.users[0].email,
+      avatar: await avatars.getInitials(response.users[0].name)
+    })  
+   
   }
   catch(err){
     error(err)
