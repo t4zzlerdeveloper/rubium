@@ -59,6 +59,7 @@ export default async ({ req, res, log, error }) => {
       const isOwner = perms.include(Permission.delete(Role.user(req.query.ownerId)));
       const authed = await validateSession(req.query.ownerId,req.query.sessionId);
 
+      return res.send("Testing");
 
       if(!isOwner || !authed || userId == null){
           return res.json({success:false,debug:"err2"})
@@ -76,6 +77,7 @@ export default async ({ req, res, log, error }) => {
         error(err)
         return res.json({success:false,debug:"err3"});
       } 
+
     }
     catch(err){
       error(err)
