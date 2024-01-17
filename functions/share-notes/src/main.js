@@ -31,13 +31,14 @@ export default async ({ req, res, log, error }) => {
   async function validateSession(userId,sessionId){
     try{
       const response = await users.listSessions(userId)
+      let authed = false;
       response.sessions.map((ss)=>{
         if(ss.$id == sessionId){
-          return true;
+          authed = true;
         }
       })
 
-      return false;
+      return authed;
      
     }
     catch(err){
@@ -55,7 +56,7 @@ export default async ({ req, res, log, error }) => {
       let perms = response.$permissions;
 
       const userId = await getUserIdByEmail(req.query.email);
-      return res.json({response:await validateSession(req.query.ownerId,req.query.sessionId)});
+      return res.json({authed:await validateSession(req.query.ownerId,req.query.sessionId)});
 
 
       // Simple Auth (with possible flaws)
