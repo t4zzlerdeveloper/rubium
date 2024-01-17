@@ -32,34 +32,32 @@ export default async ({ req, res, log, error }) => {
   if(req.method == "GET"){
     try{
       const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
-     
+
       let perms = response.$permissions;
 
       const userId = await getUserIdByEmail(req.query.email);
+      const isOwner = !perms.includes(Permission.delete(Role.user(req.query.authId)));
 
-
-      if(!perms.includes(Permission.delete(Role.user(req.query.authId))) || userId == null){
-          return res.json({success:false})
+      if(!isOwner || userId == null){
+          return res.json({success:false,debug:"Auth owner error uId: " + userId })
       }
 
       const role = Role.user(userId);
+      perms = [...perms,Permission.read(role)]
+      perms = [...perms,Permission.update(role)]
 
-       perms = [...perms,Permission.read(role)]
-       perms = [...perms,Permission.update(role)]
-   
-       try{
-         const response2 = databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
-         return res.json({success:true});
-       }
-       catch(err){
-         error(err)
-         return res.json({success:false});
-       }
-       
-     }
-     catch(err){
-       error(err)
-     }
+      try{
+        const response2 = databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
+        return res.json({success:true});
+      }
+      catch(err){
+        error(err)
+        return res.json({success:false});
+      } 
+    }
+    catch(err){
+      error(err)
+    }
   }
   else if(req.method == "DELETE"){
 
