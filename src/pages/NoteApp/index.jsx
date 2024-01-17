@@ -79,7 +79,7 @@ function NoteApp() {
       const permissions = [Permission.read(role),Permission.update(role),Permission.delete(role)];
       
       let noteElem = document.getElementById("note");
-      const data = {title:note.title,owner:user.current.$id,content:noteElem.innerHTML};
+      const data = {title:note.title,content:noteElem.innerHTML};
       setNotes(notes.filter(item => item.$id !== "draft"));
 
       databases.createDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,ID.unique(),data,permissions)
@@ -279,11 +279,11 @@ function setCurSelectionOffset(offset, forEnd = false) {
 }
 
 function checkUpdate(note){
-  return user.current && note.$permissions.includes(Permission.update(Role.user(user.current.$id)))
+  return user.current &&  note.$permissions && note.$permissions.includes(Permission.update(Role.user(user.current.$id)))
 }
 
 function checkDelete(note){
-  return user.current && note.$permissions.includes(Permission.delete(Role.user(user.current.$id)))
+  return user.current && note.$permissions && note.$permissions.includes(Permission.delete(Role.user(user.current.$id)))
 }
 
 const [toastMessage,setToastMessage] = useState("");
@@ -340,10 +340,7 @@ useEffect(()=>{
         </div>
         
         {loadingNotes ? <Loader/>
-         : notes.length !== 0 ? notes.filter((n)=>{
-          //Remove public link notes
-          if(checkUpdate(n)) return n;
-         }).map((nt)=>{
+         : notes.length !== 0 ? notes.map((nt)=>{
           return <div key={nt.$id} className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
             <p>{nt.title}
               <a className={nt.$id == "draft" ? "draft" : checkDelete(nt) ? "private" : "shared"}>&nbsp;
@@ -351,7 +348,7 @@ useEffect(()=>{
             </p>
             {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/> : <></>}
             </div>
-        }): <></>}
+        }): <div className="side-item" >Nothing to see here.</div>}
         <button
             className='side-logout'
             type="button"
