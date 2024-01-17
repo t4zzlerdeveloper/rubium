@@ -51,15 +51,15 @@ export default async ({ req, res, log, error }) => {
 
   if(req.method == "POST"){
     try{
-      const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
+      const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.body.noteId)
 
       let perms = response.$permissions;
 
-      const userId = await getUserIdByEmail(req.query.email);
-      const isOwner = perms.include(Permission.delete(Role.user(req.query.ownerId)));
-      const authed = await validateSession(req.query.ownerId,req.query.sessionId);
+      const userId = await getUserIdByEmail(req.body.email);
+      const isOwner = perms.include(Permission.delete(Role.user(req.body.ownerId)));
+      const authed = await validateSession(req.body.ownerId,req.body.sessionId);
 
-
+      return res.send("trte")
 
       if(!isOwner || !authed || userId == null){
           return res.json({success:false,debug:"err2"})
@@ -70,7 +70,7 @@ export default async ({ req, res, log, error }) => {
       perms = [...perms,Permission.update(role)]
 
       try{
-        const response2 = databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
+        const response2 = databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.body.noteId,response.data,perms)
         return res.json({success:true});
       }
       catch(err){
