@@ -78,23 +78,32 @@ function ShareDialog(props){
     }
 
 
-    function removeUserSharing(userId){
-        const permissions = note.$permissions;
+    function removeUserSharing(email){
+      const headers= {
+        'Content-Type': 'application/json'
+      };
 
-        permissions = permissions.filter(function(e) {
-            return e !== Permission.read(Role.user(userId))      ||
-                   e !== Permission.update(Role.user(userId))    ||
-                   e !== Permission.delete(Role.user(userId)) ;
-          });
-    
-        databases.updateDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id,undefined,permissions)
-        .then((res)=>{
-          //showToast("Note shared with " + userId,"success")
-          //loadNotes();
+      const dataToPost = {
+        ownerId: user.current.$id,
+        sessionId: user.current.sessionId,
+        noteId: note.$id,
+        email: email
+      };
+
+
+      functions.createExecution(
+        '65a6f370b6b21d9a78d2',
+        JSON.stringify(dataToPost),
+        false,
+        '/',
+        'DELETE',
+        headers
+        ).then((res)=>{
+          console.log(res)
           fetchNote();
         })
         .catch(()=>{
-          //showToast("Error sharing note...","error")
+        
         })
     }
 
@@ -111,14 +120,14 @@ function ShareDialog(props){
           email: email
         };
 
-        console.log(dataToPost);
 
         functions.createExecution(
           '65a6f370b6b21d9a78d2',
           JSON.stringify(dataToPost),
           false,
           '/',
-          'POST'
+          'POST',
+          headers
           ).then((res)=>{
             console.log(res)
             fetchNote();
@@ -164,7 +173,7 @@ function ShareDialog(props){
                         return <div className='sh-list-item'>
                                   <img className="sh-profile" src={"//unsplash.it/20/20"}/>
                                   <p>{u}</p>
-                                  <img className="sh-remove" src={removePerson}/>
+                                  <img className="sh-remove" src={removePerson} onClick={()=>{removeUserSharing(email)}}/>
                                 </div>
                       })}
                     </div>

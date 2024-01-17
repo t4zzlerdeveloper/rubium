@@ -54,7 +54,6 @@ export default async ({ req, res, log, error }) => {
       const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.body.noteId)
 
       let perms = response.$permissions;
-
     
       const userId = await getUserIdByEmail(req.body.email);
       const isOwner = perms.includes(Permission.delete(Role.user(req.body.ownerId)));
@@ -102,7 +101,7 @@ export default async ({ req, res, log, error }) => {
 
 
       const role = Role.user(userId);
-      permissions = permissions.filter(function(e) {
+      perms = perms.filter(function(e) {
         return e !== Permission.read(role) && e !==Permission.update(role);
       });
    
