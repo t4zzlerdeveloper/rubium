@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import './ShareDialog.css'
 
-import { client, databases } from '../../lib/appwrite'
+import { client, databases,functions } from '../../lib/appwrite'
 import { useUser } from '../../lib/context/user';
 
 import removePerson from '../../assets/person_remove.svg'
 import closeIcon from '../../assets/close.svg'
-import { Permission, Role } from 'appwrite';
+import { Functions, Permission, Role } from 'appwrite';
+import axios from 'axios';
+
 
 
 function ShareDialog(props){
@@ -96,27 +98,44 @@ function ShareDialog(props){
         })
     }
 
-      function shareNoteWithUser(userId){
-        const permissions = note.$permissions;
+      function shareNoteWithUser(email){
 
-        permissions.push(Permission.read(Role.user(userId)))
-        permissions.push(Permission.update(Role.user(userId)))
-        permissions.push(Permission.delete(Role.user(userId)))
+        const headers= {
+          'Content-Type': 'application/json'
+        };
 
-        //console.log(Permission.delete(Role.user(userId)));
-    
-        databases.updateDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id,undefined,permissions)
-        .then((res)=>{
-          //showToast("Note shared with " + userId,"success")
-          //loadNotes();
-          fetchNote();
-        })
-        .catch(()=>{
-          //showToast("Error sharing note...","error")
-        })
+        const dataToPost = {
+          ownerId: user.current.$id,
+          sessionId: user.current.sessionId,
+          noteId: note.$id,
+          email: email
+        };
+
+        console.log(dataToPost);
+
+
+        axios.post('https://65a6f3713fce7bfda0d4.appwrite.global/',dataToPost,headers)
+        // ;
+
+        // functions.createExecution(
+        //   '65a6f370b6b21d9a78d2',
+        //   JSON.stringify({
+        //     ownerId: user.current.$id,
+        //     sessionId: user.current.sessionId,
+        //     noteId: note.$id,
+        //     email: email
+        //   }),
+        //   false,
+        //   '/',
+        //   'POST'
+      .then((res)=>{
+         console.log(res)
+        fetchNote();
+      })
+      .catch(()=>{})
+        
       }
 
-      //const [sharedUsers,setSharedUsers] = useState
 
       function getSharedUsers(note){
         let sharedUsers = [];
@@ -143,7 +162,7 @@ function ShareDialog(props){
                     <div className='sh-search'>
                         <input placeholder="Enter the email to share with"
                         value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-                        <button className="share-btn" onClick={()=>{getSharedUsers(note);/*shareNoteWithUser(email);*/}}>Add</button>
+                        <button className="share-btn" onClick={()=>{shareNoteWithUser(email);}}>Add</button>
                     </div>
                     <div className='shared-list'>
                       {note && getSharedUsers(note).length == 0 ? 

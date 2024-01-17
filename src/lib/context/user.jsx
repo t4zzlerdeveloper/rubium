@@ -34,7 +34,8 @@ export function UserProvider(props) {
   async function init() {
     try {
       const loggedIn = await account.get();
-      setUser(loggedIn);
+      const session = await account.getSession("current");
+      setUser({...loggedIn,sessionId:session.$id});
     } catch (err) {
       setUser(null);
     }

@@ -62,7 +62,7 @@ export default async ({ req, res, log, error }) => {
 
 
       if(!isOwner || !authed || userId == null){
-          return res.json({success:false,debug:"err2"})
+          return res.json({success:false})
       }
 
       const role = Role.user(userId);
@@ -75,13 +75,13 @@ export default async ({ req, res, log, error }) => {
       }
       catch(err){
         error(err)
-        return res.json({success:false,debug:"err3"});
+        return res.json({success:false});
       } 
 
     }
     catch(err){
       error(err)
-      return res.json({success:false,debug:"err4"});
+      return res.json({success:false});
     }
   }
   else if(req.method == "DELETE"){
