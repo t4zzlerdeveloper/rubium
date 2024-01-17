@@ -65,25 +65,23 @@ export default async ({ req, res, log, error }) => {
       }
 
       let sharedUsers = [];
-      perms.map((p)=>{
+      perms.map( async (p)=>{
         if(p.includes('update("user:') ){
           const userId = p.replace('update("user:','').replace('")','');
           if(!sharedUsers.includes(userId) && userId !== req.body.ownerId){
 
-              users.get(userId)
-              .then((res)=>{
-                avatars.getInitials(res.name)
-                .then((res2)=>{
-                  sharedUsers.push({
-                    email: res.email,
-                    avatar: res2
-                  })
-                })
-                
+            try{
+              const user = await users.get(userId);
+              const avatar = await avatars.getInitials(res.name);
+
+              sharedUsers.push({
+                email: res.email,
+                avatar: res2
               })
-              .catch(()=>{
-                return res.json([])
-              })
+            }
+            catch(err){
+
+            }
           }
           
         }
@@ -91,7 +89,7 @@ export default async ({ req, res, log, error }) => {
       return res.json(sharedUsers);
     }
     catch{
-      return res.json([])
+      return res.json({success:false});
     }
 
 
