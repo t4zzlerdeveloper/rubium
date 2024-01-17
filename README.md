@@ -19,8 +19,7 @@ Rubium is a Secure, Fast and Open-Source Note-taking app, an alternative to othe
 
 - [x] ~~Landing Page~~
 - [ ] Block Editor
-- [X] ~~Shareable Notes (By Email)~~
-- [ ] Shareable Notes (By Link)
+- [ ] Shareable Notes (By Email or Link)
 - [ ] On-board Pomodoro Timer
 
 ---
