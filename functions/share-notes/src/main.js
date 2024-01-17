@@ -1,4 +1,4 @@
-import { Databases, Permission, Role ,Client } from 'node-appwrite';
+import { Databases, Permission, Role ,Client,Users } from 'node-appwrite';
 
 export default async ({ req, res, log, error }) => {
 
@@ -8,11 +8,11 @@ export default async ({ req, res, log, error }) => {
      .setKey(process.env.APPWRITE_API_KEY);
 
   const databases = new Databases(client);
-  const users = new sdk.Users(client);
+  const users = new Users(client);
 
   try{
     const response = await users.list(req.query.email);
-    log(response);
+    return res.json({users:response.users})
   }
   catch{
 
