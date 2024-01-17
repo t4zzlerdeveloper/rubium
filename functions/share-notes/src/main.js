@@ -72,11 +72,10 @@ export default async ({ req, res, log, error }) => {
 
             try{
               const user = await users.get(userId);
-              const avatar = await avatars.getInitials(user.name);
 
               sharedUsers.push({
-                email: user.email,
-                avatar: avatar
+                name: user.name,
+                email: user.email
               })
             }
             catch(err){

@@ -7,7 +7,6 @@ import { useUser } from '../../lib/context/user';
 import removePerson from '../../assets/person_remove.svg'
 import closeIcon from '../../assets/close.svg'
 import { Functions, Permission, Role } from 'appwrite';
-import axios from 'axios';
 
 
 
@@ -32,6 +31,7 @@ function ShareDialog(props){
         databases.getDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,props.noteId)
         .then((res)=>{
             setNote(res);
+            reloadSharedUsers(note);
             setIsPublished(note.$permissions.includes(Permission.read(Role.any())))
         })
         .catch(()=>{
@@ -139,15 +139,23 @@ function ShareDialog(props){
       }
 
 
-      function getSharedUsers(note){
-        let sharedUsers = [];
-        note.$permissions.map((p)=>{
-          if(p.includes('update("user:') ){
-            const userId = p.replace('update("user:','').replace('")','')
-            if(!sharedUsers.includes(userId) && userId !== user.current.$id) sharedUsers.push(userId)
-          }
-        })
-        return sharedUsers;
+      const [sharedUsers,setSharedUsers] = useState([]);
+
+    function reloadSharedUsers(note){
+
+        const query = `?ownerId=${user.current.$id}&sessionId=${user.current.sessionId}&noteId=${note.$id}`
+
+        functions.createExecution(
+          '65a6f370b6b21d9a78d2',
+          '',
+          false,
+          '/'+query,
+          'GET'
+          ).then((res)=>{
+            setSharedUsers(JSON.parse(res.responseBody));
+          })
+          .catch(()=>{
+          })
       }
 
     return(<>
@@ -167,13 +175,13 @@ function ShareDialog(props){
                         <button className="share-btn" onClick={()=>{shareNoteWithUser(email);}}>Add</button>
                     </div>
                     <div className='shared-list'>
-                      {note && getSharedUsers(note).length == 0 ? 
+                      {sharedUsers.length == 0 ? 
                         <p>You haven´t shared this note with anyone yet.</p>
-                       : note && getSharedUsers(note).map((u)=>{
+                       : sharedUsers.map((u)=>{
                         return <div className='sh-list-item'>
-                                  <img className="sh-profile" src={"//unsplash.it/20/20"}/>
-                                  <p>{u}</p>
-                                  <img className="sh-remove" src={removePerson} onClick={()=>{removeUserSharing(email)}}/>
+                                  <img className="sh-profile" src={u.avatar}/>
+                                  <p>{u.email}</p>
+                                  <img className="sh-remove" src={removePerson} onClick={()=>{removeUserSharing(u.email)}}/>
                                 </div>
                       })}
                     </div>
