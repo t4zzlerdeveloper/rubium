@@ -61,7 +61,7 @@ export default async ({ req, res, log, error }) => {
 
 
       if(!isOwner || !authed || userId == null){
-          return res.json({success:false/*,debug:"Auth owner error uId: " + userId */})
+          return res.json({success:false,debug:"Auth owner error uId: " + userId})
       }
 
       const role = Role.user(userId);
@@ -79,6 +79,7 @@ export default async ({ req, res, log, error }) => {
     }
     catch(err){
       error(err)
+      return res.json({success:false});
     }
   }
   else if(req.method == "DELETE"){
