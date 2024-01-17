@@ -12,7 +12,7 @@ export default async ({ req, res, log, error }) => {
 
   try{
     const response = await users.list(req.query.email);
-    return res.json({users:response.users})
+    return res.json(response)
   }
   catch(err){
     error(err)
