@@ -113,26 +113,19 @@ function ShareDialog(props){
 
         console.log(dataToPost);
 
-
-        axios.post('https://65a6f3713fce7bfda0d4.appwrite.global/',dataToPost,headers)
-        // ;
-
-        // functions.createExecution(
-        //   '65a6f370b6b21d9a78d2',
-        //   JSON.stringify({
-        //     ownerId: user.current.$id,
-        //     sessionId: user.current.sessionId,
-        //     noteId: note.$id,
-        //     email: email
-        //   }),
-        //   false,
-        //   '/',
-        //   'POST'
-      .then((res)=>{
-         console.log(res)
-        fetchNote();
-      })
-      .catch(()=>{})
+        functions.createExecution(
+          '65a6f370b6b21d9a78d2',
+          JSON.stringify(dataToPost),
+          false,
+          '/',
+          'POST'
+          ).then((res)=>{
+            console.log(res)
+            fetchNote();
+          })
+          .catch(()=>{
+          
+          })
         
       }
 
