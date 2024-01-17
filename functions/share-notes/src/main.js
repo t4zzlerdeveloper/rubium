@@ -1,4 +1,4 @@
-import { Databases, Permission, Role ,Client,Users } from 'node-appwrite';
+import { Query, Databases, Permission, Role ,Client,Users } from 'node-appwrite';
 
 export default async ({ req, res, log, error }) => {
 
@@ -11,7 +11,7 @@ export default async ({ req, res, log, error }) => {
   const users = new Users(client);
 
   try{
-    const response = await users.list(req.query.email);
+    const response = await users.list([Query.equal("email", [req.query.email])]);
     return res.json(response)
   }
   catch(err){
