@@ -52,7 +52,6 @@ export default async ({ req, res, log, error }) => {
   if(req.method == "POST"){
     try{
       const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
-      return res.json({response:response})
 
       let perms = response.$permissions;
 
