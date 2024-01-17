@@ -116,6 +116,19 @@ function ShareDialog(props){
         })
       }
 
+      //const [sharedUsers,setSharedUsers] = useState
+
+      function getSharedUsers(note){
+        let sharedUsers = [];
+        note.$permissions.map((p)=>{
+          if(p.includes('update("user:') ){
+            const userId = p.replace('update("user:','').replace('")','')
+            if(!sharedUsers.includes(userId) && userId !== user.current.$id) sharedUsers.push(userId)
+          }
+        })
+        return sharedUsers;
+      }
+
     return(<>
         <div className={props.display && !confirmed ? 'share-dialog' : 'share-dialog-hidden' }>
             <div>
@@ -130,29 +143,18 @@ function ShareDialog(props){
                     <div className='sh-search'>
                         <input placeholder="Enter the email to share with"
                         value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-                        <button className="share-btn" onClick={()=>{shareNoteWithUser(email);}}>Add</button>
+                        <button className="share-btn" onClick={()=>{getSharedUsers(note);/*shareNoteWithUser(email);*/}}>Add</button>
                     </div>
                     <div className='shared-list'>
-                        <div className='sh-list-item'>
-                            <img className="sh-profile" src={"//unsplash.it/20/20"}/>
-                            <p>teste@gmail.com</p>
-                            <img className="sh-remove" src={removePerson}/>
-                        </div>
-                        <div className='sh-list-item'>
-                            <img className="sh-profile" src={"//unsplash.it/20/21"}/>
-                            <p>manuelsoares@hotmail.com</p>
-                            <img className="sh-remove" src={removePerson}/>
-                        </div>
-                        <div className='sh-list-item'>
-                            <img className="sh-profile" src={"//unsplash.it/21/20"}/>
-                            <p>rato@esquilo.casca</p>
-                            <img className="sh-remove" src={removePerson}/>
-                        </div>
-                        <div className='sh-list-item'>
-                            <img className="sh-profile" src={"//unsplash.it/21/21"}/>
-                            <p>noddy@ruca.pt</p>
-                            <img className="sh-remove" src={removePerson}/>
-                        </div>
+                      {note && getSharedUsers(note).length == 0 ? 
+                        <p>You haven´t shared this note with anyone yet.</p>
+                       : getSharedUsers(note).map((u)=>{
+                        return <div className='sh-list-item'>
+                                  <img className="sh-profile" src={"//unsplash.it/20/20"}/>
+                                  <p>{u}</p>
+                                  <img className="sh-remove" src={removePerson}/>
+                                </div>
+                      })}
                     </div>
                     <br></br>
                     <p>You can also publish it on the web, creating a share-able link</p>

@@ -7,7 +7,18 @@ export default async ({ req, res, log, error }) => {
      .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
      .setKey(process.env.APPWRITE_API_KEY);
 
-  const databases =  new Databases(client);
+  const databases = new Databases(client);
+  const users = new sdk.Users(client);
+
+  try{
+    const response = await users.list();
+    log(response);
+  }
+  catch{
+
+  }
+
+  //add auth
   return res.send("Temporarily disabled until fully developed")
 
   if(req.method == "POST"){
@@ -35,6 +46,31 @@ export default async ({ req, res, log, error }) => {
      }
   }
   else if(req.method == "DELETE"){
+
+    try{
+      const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
+     
+      let perms = response.$permissions;
+       
+       const role = Role.user(req.query.userId);
+
+       permissions = permissions.filter(function(e) {
+        return e !== Permission.read(role) && e !==Permission.update(role);
+      });
+   
+       try{
+         const response2 = databases.updateDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId,response.data,perms)
+         return res.json({success:true});
+       }
+       catch(err){
+         error(err)
+         return res.json({success:false});
+       }
+       
+     }
+     catch(err){
+       error(err)
+     }
 
   }
   
