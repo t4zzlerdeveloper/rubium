@@ -11,47 +11,35 @@ export default async ({ req, res, log, error }) => {
   const users = new Users(client);
   const avatars = new Avatars(client);
 
-  try{
-    const response = await users.list([Query.equal("email", [req.query.email])]);
-    
-    if(response.total !== 1){
-      return res.json({success:false})
-    }
-
+  async function getUserIdByEmail(email){
     try{
-      const avatar = await avatars.getInitials(response.users[0].name);
-    
-      return res.json({
-        $id: response.users[0].$id,
-        email: response.users[0].email,
-        avatar: avatar
-      })  
+      const response = await users.list([Query.equal("email", [email])]);
+      
+      if(response.total !== 1){
+        return null;
+      }
+  
+      return response.users[0].$id
+     
     }
     catch(err){
-      return res.json({
-        $id: response.users[0].$id,
-        email: response.users[0].email,
-        avatar:  null
-      })  
+      error(err)
+      return null;
     }
-
-   
-   
-  }
-  catch(err){
-    error(err)
   }
 
   //add auth
-  return res.send("Temporarily disabled until fully developed")
+  //return res.send("Temporarily disabled until fully developed")
 
-  if(req.method == "POST"){
+  if(req.method == "GET"){
     try{
       const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
      
       let perms = response.$permissions;
-       
-       const role = Role.user(req.query.userId);
+
+      const userId = await getUserIdByEmail(req.query.email);
+      const role = Role.user(userId);
+      
        perms = [...perms,Permission.read(role)]
        perms = [...perms,Permission.update(role)]
    
@@ -76,7 +64,8 @@ export default async ({ req, res, log, error }) => {
      
       let perms = response.$permissions;
        
-       const role = Role.user(req.query.userId);
+      const userId = await getUserIdByEmail(req.query.email);
+      const role = Role.user(userId);
 
        permissions = permissions.filter(function(e) {
         return e !== Permission.read(role) && e !==Permission.update(role);
