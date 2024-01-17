@@ -51,11 +51,12 @@ export default async ({ req, res, log, error }) => {
 
   if(req.method == "POST"){
     try{
+      return res.send("testing...")
       const response = await databases.getDocument(process.env.VITE_DATABASE_ID,process.env.VITE_NOTES_COLLECTION_ID,req.query.noteId)
+
 
       let perms = response.$permissions;
 
-      return res.send("Testing");
       const userId = await getUserIdByEmail(req.query.email);
       const isOwner = perms.include(Permission.delete(Role.user(req.query.ownerId)));
       const authed = await validateSession(req.query.ownerId,req.query.sessionId);
