@@ -72,7 +72,9 @@
 
 .star-git > p{
     padding: 0;
-    margin:0
+    margin:0;
+    color:white;
+    transition: 1s;
 }
 
 
@@ -85,6 +87,10 @@
 .star-git:hover > img{
     transform: rotate(360deg);
     filter:grayscale(0%) brightness(100%);
+}
+
+.star-git:hover > p{
+    color: #F45B69;
 }
 
 .launch-app{
@@ -327,6 +333,7 @@ footer > .newsletter > p{
 
 footer > .newsletter > input,footer > .newsletter > button{
     font-family: inherit;
+    color:white;
     border: none;
     outline:none;
     border-radius: 12px;
@@ -337,6 +344,7 @@ footer > .newsletter > input,footer > .newsletter > button{
 
 footer > .newsletter > input{
     border-radius: 12px 0px 0px 12px;
+    color:black;
 }
 
 footer > .newsletter > button{

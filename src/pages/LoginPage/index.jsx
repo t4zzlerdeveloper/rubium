@@ -56,7 +56,13 @@ function LoginPage(){
         <h1>Sign in to Rubium</h1>
         <input type="text" placeholder="Email" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
         <br/>
-        <input type="password" placeholder="Password" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
+        <input 
+          type="password" 
+          placeholder="Password" 
+          value={password} 
+          onKeyDown={(e)=>{if(e.key == "Enter"){login(email, password)}}} 
+          onChange={(e)=>{setPassword(e.target.value)}}
+        />
         <br></br>
         {loading ? <Loader/> :
         <div className='login-buttons'>

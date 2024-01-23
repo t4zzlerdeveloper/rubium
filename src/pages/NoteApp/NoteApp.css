@@ -54,6 +54,7 @@
   font-family: inherit;
   font-size: 14px;
   min-width: 60%;
+  color:white;
 }
 
 .side-search:focus{
@@ -166,6 +167,7 @@
   border: none;
   transition: 0.4s;
   opacity: 0.6;
+  color:white;
   font-size: 14px;
 }
 

@@ -14,6 +14,7 @@ import Loader from '../../views/Loader'
 import Toast from '../../views/Toast'
 import ConfirmationDialog from '../../views/ConfirmationDialog'
 import ShareDialog from '../../views/ShareDialog'
+import NoteEditor from '../../views/NoteEditor'
 
 
 
@@ -380,7 +381,8 @@ useEffect(()=>{
         {loadingCurrentNote ? <Loader/> : <>
           <p style={{position:"absolute",color:"gray",fontSize:"10px"}}>{note.$id}</p>
           <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
-          <div id="note" dangerouslySetInnerHTML={{__html: note.content || ""}} className='note-content' contentEditable={editable} onKeyUp={(e)=>{handleKeyUp(e)}} ></div>
+          <NoteEditor></NoteEditor>
+          {/* <div id="note" dangerouslySetInnerHTML={{__html: note.content || ""}} className='note-content' contentEditable={editable} onKeyUp={(e)=>{handleKeyUp(e)}} ></div> */}
         </>}
       </div>
       </>: <></>}
