@@ -381,8 +381,13 @@ useEffect(()=>{
         {loadingCurrentNote ? <Loader/> : <>
           <p style={{position:"absolute",color:"gray",fontSize:"10px"}}>{note.$id}</p>
           <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
+          
+          {window.location.host == "localhost:5173" ? <>
           <NoteEditor></NoteEditor>
-          {/* <div id="note" dangerouslySetInnerHTML={{__html: note.content || ""}} className='note-content' contentEditable={editable} onKeyUp={(e)=>{handleKeyUp(e)}} ></div> */}
+          </> :  <>
+          <div id="note" dangerouslySetInnerHTML={{__html: note.content || ""}} className='note-content' contentEditable={editable} onKeyUp={(e)=>{handleKeyUp(e)}} ></div>
+          </>}
+         
         </>}
       </div>
       </>: <></>}

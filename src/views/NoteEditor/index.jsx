@@ -41,7 +41,12 @@ function NoteEditor(){
         setFF(ff+1);
     }
 
-    function remove
+    function removeBlock(idx){
+        let ctCopy = content;
+        setContent(ctCopy.filter((a,index)=>{
+            if(index !== idx){ return a}
+        }))
+    }
 
     function handleKeyDown(e,index,type){
 
@@ -55,6 +60,10 @@ function NoteEditor(){
         else if(e.key == "Backspace"){
             // e.preventDefault();
             // index++;
+            if( document.getElementById("neid-"+index).innerHTML == "<br>"){
+                removeBlock(index)
+            }
+          
         }
         else if(e.key == "Enter" && (type =="h1" || type == "h2")){
             e.preventDefault();
