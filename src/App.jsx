@@ -22,7 +22,7 @@ function App() {
   return (
     <UserProvider>
         <div className="package-version">
-        <b>Alpha</b> v{packageJson.version}
+        <b>git</b> {packageJson.hash}
           
           </div>
         <Suspense fallback={<LoadingPage/>}>

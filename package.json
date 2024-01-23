@@ -1,7 +1,7 @@
 {
   "name": "rubium",
   "private": true,
-  "version": "0.1.70",
+  "version": "0.1.71",
   "type": "module",
   "scripts": {
     "prebuild": "node check-version.js",
@@ -27,5 +27,6 @@
     "gh-pages": "^6.1.1",
     "react-router-dom": "^6.21.1",
     "vite": "^5.0.8"
-  }
+  },
+  "hash": "4dac786"
 }

@@ -1,6 +1,6 @@
  <img height="100" src="/public/rubium-logomark.svg"/>
 
-# Rubium (Beta) - Notes Should Only Cost Time
+# Rubium (Alpha) - Notes Should Only Cost Time
 
 ![](https://img.shields.io/badge/Beta-white)
 ![](https://img.shields.io/badge/Note_Taking-App-f45b69)
