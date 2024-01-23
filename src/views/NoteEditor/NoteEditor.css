@@ -1,0 +1,38 @@
+.note-editor > *{
+    outline: none;
+}
+
+.note-editor > *:focus{
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 3px;
+}
+
+.toolbar {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 169px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    gap:5px;
+    background: linear-gradient(45deg, rgba(0, 10, 10, 1), rgba(10, 0, 0, 1));
+    filter:drop-shadow(0 0 16px rgba(251, 85, 85, 0.2));
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    border: 1px solid rgb(50, 20,20);
+
+    
+    transform: translateX(-50%);
+  }
+
+  .toolbar >img{
+    opacity: 0.7;
+    transition: 0.4s;
+    cursor: pointer;
+  }
+
+  .toolbar > img:hover{
+    opacity: 1;
+  }
