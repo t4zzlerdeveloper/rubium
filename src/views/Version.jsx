@@ -1,5 +1,5 @@
 import axios from 'axios';
-import packageJson from '../package.json';
+import packageJson from '../../package.json';
 import { useEffect, useState } from 'react';
 
 const invalid = {color:"white",background:"red"};
