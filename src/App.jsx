@@ -14,9 +14,17 @@ import PublishedNote from "./pages/PublishedNote";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyPage from "./pages/VerifyPage";
 
+
+import packageJson from '../package.json';
+
+
 function App() {
   return (
     <UserProvider>
+        <div className="package-version">
+        <b>Alpha</b> v{packageJson.version}
+          
+          </div>
         <Suspense fallback={<LoadingPage/>}>
             <BrowserRouter>
             <Routes>

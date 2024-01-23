@@ -52,3 +52,25 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+
+.package-version{
+  cursor: pointer;
+  opacity: 0.25;
+  font-family: inherit;
+  position:fixed;
+  z-index: 9999;
+  bottom:5px;
+  right:5px;
+  padding-right: 10px;
+  background-color: black;
+  border-radius: 10px;
+}
+
+.package-version > b{
+  background-color: white;
+  border-radius: 10px;
+  color:rgb(139, 139, 139);
+  font-weight: 200;
+  padding:2.5px 5px;
+}

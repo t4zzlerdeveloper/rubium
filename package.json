@@ -1,9 +1,10 @@
 {
   "name": "rubium",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.70",
   "type": "module",
   "scripts": {
+    "prebuild": "node check-version.js",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
