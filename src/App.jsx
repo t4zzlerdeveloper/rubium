@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 const NoteApp = lazy(() => import('./pages/NoteApp'));
 //import NoteApp from "./pages/NoteApp";
@@ -13,18 +13,15 @@ import LoadingPage from "./pages/LoadingPage";
 import PublishedNote from "./pages/PublishedNote";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyPage from "./pages/VerifyPage";
+import Version from "./version";
 
-
-import packageJson from '../package.json';
 
 
 function App() {
+
   return (
     <UserProvider>
-        <div className="package-version">
-        <b>git</b> {packageJson.hash}
-          
-          </div>
+       <Version/>
         <Suspense fallback={<LoadingPage/>}>
             <BrowserRouter>
             <Routes>
