@@ -13,7 +13,6 @@ function Version(){
     useEffect(()=>{
         axios.get("https://api.github.com/repos/t4zzlerdeveloper/rubium/commits?per_page=1")
         .then((res)=>{
-            console.log(res.data[0].sha)
 
             if(res.data[0].sha == packageJson.hash){setStatus(1)}
             else{setStatus(2)}
@@ -22,7 +21,14 @@ function Version(){
     },[])
     
     return(<div className="package-version">
-        <b style={status == 1 ? valid : status == 0 ? pending : invalid}>git</b> {packageJson.hash.substring(0,7)} <section>&nbsp;</section>
+        {window.location.host == "localhost:5173" ?
+        <>
+         <b>git</b> localhost
+        </>
+        :<>
+        <b style={status == 1 ? valid : status == 0 ? pending : invalid}>git</b> {packageJson.hash.substring(0,7)}
+        </>}
+       
     </div>)
 }
 
