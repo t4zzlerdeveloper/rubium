@@ -13,7 +13,7 @@ import LoadingPage from "./pages/LoadingPage";
 import PublishedNote from "./pages/PublishedNote";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyPage from "./pages/VerifyPage";
-import Version from "./version";
+import Version from "./views/Version";
 
 
 
