@@ -7,6 +7,7 @@ import { useUser } from '../../lib/context/user';
 import removePerson from '../../assets/person_remove.svg'
 import closeIcon from '../../assets/close.svg'
 import { Functions, Permission, Role } from 'appwrite';
+import Loader from '../Loader';
 
 
 
@@ -14,6 +15,8 @@ function ShareDialog(props){
 
     const [confirmed,setConfirmed] = useState(false);
     const [email,setEmail] = useState("");
+
+    const [loadingUsers,setLoadingUsers] = useState(true);
 
     const user = useUser();
 
@@ -79,6 +82,8 @@ function ShareDialog(props){
 
 
     function removeUserSharing(email){
+
+      setLoadingUsers(true);
       const headers= {
         'Content-Type': 'application/json'
       };
@@ -103,11 +108,13 @@ function ShareDialog(props){
           fetchNote();
         })
         .catch(()=>{
-        
+          setLoadingUsers(false)
         })
     }
 
       function shareNoteWithUser(email){
+
+        setLoadingUsers(true);
 
         const headers= {
           'Content-Type': 'application/json'
@@ -129,11 +136,10 @@ function ShareDialog(props){
           'POST',
           headers
           ).then((res)=>{
-            setEmail("");
             fetchNote();
           })
           .catch(()=>{
-          
+            setLoadingUsers(false);
           })
         
       }
@@ -142,6 +148,8 @@ function ShareDialog(props){
       const [sharedUsers,setSharedUsers] = useState([]);
 
     function reloadSharedUsers(note){
+
+        setLoadingUsers(true);
 
         const query = `?ownerId=${user.current.$id}&sessionId=${user.current.sessionId}&noteId=${note.$id}`
 
@@ -153,9 +161,13 @@ function ShareDialog(props){
           'GET'
           ).then((res)=>{
             setSharedUsers(JSON.parse(res.responseBody));
+            setLoadingUsers(false);
+            setEmail("")
           })
           .catch(()=>{
+            setLoadingUsers(false);
           })
+
       }
 
     return(<>
@@ -168,14 +180,14 @@ function ShareDialog(props){
                
                 
                     <p>You can quickly share a note with a friend to easily collaborate by providing the email associated to their Rubium account.</p>
-                    {/* <p>{props.noteId ? props.noteId : "No note id"}</p> */}
+                    {/* <p>{props.noteId ? props.noteId : "No note id"}</p> */} 
                     <div className='sh-search'>
                         <input placeholder="Enter the email to share with"
                         value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-                        <button className="share-btn" onClick={()=>{shareNoteWithUser(email);}}>Add</button>
+                         {loadingUsers ? <Loader/> : <button className="share-btn" onClick={()=>{shareNoteWithUser(email);}}>Add</button>}
                     </div>
                     <div className='shared-list'>
-                      {sharedUsers.length == 0 ? 
+                      {loadingUsers ? <></> : sharedUsers.length == 0 ? 
                         <p>You haven´t shared this note with anyone yet.</p>
                        : sharedUsers.map((u)=>{
                         return <div className='sh-list-item'>
@@ -185,6 +197,7 @@ function ShareDialog(props){
                                 </div>
                       })}
                     </div>
+             
                     <br></br>
                     <p>You can also publish it on the web, creating a share-able link</p>
                     {isPublished ?
