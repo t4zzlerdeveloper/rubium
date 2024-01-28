@@ -21,6 +21,11 @@ function NoteEditor(){
             text:"Another H2 block"
         },
         {
+            type:"img",
+            text:"unsplash.it random image ",
+            url:"https://unsplash.it/130/193"
+        },
+        {
             type:"p",
             text:"This is just some <b>bold text</b> that you can see as a <p/> object"
         },
@@ -130,6 +135,10 @@ function NoteEditor(){
 
     return (<div className='note-editor'>
         {ff > -1 && content.map((c,index)=>{
+            if(c.type == "img"){
+                return <div className="img"><img src={c.url} /><p>{c.text}</p></div>
+            }
+
             return<> <input className={c.type}
                 style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
                 id={"neid-" + index} 

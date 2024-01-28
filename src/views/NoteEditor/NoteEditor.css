@@ -3,7 +3,7 @@
   padding: 32px 16px;
   border-left: 1px solid rgba(228, 128, 128, 0.04);
   border-right: 1px solid rgba(176, 40, 40, 0.06);
-  background: linear-gradient(-45deg, rgba(0, 10, 10, 0.05), rgba(10, 0, 0, 0.05));
+  background: linear-gradient(-45deg, rgba(0, 10, 10, 0.1), rgba(10, 0, 0, 0.05));
   border-radius: 30px 60px ;
   display: flex;
   flex-direction: column;
@@ -11,15 +11,15 @@
   place-content: center;
 }
 
-.note-editor > input:hover{
+.note-editor > input:hover,.img:hover{
   background-color: rgba(255,255,255,0.02);
 }
 
-.note-editor > input:focus{
+.note-editor > input:focus,.img:focus{
     background-color: rgba(255,255,255,0.05);
 }
 
-.note-editor > input{
+.note-editor > input,.img{
   display: block;
   width: 95%;
   height: 100%;
@@ -51,6 +51,28 @@
 .p > b{
   font-weight:900;
 }
+
+.img{
+  cursor: pointer;
+  padding:18px 12px;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+  gap:10px
+}
+
+.img > p{
+  color:rgb(81, 81, 81);
+  font-size: 11px;
+  padding:0;
+  margin:0;
+}
+
+.img > img{
+  border-radius: 4px;
+  object-fit: contain;
+} 
 
 
 .toolbar {
