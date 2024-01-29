@@ -14,6 +14,7 @@ import PublishedNote from "./pages/PublishedNote";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyPage from "./pages/VerifyPage";
 import Version from "./views/Version";
+import OAuth2 from "./views/OAuth2";
 
 
 
@@ -26,15 +27,20 @@ function App() {
             <BrowserRouter>
             <Routes>
                 <Route path="/">
-                <Route index element={<LandingPage/>} />
-                <Route path="login" element={<LoginPage />} />
-                <Route path="register" element={<RegisterPage />} />
-                <Route path="verify" element={<VerifyPage/>} />
-                <Route path="app" element={<RequireAuth><NoteApp/></RequireAuth>} />
-                <Route path="note" element={<PublishedNote/>}>
-                  <Route path="*" element={<PublishedNote/>}/>
-                </Route>
-                <Route path="*" element={<NoPage />} />
+                  <Route index element={<LandingPage/>} />
+                  <Route path="login" element={<LoginPage />} />
+                  <Route path="auth">
+                    <Route path="oauth2" >
+                      <Route path="*" element={<OAuth2/>}/>
+                    </Route>
+                  </Route>
+                  <Route path="register" element={<RegisterPage />} />
+                  <Route path="verify" element={<VerifyPage/>} />
+                  <Route path="app" element={<RequireAuth><NoteApp/></RequireAuth>} />
+                  <Route path="note" element={<PublishedNote/>}>
+                    <Route path="*" element={<PublishedNote/>}/>
+                  </Route>
+                  <Route path="*" element={<NoPage />} />
                 </Route>
             </Routes>
             </BrowserRouter>

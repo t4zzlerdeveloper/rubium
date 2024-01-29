@@ -7,6 +7,7 @@ import { useUser } from "../../lib/context/user";
 import Loader from '../../views/Loader';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../../views/Toast';
+import GoogleButton from '../../views/GoogleButton';
 
 function LoginPage(){
 
@@ -68,7 +69,9 @@ function LoginPage(){
         <div className='login-buttons'>
              <a  onClick={() => navigate("/register")}>Not yet registered?</a>
             <button  onClick={() => login(email, password)}>Sign in</button>
-        </div>} 
+        </div>}   
+        <section className='login-sep'><br/></section>
+        <GoogleButton/>
     </div>
     <div className="login-back" style={{background: `url(${loginBack})`,backgroundSize:"cover"}}></div>
 

@@ -108,6 +108,12 @@
     flex-direction: column;
 }
 
+
+.login-sep{
+    margin-top: 25px;
+    border-top: 2px solid #2c2c2c54;
+}
+
 @media only screen and (max-width: 600px) {
     .login-card {
         width: 80vw;

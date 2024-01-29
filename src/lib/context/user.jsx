@@ -15,6 +15,11 @@ export function UserProvider(props) {
     setUser(await account.get());
   }
 
+  async function loginWithGoogle() {
+    const loggedIn = await account.createOAuth2Session("google","http://localhost:5173/auth/oauth2/success","http://localhost:5173/login",["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]);
+    setUser(await account.get());
+  }
+
   async function logout() {
     await account.deleteSession("current");
     setUser(null);
@@ -46,7 +51,7 @@ export function UserProvider(props) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ current: user, login, logout, register,sendVerification }}>
+    <UserContext.Provider value={{ current: user, login,loginWithGoogle, logout, register,sendVerification }}>
       {props.children}
     </UserContext.Provider>
   );
