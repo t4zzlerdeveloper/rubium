@@ -6,6 +6,13 @@ import formatH2 from '../../assets/format_h2.svg'
 import formatP from '../../assets/format_p.svg'
 
 
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
+
+
+
+
 function NoteEditor(){
 
     const [ff,setFF] = useState(0);
@@ -29,11 +36,15 @@ function NoteEditor(){
             type:"p",
             text:"This is just some <b>bold text</b> that you can see as a <p/> object"
         },
+        {
+            type:'ai'
+        }
 
     ])
 
     useEffect(()=>{
-        document.getElementById("neid-"+(content.length-1)).focus();
+        try{document.getElementById("neid-"+(content.length-1)).focus();}
+        catch{}
     },[content])
 
 
@@ -133,10 +144,32 @@ function NoteEditor(){
         });
     }
 
+
+    const [prompt,setPrompt] = useState("");
+    const [generated,setGenerated] = useState("");
+
+    async function generateContent(){
+        const prt = prompt;
+        setPrompt("");
+        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+
+        const result = await model.generateContent(prt);
+        const response = await result.response;
+        const text = response.text();
+        setGenerated(text);
+    }
+
     return (<div className='note-editor'>
         {ff > -1 && content.map((c,index)=>{
             if(c.type == "img"){
                 return <div className="img"><img src={c.url} /><p>{c.text}</p></div>
+            }
+
+            if(c.type == "ai"){
+                return <>
+                <input className={"p"} value={generated}/>
+                <input value={prompt} onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e)=>{if(e.key === "Enter"){ generateContent()}}} placeholder="Enter Prompt"/>
+                </>
             }
 
             return<> <input className={c.type}

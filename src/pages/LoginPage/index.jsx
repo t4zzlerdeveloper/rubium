@@ -115,8 +115,9 @@ function LoginPage(){
              <a  onClick={() => navigate("/register")}>Not yet registered?</a>
             <button id="lg-btn" disabled={!validEmail || !validPassword}  onClick={() => {if(validEmail && validPassword){login(email, password)}else{showToast("Invalid credentials...","error")}}}>Sign in</button>
         </div>}   
+
+        {loading ? <></> :<> 
         <section className='login-sep'><br/></section>
-        {loading ? <></> :<>
         <OAuthButton provider="google"/>
         <OAuthButton provider="github"/>
         </>}
