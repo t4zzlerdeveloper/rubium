@@ -167,7 +167,7 @@ function NoteEditor(){
 
             if(c.type == "ai"){
                 return <>
-                <input className={"p"} value={generated}/>
+                <div>{generated}</div>
                 <input value={prompt} onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e)=>{if(e.key === "Enter"){ generateContent()}}} placeholder="Enter Prompt"/>
                 </>
             }
