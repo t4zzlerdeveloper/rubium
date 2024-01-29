@@ -15,9 +15,9 @@ export function UserProvider(props) {
     setUser(await account.get());
   }
 
-  async function loginWithGoogle() {
-    const loggedIn = await account.createOAuth2Session("google","https://rubium.vercel.app/auth/oauth2/success","https://rubium.vercel.app/login",["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]);
-    setUser(await account.get());
+  async function loginWithGitHub() {
+    //await account.createAnonymousSession();
+    const loggedIn = await account.createOAuth2Session("github","http://localhost:5173/auth/oauth2/success","https://rubium.vercel.app/login",["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]);
   }
 
   async function logout() {
@@ -51,7 +51,7 @@ export function UserProvider(props) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ current: user, login,loginWithGoogle, logout, register,sendVerification }}>
+    <UserContext.Provider value={{ current: user, login,loginWithGitHub, logout, register,sendVerification }}>
       {props.children}
     </UserContext.Provider>
   );

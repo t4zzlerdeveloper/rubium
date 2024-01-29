@@ -1,0 +1,83 @@
+.google-btn {
+    font-family: inherit;
+    transition: background-color .3s, box-shadow .3s;
+    margin:12px 0px;
+    padding: 10px 14px 10px 14px;
+    border-radius: 12px;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+    
+    font-size: 14px;
+    font-weight: 500;
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color:rgba(255, 255, 255, 0.5);
+
+
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+  
+    
+  }
+
+  .google-btn > div{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+    place-items: center;
+  }
+
+  .google-btn > div > img{
+    width:  20px;
+    height: 20px;
+    filter: grayscale() brightness(500%);
+    transition:0.4s;
+  }
+
+  .google-btn:hover > div > img{
+    width:  20px;
+    height: 20px;
+    filter: grayscale() brightness(0%)
+  }
+
+  .google-btn > div > p{
+    padding:0 10px;
+    margin:0;
+  }
+
+  .google-btn:hover {
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    background-color: white;
+    color:black;
+    border: 1px solid white;
+  }
+  
+  .google-btn:active {
+    background-color: #eeeeee;
+  }
+  
+  .google-btn:focus {
+    outline: none;
+    box-shadow: 
+      0 -1px 0 rgba(0, 0, 0, .04),
+      0 2px 4px rgba(0, 0, 0, .25),
+      0 0 0 3px #c8dafc;
+  }
+  
+  .google-btn:disabled {
+    filter: grayscale(100%);
+    background-color: #ebebeb;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+    cursor: not-allowed;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
