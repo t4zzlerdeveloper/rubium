@@ -14,11 +14,14 @@ function OAuth2(){
         if(status == "success"){
            
         }
+        setTimeout(()=>{
+            navigate("/login");
+        },3000)
     },[])
 
 
     return(<>
-        {user && user.current ? JSON.stringify(user.current) : "No user"}
+        {"Sorry but this type of authentication is still under development... Redirecting..."}
     </>)
 }
 

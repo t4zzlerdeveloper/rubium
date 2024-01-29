@@ -299,6 +299,7 @@ function showToast(msg,type) {
 const [noteToDelete,setNoteToDelete] = useState(null);
 const [sharing,setSharing] = useState(false);
 const [userVerified,setUserVerified] = useState(true); 
+const [emailResent,setEmailResent] = useState(false);
 
 useEffect(()=>{
   if(user.current && !user.current.emailVerification) setUserVerified(false)
@@ -318,15 +319,28 @@ useEffect(()=>{
       handleCancelation={()=>{setNoteToDelete(null);}} 
       handleConfirmation={()=>{deleteNote(noteToDelete);setNoteToDelete(null);}} />
 
-      <ConfirmationDialog display={!userVerified} 
-      text={`Verify your account with the link sent to your email to continue using Rubium`} 
-      title={"Account Verification"}
+      <ConfirmationDialog display={!userVerified && !emailResent} 
+      text={`Verify your account with the link sent to your email to continue using Rubium. Press 'Done' after you verified the email.`} 
+      title={"Email Verification Required"}
       cancelText={"Re-send email"}
       confirmText={"Done"}
       handleCancelation={async () => {
         user.sendVerification();
+        setEmailResent(true);
       }}
       handleConfirmation={()=>{document.location.reload()}} />
+
+    <ConfirmationDialog display={!userVerified && emailResent} 
+      text={`We have re-sent the verification link to your email. Press 'Ok' when you are finished verifying it.`} 
+      title={"Check your email again"}
+      cancelText={"Re-send again"}
+      confirmText={"Ok"}
+      handleCancelation={async () => {
+        user.sendVerification();
+        setEmailResent(false);
+      }}
+      handleConfirmation={()=>{document.location.reload()}} />
+
 
       {userVerified ? <>
       <div className='sidebar'>

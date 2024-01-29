@@ -9,12 +9,19 @@ import { useNavigate } from 'react-router-dom';
 import Toast from '../../views/Toast';
 import OAuthButton from '../../views/OAuthButton';
 
+const validStyle = {color:"rgba(255,255,255,0.8)"};
+const invalidStyle = {color:"rgba(211, 111, 111,0.8)"};
+
 function LoginPage(){
 
    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
+    const [validEmail,setValidEmail] = useState(false);
     const [password, setPassword] = useState('');
+    const [validPassword,setValidPassword] = useState(false);
+
+    const [firstType,setFirstType] = useState(true);
 
     const[loading,setLoading] = useState(false);
 
@@ -37,6 +44,33 @@ function LoginPage(){
      
     }
 
+
+    function handleEmailChange(e){
+      setFirstType(false);
+      const newEmail = e.target.value;
+
+      let emailParts = newEmail.split('@');
+      emailParts[1] = newEmail.split('.');
+      const valid = (emailParts[0] || "") .length >= 1 &&
+                    (emailParts[1][0]|| "").length >= 1 &&
+                    (emailParts[1][1] || "").length >= 1;
+
+      setValidEmail(valid);
+      setEmail(newEmail);
+
+    }
+
+
+
+
+    function handlePasswordChange(e){
+      setFirstType(false);
+      const newPassword = e.target.value;
+      setValidPassword(newPassword.length > 7);
+      setPassword(newPassword);
+    }
+
+
     const [toastMessage,setToastMessage] = useState("");
     function showToast(msg,type) {
       setToastMessage(msg)
@@ -55,24 +89,37 @@ function LoginPage(){
             <img src={rubiumLogo}/>
         </div>
         <h1>Sign in to Rubium</h1>
-        <input type="text" placeholder="Email" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
+        <input 
+          type="text" 
+          placeholder="Email" 
+          value={email} 
+          onKeyDown={(e)=>{if(e.key == "Enter"){document.getElementById("pwd-f").focus()}}} 
+          onChange={(e)=>{handleEmailChange(e)}}
+          style={firstType || validEmail ? validStyle : invalidStyle}
+          />
+          
         <br/>
         <input 
+          id="pwd-f"
           type="password" 
           placeholder="Password" 
           value={password} 
-          onKeyDown={(e)=>{if(e.key == "Enter"){login(email, password)}}} 
-          onChange={(e)=>{setPassword(e.target.value)}}
+          onKeyDown={(e)=>{if(e.key == "Enter"){document.getElementById("lg-btn").click()}}} 
+          onChange={(e)=>{handlePasswordChange(e);}}
+          style={firstType || validPassword ? validStyle : invalidStyle}
         />
+
         <br></br>
         {loading ? <Loader/> :
         <div className='login-buttons'>
              <a  onClick={() => navigate("/register")}>Not yet registered?</a>
-            <button  onClick={() => login(email, password)}>Sign in</button>
+            <button id="lg-btn" disabled={!validEmail || !validPassword}  onClick={() => {if(validEmail && validPassword){login(email, password)}else{showToast("Invalid credentials...","error")}}}>Sign in</button>
         </div>}   
         <section className='login-sep'><br/></section>
+        {loading ? <></> :<>
         <OAuthButton provider="google"/>
         <OAuthButton provider="github"/>
+        </>}
     </div>
     <div className="login-back" style={{background: `url(${loginBack})`,backgroundSize:"cover"}}></div>
 

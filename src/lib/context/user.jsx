@@ -17,7 +17,8 @@ export function UserProvider(props) {
 
   async function loginWith(provider) {
     //await account.createAnonymousSession();
-    const loggedIn = await account.createOAuth2Session(provider,"http://localhost:5173/auth/oauth2/success","https://rubium.vercel.app/login",["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]);
+    const host = window.location.origin;
+    const loggedIn = await account.createOAuth2Session(provider,host + "/auth/oauth2/success", host + "/login",["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]);
   }
 
   async function logout() {
