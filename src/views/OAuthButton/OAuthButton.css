@@ -1,4 +1,4 @@
-.google-btn {
+.oauth-btn {
     font-family: inherit;
     transition: background-color .3s, box-shadow .3s;
     margin:12px 0px;
@@ -20,43 +20,43 @@
     
   }
 
-  .google-btn > div{
+  .oauth-btn > div{
     display: flex;
     flex-direction: row;
-    gap:20px;
+    gap:16px;
     place-items: center;
   }
 
-  .google-btn > div > img{
+  .oauth-btn > div > img{
     width:  20px;
     height: 20px;
-    filter: grayscale() brightness(500%);
+    filter: grayscale() brightness(1000%) opacity(0.7);
     transition:0.4s;
   }
 
-  .google-btn:hover > div > img{
+  .oauth-btn:hover > div > img{
     width:  20px;
     height: 20px;
-    filter: grayscale() brightness(0%)
+    filter: none;
   }
 
-  .google-btn > div > p{
+  .oauth-btn > div > p{
     padding:0 10px;
     margin:0;
   }
 
-  .google-btn:hover {
+  .oauth-btn:hover {
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
     background-color: white;
     color:black;
     border: 1px solid white;
   }
   
-  .google-btn:active {
+  .oauth-btn:active {
     background-color: #eeeeee;
   }
   
-  .google-btn:focus {
+  .oauth-btn:focus {
     outline: none;
     box-shadow: 
       0 -1px 0 rgba(0, 0, 0, .04),
@@ -64,7 +64,7 @@
       0 0 0 3px #c8dafc;
   }
   
-  .google-btn:disabled {
+  .oauth-btn:disabled {
     filter: grayscale(100%);
     background-color: #ebebeb;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
