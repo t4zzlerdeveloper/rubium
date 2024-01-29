@@ -14,7 +14,7 @@ import PublishedNote from "./pages/PublishedNote";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyPage from "./pages/VerifyPage";
 import Version from "./views/Version";
-import OAuth2 from "./views/OAuth2";
+import OAuth2 from "./pages/OAuth2";
 
 
 

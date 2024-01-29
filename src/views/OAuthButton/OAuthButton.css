@@ -1,7 +1,7 @@
 .oauth-btn {
     font-family: inherit;
     transition: background-color .3s, box-shadow .3s;
-    margin:12px 0px;
+    margin:8px 0px;
     padding: 10px 14px 10px 14px;
     border-radius: 12px;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
@@ -9,7 +9,7 @@
     font-size: 14px;
     font-weight: 500;
 
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
     color:rgba(255, 255, 255, 0.5);
 
 
@@ -30,14 +30,15 @@
   .oauth-btn > div > img{
     width:  20px;
     height: 20px;
-    filter: grayscale() brightness(1000%) opacity(0.7);
-    transition:0.4s;
+    filter: grayscale() brightness(1000%) opacity(0.4);
+    transition:0.6s;
   }
 
   .oauth-btn:hover > div > img{
     width:  20px;
     height: 20px;
     filter: none;
+    transform: rotate(360deg);
   }
 
   .oauth-btn > div > p{
@@ -49,7 +50,7 @@
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
     background-color: white;
     color:black;
-    border: 1px solid white;
+    border: 0.5px solid white;
   }
   
   .oauth-btn:active {
