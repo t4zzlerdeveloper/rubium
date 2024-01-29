@@ -16,7 +16,7 @@ export function UserProvider(props) {
   }
 
   async function loginWithGoogle() {
-    const loggedIn = await account.createOAuth2Session("google","http://localhost:5173/auth/oauth2/success","http://localhost:5173/login",["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]);
+    const loggedIn = await account.createOAuth2Session("google","https://rubium.vercel.app/auth/oauth2/success","https://rubium.vercel.app/login",["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]);
     setUser(await account.get());
   }
 
