@@ -5,6 +5,8 @@ import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
 import formatP from '../../assets/format_p.svg'
 
+import dragInd from '../../assets/drag_indicator.svg'
+
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -48,11 +50,29 @@ function NoteEditor(){
     },[content])
 
 
+    function array_move(arr, old_index, new_index) {
+        if (new_index >= arr.length) {
+            var k = new_index - arr.length + 1;
+            while (k--) {
+                arr.push(undefined);
+            }
+        }
+        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+        return arr; // for testing
+    };
+
     function swapBlocks(x,y){
         let ctCopy = content;
         var b = ctCopy[x];
         ctCopy[x] = ctCopy[y];
         ctCopy[y] = b;
+        setContent(ctCopy);
+        setFF(ff+1);
+    }
+
+    function moveBlockTo(x,newX){
+        let ctCopy = content;
+        ctCopy = array_move(ctCopy,x,newX)
         setContent(ctCopy);
         setFF(ff+1);
     }
@@ -144,7 +164,36 @@ function NoteEditor(){
         });
     }
 
+    const[blockDragging,setBlockDragging] = useState(-1);
+    const[enabledDrop,setEnabledDrop] = useState(-1);
+    function handleDropEnter(index){
+        setEnabledDrop(index)
+    }
+    
+    function handleDragStart(index){
+        setBlockDragging(index);
+    }
 
+    function handleDragEnd(e,index){
+        if(enabledDrop != -1){
+            if(index < enabledDrop){
+                moveBlockTo(index,enabledDrop-1)
+            }
+            else{
+                moveBlockTo(index,enabledDrop)
+
+            }
+           setEnabledDrop(-1)
+        }
+        setBlockDragging(-1)
+    }
+
+    function handleDropLeave(){
+           if(blockDragging == -1) setEnabledDrop(-1)
+    }
+
+
+    //Gen AI related
     const [prompt,setPrompt] = useState("");
     const [generated,setGenerated] = useState("");
 
@@ -159,28 +208,66 @@ function NoteEditor(){
         setGenerated(text);
     }
 
+      
     return (<div className='note-editor'>
-        {ff > -1 && content.map((c,index)=>{
-            if(c.type == "img"){
-                return <div className="img"><img src={c.url} /><p>{c.text}</p></div>
-            }
+           <section 
+                id={"drop-0"}
+                onDragOver={(e)=>{handleDropEnter(0)}}
+                onDragLeave={(e)=>{handleDropLeave(e,0)}}
+                drop-enabled={enabledDrop == 0 ? "true" : "false" }
+                className='drop-spot'
+            ><div className='drop-spot-inner'></div></section>
 
-            if(c.type == "ai"){
-                return <>
-                <div>{generated}</div>
-                <input value={prompt} onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e)=>{if(e.key === "Enter"){ generateContent()}}} placeholder="Enter Prompt"/>
-                </>
-            }
+            {ff > -1 && content.map((c,index)=>{
 
-            return<> <input className={c.type}
-                style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
-                id={"neid-" + index} 
-                onFocus={()=>{setCurrentBlockId(index)}}
-                onSelectCapture={()=>{handleMouseUp();}}
-                onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
-                onChange={(e)=>{updateContent(e,index)}}                
-                value={c.text}/>
-                </>
+            return(
+            <>
+            
+                <div
+                key={"bleid-" + index}
+                id={"bleid-" + index}
+                className='block'
+                draggable="true"
+                onDragStart={(e)=>{handleDragStart(index);}}
+                onDragEnd={(e)=>{handleDragEnd(e,index)}}
+                >
+                    <img className='b-dragger' src={dragInd} draggable="false"/>
+                    {
+                    c.type == "img" ?
+                    <>
+                        <div className="img"><img src={c.url} /><p>{c.text}</p></div>
+                    </>
+                    : c.type == "ai" ?
+                    <>
+                        <div>{generated}</div>
+                        <input value={prompt} onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e)=>{if(e.key === "Enter"){ generateContent()}}} placeholder="Enter Prompt"/>
+                    </>
+                    :
+                    <>
+                            <input className={c.type}
+                            style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
+                            id={"neid-" + index} 
+                            onFocus={()=>{setCurrentBlockId(index)}}
+                            onSelectCapture={()=>{handleMouseUp();}}
+                            onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
+                            onChange={(e)=>{updateContent(e,index)}}                
+                            value={c.text}
+                            draggable="true"
+                            onDragStart={event => event.preventDefault()}
+                            />
+                    </>
+                }
+                </div>
+                <section 
+                id={"drop-"+index+1}
+                onDragOver={(e)=>{handleDropEnter(index+1)}}
+                onDragLeave={(e)=>{handleDropLeave()}}
+                drop-enabled={enabledDrop == index+1 ? "true" : "false" }
+                className='drop-spot'
+                ><div className='drop-spot-inner'></div></section>
+            </>)
+
+          
 
             return<> <c.type
                 style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 

@@ -11,15 +11,42 @@
   place-content: center;
 }
 
-.note-editor > input:hover,.img:hover{
+.block{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  place-items: center;
+  place-content: center;
+  cursor:grab;
+}
+
+.b-dragger{
+  opacity: 0;
+  padding:0px 0px;
+  width: 20px;
+  height: 20px;
+  transition: 0.2s;
+}
+
+
+.block:hover > .b-dragger {
+  opacity: 0.7;
+  cursor:grab;
+}
+
+
+
+
+.block > input:hover,.img:hover{
   background-color: rgba(255,255,255,0.02);
 }
 
-.note-editor > input:focus,.img:focus{
+.block > input:focus,.img:focus{
     background-color: rgba(255,255,255,0.05);
 }
 
-.note-editor > input,.img{
+.block > input,.img{
   display: block;
   width: 95%;
   height: 100%;
@@ -28,8 +55,25 @@
   background-color: transparent;
   color:white;
   border-radius: 4px;
-  padding: 8px 12px;
-  margin-bottom: 8px;
+  padding: 0px 12px;
+  cursor:text;
+}
+
+.drop-spot{
+  width: 100%;
+  padding: 10px;
+  opacity: 0;
+}
+
+.drop-spot-inner{
+  width: 100%;
+  border-top: 4px solid rgba(91, 91, 91, 0.5);
+  border-radius: 8px;
+}
+
+
+[drop-enabled=true]{
+  opacity: 1;
 }
 
 
@@ -75,6 +119,9 @@
 } 
 
 
+
+
+
 .toolbar {
     position: absolute;
     display: flex;
@@ -104,4 +151,3 @@
   .toolbar > img:hover{
     opacity: 1;
   }
-
