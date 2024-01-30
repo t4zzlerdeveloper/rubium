@@ -98,7 +98,7 @@ function LoginPage(){
           style={firstType || validEmail ? validStyle : invalidStyle}
           />
           
-        <br/>
+        
         <input 
           id="pwd-f"
           type="password" 

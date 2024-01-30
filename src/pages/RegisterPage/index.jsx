@@ -134,7 +134,6 @@ function RegisterPage(){
           onKeyDown={(e)=>{if(e.key == "Enter"){document.getElementById("pwd-f").focus()}}} 
           onChange={(e)=>{handleEmailCopyChange(e)}}
           style={firstType || validEmailCopy ? validStyle : invalidStyle}/>
-        <br/>
         <input
           id='pwd-f'  
           type="password" 
