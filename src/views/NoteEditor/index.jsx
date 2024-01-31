@@ -4,7 +4,9 @@ import './NoteEditor.css'
 import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
 import formatP from '../../assets/format_p.svg'
+import formatImg from '../../assets/image.svg'
 
+import addInd from '../../assets/add.svg'
 import dragInd from '../../assets/drag_indicator.svg'
 
 
@@ -76,6 +78,33 @@ function NoteEditor(props){
         ctCopy[y] = b;
         setContent(ctCopy);
         setFF(ff+1);
+    }
+
+    function insertBlockOn(x,type){
+        let ctCopy = content;
+        let initialContent = {
+            type:type,
+            text:""
+        };
+
+        if(type =="img"){
+            const x = Math.round(Math.random() * 300) + 200;
+            const y = Math.round(Math.random() * 300) + 200;
+            initialContent = {
+                type:type,
+                text : `unsplash image ${x}x${y}`,
+                url : `//unsplash.it/${x}/${y}`
+            }
+        }
+
+        ctCopy = [
+            ...ctCopy.slice(0, x),
+            initialContent,
+            ...ctCopy.slice(x)
+        ];
+        setContent(ctCopy);
+        setFF(ff+1);
+        document.getElementById("neid-"+x).focus();
     }
 
     function moveBlockTo(x,newX){
@@ -167,6 +196,7 @@ function NoteEditor(props){
 
     const[blockDragging,setBlockDragging] = useState(-1);
     const[enabledDrop,setEnabledDrop] = useState(-1);
+
     function handleDropEnter(index){
         if(props.editable) setEnabledDrop(index)
     }
@@ -195,6 +225,25 @@ function NoteEditor(props){
            if(blockDragging == -1) setEnabledDrop(-1)
     }
 
+    const[creatingBlock,setCreatingBlock] = useState(-1);
+    const[crtBlockStyle,setCrtBlockStyle] = useState({top:"0",left:"0"});
+
+    function handleBlockCreationOpen(e,index){
+        setCreatingBlock(index);
+        let addButton = document.getElementById("addeid-"+index);
+        const rect = addButton.getBoundingClientRect();
+        setCrtBlockStyle(
+            {
+                top:rect.top -5,
+                left:rect.left -15 
+            }
+        )
+    }
+
+    function addBlock(type){
+        insertBlockOn(creatingBlock,type);
+        setCreatingBlock(-1);
+    }
 
 
 
@@ -215,6 +264,7 @@ function NoteEditor(props){
 
       
     return (<div className='note-editor'>
+            
            <section 
                 id={"drop-0"}
                 onDragOver={(e)=>{handleDropEnter(0)}}
@@ -237,7 +287,21 @@ function NoteEditor(props){
                 onDragStart={(e)=>{handleDragStart(index);}}
                 onDragEnd={(e)=>{handleDragEnd(e,index)}}
                 >
-                    <img className='b-dragger' src={dragInd} draggable="false"/>
+                    <img 
+                        id={"addeid-"+(index+1)}  
+                        className='b-add'
+                        src={addInd} 
+                        draggable="false" 
+                        enabled={creatingBlock == index+1 ? "true" : "false"}
+                        onMouseEnter={(e)=>{handleBlockCreationOpen(e,index+1)}}
+                      />
+
+                    <img 
+                        className='b-dragger' 
+                        src={dragInd} 
+                        draggable="false" 
+                        enabled={creatingBlock == index+1 ? "true" : "false"}
+                        onMouseEnter={()=>{setCreatingBlock(-1)}}/>
                     {
                     c.type == "img" ?
                     <>
@@ -277,23 +341,37 @@ function NoteEditor(props){
 
         
         })}
-       {props.editable ? <> <div style={toolStyle} class="toolbar">
+       {props.editable ? <> 
+       <div style={toolStyle} className="toolbar">
             <img src={formatH1} onClick={()=>{boldSelected()}}/>
             <img src={formatH2}/>
             <img src={formatP}/>
+            <img src={formatImg}/>
         </div>
+        { creatingBlock == -1 ? <></> : 
+        <div 
+            className="block-creator" 
+            style={crtBlockStyle} 
+            onMouseLeave={()=>{setCreatingBlock(-1)}}>
+
+            <div onClick={()=>{addBlock("h1")}}>
+                <img src={formatH1}/>
+                <p>Heading H1</p>
+            </div>
+            <div onClick={()=>{addBlock("h2")}}>
+                <img src={formatH2}/>
+                <p>Heading H2</p>
+            </div>
+            <div onClick={()=>{addBlock("p")}}>
+                <img src={formatP}/>
+                <p>Paragraph</p>
+            </div>
+            <div onClick={()=>{addBlock("img")}}>
+                <img src={formatImg}/>
+                <p>Random Image</p>
+            </div>
+        </div>}
          <div>
-        <select name="type" id="blockType">
-            <option value="h1">Heading H1</option>
-            <option value="h2">Heading H2</option>
-            <option value="p">Paragraph</option>
-        </select>
-            <button onClick={()=>{
-                setContent([...content,{
-                    type: document.getElementById("blockType").value,
-                    text:""
-                }])
-            }}>+ Add</button>
         </div> </>: <></>}
     </div>)
 }

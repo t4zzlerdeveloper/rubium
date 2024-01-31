@@ -272,6 +272,10 @@ hr.rounded {
   animation: slide-in2 1s;
 }
 
+.main-div-inner{
+  padding:1vw 2vw;
+}
+
 .main-controls{
   position: absolute;
   z-index: 1;

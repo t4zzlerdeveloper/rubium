@@ -301,17 +301,17 @@ useEffect(()=>{
             : <></>}
           </>}
         </div>
-        {loadingCurrentNote ? <Loader/> : <>
-          <p style={{position:"absolute",color:"gray",fontSize:"10px"}}>{note.$id}</p>
+        {loadingCurrentNote ? <Loader/> : <div className='main-div-inner'>
+          {/* <p style={{position:"absolute",color:"gray",fontSize:"10px"}}>{note.$id}</p> */}
           <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
-        
 
           <NoteEditor 
           editable={editable}
           content={note.content} 
-          setContent={(newContent)=>{setNoteContent(newContent)}} />
+          setContent={(newContent)=>{setNoteContent(newContent)}} >
+          </NoteEditor>
          
-        </>}
+        </div>}
       </div>
       </>: <></>}
     </div>
