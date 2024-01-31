@@ -168,11 +168,11 @@ function NoteEditor(props){
     const[blockDragging,setBlockDragging] = useState(-1);
     const[enabledDrop,setEnabledDrop] = useState(-1);
     function handleDropEnter(index){
-        setEnabledDrop(index)
+        if(props.editable) setEnabledDrop(index)
     }
     
     function handleDragStart(index){
-        setBlockDragging(index);
+        if(props.editable) setBlockDragging(index);
     }
 
     function handleDragEnd(e,index){
@@ -259,6 +259,7 @@ function NoteEditor(props){
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
                             onChange={(e)=>{updateContent(e,index)}}                
                             value={c.text}
+                            disabled={!props.editable ? "true" : "false"}
                             draggable={props.editable ? "true" : "false"}
                             onDragStart={event => event.preventDefault()}
                             />
@@ -276,12 +277,12 @@ function NoteEditor(props){
 
         
         })}
-        <div style={toolStyle} class="toolbar">
+       {props.editable ? <> <div style={toolStyle} class="toolbar">
             <img src={formatH1} onClick={()=>{boldSelected()}}/>
             <img src={formatH2}/>
             <img src={formatP}/>
         </div>
-        <div>
+         <div>
         <select name="type" id="blockType">
             <option value="h1">Heading H1</option>
             <option value="h2">Heading H2</option>
@@ -293,7 +294,7 @@ function NoteEditor(props){
                     text:""
                 }])
             }}>+ Add</button>
-        </div>
+        </div> </>: <></>}
     </div>)
 }
 
