@@ -46,7 +46,7 @@ function NoteEditor(props){
 
     const [ff,setFF] = useState(0);
 
-    const initialContent = props.content ? JSON.parse(props.content) : [];
+    const initialContent = props.content ? JSON.parse(props.content) : [{type:"p",text:""}];
 
     const [content,setContent] = useState(initialContent)
 
@@ -231,14 +231,31 @@ function NoteEditor(props){
 
     function handleBlockCreationOpen(e,index){
         setCreatingBlock(index);
+        //let blockCreator = document.getElementById("crt-blk");
         let addButton = document.getElementById("addeid-"+index);
         const rect = addButton.getBoundingClientRect();
-        setCrtBlockStyle(
-            {
-                top:rect.top -5,
-                left:rect.left -15 
-            }
-        )
+
+        if(rect.top > window.innerHeight -200){
+            //!fix size to dynamic
+            setCrtBlockStyle(
+                {
+                    top:rect.top - 150,
+                    left:rect.left -15 ,
+                    paddingBottom: "35px"
+                }
+            )
+        }
+        else{
+            setCrtBlockStyle(
+                {
+                    top:rect.top -5,
+                    left:rect.left -15 ,
+                    paddingTop: "35px",
+                }
+            )
+        }
+
+      
     }
 
     function addBlock(type){

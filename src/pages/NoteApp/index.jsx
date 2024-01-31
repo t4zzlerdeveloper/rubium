@@ -136,7 +136,7 @@ function NoteApp() {
     setLoadingNotes(true);
     setEditable(true);
     showToast("Created a new draft!","info")
-    setNotes([...notes,{$id:"draft",title:"New Note",content:[]}]);
+    setNotes([...notes,{$id:"draft",title:"New Note",content:[{type:"p",text:""}]}]);
     loadNoteById("draft");
     setLoadingNotes(false);
   }
