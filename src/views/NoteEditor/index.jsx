@@ -259,7 +259,7 @@ function NoteEditor(props){
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
                             onChange={(e)=>{updateContent(e,index)}}                
                             value={c.text}
-                            disabled={!props.editable ? "true" : "false"}
+                            disabled={!props.editable }
                             draggable={props.editable ? "true" : "false"}
                             onDragStart={event => event.preventDefault()}
                             />
