@@ -36,15 +36,27 @@
 }
 
 
+.block[editable=false] > .b-dragger{
+ opacity: 0;
+}
+
+
 
 
 .block > input:hover,.img:hover{
   background-color: rgba(255,255,255,0.02);
 }
 
+.block[editable=false] > input:hover,
+.block[editable=false] > .img:hover{
+  background-color: transparent;
+  cursor: text;
+}
+
 .block > input:focus,.img:focus{
     background-color: rgba(255,255,255,0.05);
 }
+
 
 .block > input,.img{
   display: block;

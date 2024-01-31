@@ -79,8 +79,7 @@ function NoteApp() {
       const role = Role.user(user.current.$id);
       const permissions = [Permission.read(role),Permission.update(role),Permission.delete(role)];
       
-      let noteElem = document.getElementById("note");
-      const data = {title:note.title,content:noteElem.innerHTML};
+      const data = {title:note.title,content:note.content};
       setNotes(notes.filter(item => item.$id !== "draft"));
 
       databases.createDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,ID.unique(),data,permissions)
@@ -96,7 +95,7 @@ function NoteApp() {
     else{
       databases.updateDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id,{
         title: note.title,
-        content: document.getElementById("note").innerHTML,
+        content: note.content,
       })
       .then((res)=>{
         showToast("Changes saved successfully!","success")
@@ -137,7 +136,7 @@ function NoteApp() {
     setLoadingNotes(true);
     setEditable(true);
     showToast("Created a new draft!","info")
-    setNotes([...notes,{$id:"draft",title:"New Note",content:""}]);
+    setNotes([...notes,{$id:"draft",title:"New Note",content:[]}]);
     loadNoteById("draft");
     setLoadingNotes(false);
   }
@@ -158,7 +157,7 @@ function NoteApp() {
   }
 
   function setNoteContent(newContent){
-    console.log(newContent)
+    //console.log(newContent)
     setNote({...note,content:newContent});
   }
 
@@ -188,96 +187,6 @@ function NoteApp() {
   }
   
 
-  function genRandomImage(){
-    let x = Math.round((Math.random() * 200) + 100)
-    let y = Math.round((Math.random() * 200) + 100)
-    return `//unsplash.it/${x}/${y}`
-  }
-
-  function handleKeyUp(e){
-    let noteElem = document.getElementById("note");
-    var charPos = getCursorPosition(noteElem);
-    setCharPosLog(charPos)
-    
-    if( (e.key == "Enter" ||e.key == " ") && editable){
-      if(noteElem.innerHTML.includes("!random")) setNoteContent(noteElem.innerHTML.replace("!random",`<img src='${genRandomImage()}'/>`));
-      if(noteElem.innerHTML.includes("--")) setNoteContent(noteElem.innerHTML.replace("--","<hr class='rounded'><br/>"));
-
-      // var expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
-      // var regex = new RegExp(expression);
-      // let urls = noteElem.innerHTML.match(regex);
-      // urls.forEach(link => {
-      //   if(!(link in links)) setNote(noteElem.innerHTML.replace(link,`<a onClick='window.open("${link}")' href='#'>${link}</a>`))
-      //   setLinks([...links,link])
-      // });
-
-      
-      //setCurSelectionOffset(charPos)
-      //noteElem.blur()
-    }
-
-
-  }
-
-
-  function getCursorPosition(elem){
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    const clonedRange = range.cloneRange();
-    clonedRange.selectNodeContents(elem);
-    clonedRange.setEnd(range.endContainer, range.endOffset);
-
-    return clonedRange.toString().length;
-  }
-
-
-
-  //Set offset in current contenteditable field (for start by default or for with forEnd=true)
-function setCurSelectionOffset(offset, forEnd = false) {
-  const sel = window.getSelection();
-  if (sel.rangeCount !== 1 || !document.activeElement) return;
-
-  const firstRange = sel.getRangeAt(0);
-
-  if (offset > 0) {
-      bypassChildNodes(document.activeElement, offset);
-  }else{
-      if (forEnd)
-          firstRange.setEnd(document.activeElement, 0);
-      else
-          firstRange.setStart(document.activeElement, 0);
-  }
-
-
-
-  //Bypass in depth
-  function bypassChildNodes(el, leftOffset) {
-      const childNodes = el.childNodes;
-
-      for (let i = 0; i < childNodes.length && leftOffset; i++) {
-          const childNode = childNodes[i];
-
-          if (childNode.nodeType === 3) {
-              const curLen = childNode.textContent.length;
-
-              if (curLen >= leftOffset) {
-                  if (forEnd)
-                      firstRange.setEnd(childNode, leftOffset);
-                  else
-                      firstRange.setStart(childNode, leftOffset);
-                  return 0;
-              }else{
-                  leftOffset -= curLen;
-              }
-          }else
-          if (childNode.nodeType === 1) {
-              leftOffset = bypassChildNodes(childNode, leftOffset);
-          }
-      }
-
-      return leftOffset;
-  }
-}
 
 function checkUpdate(note){
   return user.current &&  note.$permissions && note.$permissions.includes(Permission.update(Role.user(user.current.$id)))
@@ -395,12 +304,12 @@ useEffect(()=>{
         {loadingCurrentNote ? <Loader/> : <>
           <p style={{position:"absolute",color:"gray",fontSize:"10px"}}>{note.$id}</p>
           <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
-          
-          {window.location.host == "localhost:5173" ? <>
-          <NoteEditor></NoteEditor>
-          </> :  <>
-          <div id="note" dangerouslySetInnerHTML={{__html: note.content || ""}} className='note-content' contentEditable={editable} onKeyUp={(e)=>{handleKeyUp(e)}} ></div>
-          </>}
+        
+
+          <NoteEditor 
+          editable={editable}
+          content={note.content} 
+          setContent={(newContent)=>{setNoteContent(newContent)}} />
          
         </>}
       </div>

@@ -13,41 +13,49 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
 
 
+const dummyContent = [
+    {
+        type:"h1",
+        text:"H1 block",
+        underline:true,
+    },
+    {
+        type:"h2",
+        text:"Another H2 block"
+    },
+    {
+        type:"img",
+        text:"unsplash.it random image ",
+        url:"https://unsplash.it/130/193"
+    },
+    {
+        type:"p",
+        text:"This is just some <b>bold text</b> that you can see as a <p/> object"
+    },
+    {
+        type:'ai'
+    }
+
+]
 
 
-function NoteEditor(){
+function NoteEditor(props){
 
     const [ff,setFF] = useState(0);
 
-    const [content,setContent] = useState([
-        {
-            type:"h1",
-            text:"H1 block",
-            underline:true,
-        },
-        {
-            type:"h2",
-            text:"Another H2 block"
-        },
-        {
-            type:"img",
-            text:"unsplash.it random image ",
-            url:"https://unsplash.it/130/193"
-        },
-        {
-            type:"p",
-            text:"This is just some <b>bold text</b> that you can see as a <p/> object"
-        },
-        {
-            type:'ai'
-        }
+    const initialContent = props.content ? JSON.parse(props.content) : [];
 
-    ])
+    const [content,setContent] = useState(initialContent)
 
     useEffect(()=>{
         try{document.getElementById("neid-"+(content.length-1)).focus();}
         catch{}
     },[content])
+
+    useEffect(()=>{
+        props.setContent(JSON.stringify(content))
+    },[ff])
+
 
 
     function array_move(arr, old_index, new_index) {
@@ -94,7 +102,6 @@ function NoteEditor(){
         }
         else if(e.key == "Backspace"){
             
-            // index++;
             if( document.getElementById("neid-"+index).value == ""){
                 e.preventDefault();
                 removeBlock(index)
@@ -104,12 +111,6 @@ function NoteEditor(){
         else if(e.key == "Enter" && (type =="h1" || type == "h2")){
             e.preventDefault();
             index++;
-        }
-        else if(e.key == "ArrowLeft" && index >= 1){
-            //swapBlocks(index,index-1)
-        }
-        else if(e.key == "ArrowRight" && index <= content.length-2){
-            //swapBlocks(index,index+1)
         }
         document.getElementById("neid-"+index).focus();
        
@@ -138,7 +139,7 @@ function NoteEditor(){
         let copy = content;
         copy[index].text = e.target.value;
         setContent(copy);
-        console.log(content)
+        //console.log(content)
         setFF(ff+1)
     }
 
@@ -156,7 +157,7 @@ function NoteEditor(){
         let selection = window.getSelection(),
         selectionRect = a.getBoundingClientRect();
          
-        if(width == 0) {setToolStyle({display:"none"}); return;}
+        if(width == 0 || !props.editable) {setToolStyle({display:"none"}); return;}
     
        setToolStyle({
           top: selectionRect.top - 42 + 'px',
@@ -175,6 +176,7 @@ function NoteEditor(){
     }
 
     function handleDragEnd(e,index){
+        
         if(enabledDrop != -1){
             if(index < enabledDrop){
                 moveBlockTo(index,enabledDrop-1)
@@ -186,11 +188,14 @@ function NoteEditor(){
            setEnabledDrop(-1)
         }
         setBlockDragging(-1)
+
     }
 
     function handleDropLeave(){
            if(blockDragging == -1) setEnabledDrop(-1)
     }
+
+
 
 
     //Gen AI related
@@ -227,7 +232,8 @@ function NoteEditor(){
                 key={"bleid-" + index}
                 id={"bleid-" + index}
                 className='block'
-                draggable="true"
+                editable={props.editable ? "true" : "false"}
+                draggable={props.editable ? "true" : "false"}
                 onDragStart={(e)=>{handleDragStart(index);}}
                 onDragEnd={(e)=>{handleDragEnd(e,index)}}
                 >
@@ -235,7 +241,7 @@ function NoteEditor(){
                     {
                     c.type == "img" ?
                     <>
-                        <div className="img"><img src={c.url} /><p>{c.text}</p></div>
+                        <div className="img"><img  id={"neid-" + index} src={c.url} /><p>{c.text}</p></div>
                     </>
                     : c.type == "ai" ?
                     <>
@@ -244,6 +250,7 @@ function NoteEditor(){
                     </>
                     :
                     <>
+                             {/* //! Fix cant select text */}
                             <input className={c.type}
                             style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
                             id={"neid-" + index} 
@@ -252,14 +259,14 @@ function NoteEditor(){
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
                             onChange={(e)=>{updateContent(e,index)}}                
                             value={c.text}
-                            draggable="true"
+                            draggable={props.editable ? "true" : "false"}
                             onDragStart={event => event.preventDefault()}
                             />
                     </>
                 }
                 </div>
                 <section 
-                id={"drop-"+index+1}
+                id={"drop-"+(index+1)}
                 onDragOver={(e)=>{handleDropEnter(index+1)}}
                 onDragLeave={(e)=>{handleDropLeave()}}
                 drop-enabled={enabledDrop == index+1 ? "true" : "false" }
@@ -267,19 +274,7 @@ function NoteEditor(){
                 ><div className='drop-spot-inner'></div></section>
             </>)
 
-          
-
-            return<> <c.type
-                style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
-                id={"neid-" + index} 
-                onFocus={()=>{setCurrentBlockId(index)}}
-                onMouseMove={()=>{handleMouseUp();}}
-                onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
-                onKeyUp={(e)=>{updateContent(e,index)}}
-                contentEditable={true} 
-                dangerouslySetInnerHTML={{__html: c.text || ""}}>
-                </c.type>
-                </>
+        
         })}
         <div style={toolStyle} class="toolbar">
             <img src={formatH1} onClick={()=>{boldSelected()}}/>
