@@ -7,6 +7,7 @@ import formatP from '../../assets/format_p.svg'
 import formatImg from '../../assets/image.svg'
 
 import addInd from '../../assets/add.svg'
+import removeInd from '../../assets/delete.svg'
 import dragInd from '../../assets/drag_indicator.svg'
 
 
@@ -287,6 +288,7 @@ function NoteEditor(props){
                 onDragStart={(e)=>{handleDragStart(index);}}
                 onDragEnd={(e)=>{handleDragEnd(e,index)}}
                 >
+
                     <img 
                         id={"addeid-"+(index+1)}  
                         className='b-add'
@@ -329,6 +331,13 @@ function NoteEditor(props){
                             />
                     </>
                 }
+                 <img 
+                        className='b-remove'
+                        src={removeInd} 
+                        draggable="false" 
+                        onClick={()=>{removeBlock(index)}}
+                      />
+
                 </div>
                 <section 
                 id={"drop-"+(index+1)}
