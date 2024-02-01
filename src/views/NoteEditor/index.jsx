@@ -81,7 +81,7 @@ function NoteEditor(props){
         setFF(ff+1);
     }
 
-    function insertBlockOn(x,type){
+    function insertBlockOn(x,type,url=undefined,alt=undefined){
         let ctCopy = content;
         let initialContent = {
             type:type,
@@ -93,8 +93,8 @@ function NoteEditor(props){
             const y = Math.round(Math.random() * 300) + 200;
             initialContent = {
                 type:type,
-                text : `unsplash image ${x}x${y}`,
-                url : `//unsplash.it/${x}/${y}`
+                text : alt ? alt :`Enter an image caption.`,
+                url : url ? url : `//unsplash.it/${x}/${y}`
             }
         }
 
@@ -170,6 +170,14 @@ function NoteEditor(props){
         copy[index].text = e.target.value;
         setContent(copy);
         //console.log(content)
+        setFF(ff+1)
+    }
+
+    function updateUrl(index,newUrl,newText){
+        let copy = content;
+        copy[index].url = newUrl;
+        copy[index].text = newText;
+        setContent(copy);
         setFF(ff+1)
     }
 
@@ -264,6 +272,29 @@ function NoteEditor(props){
     }
 
 
+    function handleNewImageDrop(e,index){
+        e.preventDefault();
+        if(!props.editable)return;
+        let html = e.dataTransfer.getData('text/html');
+        let src = new DOMParser().parseFromString(html, "text/html")
+        .querySelector('img').src;
+        let alt = new DOMParser().parseFromString(html, "text/html")
+        .querySelector('img').alt;
+        insertBlockOn(index,"img",src,alt);
+        setEnabledDrop(-1)
+    }
+
+    function handleImageDrop(e,index){
+        e.preventDefault();
+        if(!props.editable)return;
+        let html = e.dataTransfer.getData('text/html');
+        let src = new DOMParser().parseFromString(html, "text/html")
+        .querySelector('img').src;
+        let alt = new DOMParser().parseFromString(html, "text/html")
+        .querySelector('img').alt;
+        updateUrl(index,src,alt)
+    }
+
 
     //Gen AI related
     const [prompt,setPrompt] = useState("");
@@ -289,6 +320,7 @@ function NoteEditor(props){
                 onDragLeave={(e)=>{handleDropLeave(e,0)}}
                 drop-enabled={enabledDrop == 0 ? "true" : "false" }
                 className='drop-spot'
+                onDrop={(e)=>{handleNewImageDrop(e,index+1)}}
             ><div className='drop-spot-inner'></div></section>
 
             {ff > -1 && content.map((c,index)=>{
@@ -301,7 +333,7 @@ function NoteEditor(props){
                 id={"bleid-" + index}
                 className='block'
                 editable={props.editable ? "true" : "false"}
-                draggable={props.editable ? "true" : "false"}
+                draggable={props.editable && currentBlockId != index  ? "true" : "false"}
                 onDragStart={(e)=>{handleDragStart(index);}}
                 onDragEnd={(e)=>{handleDragEnd(e,index)}}
                 >
@@ -324,7 +356,10 @@ function NoteEditor(props){
                     {
                     c.type == "img" ?
                     <>
-                        <div className="img"><img  id={"neid-" + index} src={c.url} /><p>{c.text}</p></div>
+                        <div className="img" onDrop={(e)=>{handleImageDrop(e,index)}}>
+                            <img  id={"neid-" + index} src={c.url} />
+                            <input  disabled={!props.editable } value={c.text}  onChange={(e)=>{updateContent(e,index)}} />
+                        </div>
                     </>
                     : c.type == "ai" ?
                     <>
@@ -333,18 +368,18 @@ function NoteEditor(props){
                     </>
                     :
                     <>
-                             {/* //! Fix cant select text */}
+                             {/* //! Fix cant select text */ }
                             <input className={c.type}
                             style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
                             id={"neid-" + index} 
                             onFocus={()=>{setCurrentBlockId(index)}}
+                            onMouseDown={()=>{setCurrentBlockId(index)}}
                             onSelectCapture={()=>{handleMouseUp();}}
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
                             onChange={(e)=>{updateContent(e,index)}}                
                             value={c.text}
                             disabled={!props.editable }
-                            draggable={props.editable ? "true" : "false"}
-                            onDragStart={event => event.preventDefault()}
+                            onBlur={()=>{setCurrentBlockId(-1)}}
                             />
                     </>
                 }
@@ -362,6 +397,7 @@ function NoteEditor(props){
                 onDragLeave={(e)=>{handleDropLeave()}}
                 drop-enabled={enabledDrop == index+1 ? "true" : "false" }
                 className='drop-spot'
+                onDrop={(e)=>{handleNewImageDrop(e,index+1)}}
                 ><div className='drop-spot-inner'></div></section>
             </>)
 

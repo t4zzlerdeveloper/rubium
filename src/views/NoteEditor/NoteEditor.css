@@ -22,6 +22,8 @@
   gap:2.5px;
 }
 
+
+
 .b-dragger,.b-add,.b-remove{
   opacity: 0;
   padding:2px 2px;
@@ -71,7 +73,7 @@
 
 
 
-.block > input:hover,.img:hover{
+.block:hover > input,.block > input:hover,.img:hover{
   background-color: rgba(255,255,255,0.02);
 }
 
@@ -146,7 +148,12 @@
   gap:10px
 }
 
-.img > p{
+.img > input{
+  background-color: transparent;
+  outline: none;
+  width: 90%;
+  border: none;
+  text-align: center;
   color:rgb(81, 81, 81);
   font-size: 11px;
   padding:0;
@@ -154,9 +161,33 @@
 }
 
 .img > img{
+  max-width: 90%;
+  max-height: 300px;
   border-radius: 4px;
   object-fit: contain;
+  transition: 0.8s;
+  cursor: pointer;
 } 
+
+.img > img:hover{
+  filter:grayscale();
+}
+
+.img[fullscreen=true]{
+  position: absolute;
+  top:0;
+  left: 0;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  z-index:9999;
+  padding:0;
+}
+
+.img[fullscreen=true] > img{
+  width: 100vw !important;
+  height: 100vh !important;
+}
 
 
 
@@ -171,6 +202,7 @@
   border-radius: 8px;
   background: rgb(16,18,16);
   z-index: 99;
+  filter:drop-shadow(0 0 16px rgba(233, 120, 120, 0.1));
 }
 
 .block-creator > div{
@@ -196,6 +228,12 @@
 .block-creator > div > img{
   width: 25px;
   height: 25px;
+  filter:brightness(500%);
+  transition: 0.4s;
+}
+
+.block-creator > div:hover > img{
+  filter:none;
 }
 
 
