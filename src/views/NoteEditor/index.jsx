@@ -182,7 +182,7 @@ function NoteEditor(props){
     }
 
 
-    const [toolStyle,setToolStyle] = useState({});
+    const [toolStyle,setToolStyle] = useState({display:"none"});
     const [currentBlockId,setCurrentBlockId] = useState(null);
 
     function handleMouseUp(){

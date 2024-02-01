@@ -203,6 +203,7 @@
   background: rgb(16,18,16);
   z-index: 99;
   filter:drop-shadow(0 0 16px rgba(233, 120, 120, 0.1));
+  border: 1px solid rgb(30, 30,30);
 }
 
 .block-creator > div{
@@ -256,12 +257,12 @@
     padding-top: 5px;
     padding-bottom: 5px;
     gap:5px;
-    background: linear-gradient(45deg, rgba(0, 10, 10, 1), rgba(10, 0, 0, 1));
-    filter:drop-shadow(0 0 16px rgba(251, 85, 85, 0.2));
+    background: rgb(16,18,16);
+    filter:drop-shadow(0 0 16px rgba(233, 120, 120, 0.1));
     text-align: center;
     color: white;
     border-radius: 8px;
-    border: 1px solid rgb(50, 20,20);
+    border: 1px solid rgb(30, 30,30);
 
     
     transform: translateX(-50%);
