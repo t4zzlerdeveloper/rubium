@@ -296,11 +296,12 @@ function NoteEditor(props){
     }
 
 
-    function autoGrow(oField) {
-        if (oField.scrollHeight > oField.clientHeight) {
-          oField.style.height = oField.scrollHeight + "px";
-        }
-      }
+   function getPlaceholder(type){
+    if(type == "p") return "Write a new paragraph...";
+    else if(type == "img") return "Enter an image caption..."
+    else if(type == "h1") return "Enter Heading H1..."
+    else if(type == "h2") return "Enter Heading H2..."
+   }
 
 
     //Gen AI related
@@ -365,7 +366,7 @@ function NoteEditor(props){
                     <>
                         <div className="img" onDrop={(e)=>{handleImageDrop(e,index)}}>
                             <img  id={"neid-" + index} src={c.url} />
-                            <input  disabled={!props.editable } value={c.text}  onChange={(e)=>{updateContent(e,index)}} />
+                            <input placeholder={ props.editable ? getPlaceholder(c.type): ''}  disabled={!props.editable } value={c.text}  onChange={(e)=>{updateContent(e,index)}} />
                         </div>
                     </>
                     : c.type == "ai" ?
@@ -378,7 +379,7 @@ function NoteEditor(props){
                             <textarea className={c.type}
                             style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
                             id={"neid-" + index} 
-                            placeholder='Write a new paragraph....'
+                            placeholder={ props.editable ? getPlaceholder(c.type): ''}
                             onFocus={()=>{setCurrentBlockId(index)}}
                             onMouseDown={()=>{setCurrentBlockId(index)}}
                             onSelectCapture={()=>{handleMouseUp();}}
@@ -395,6 +396,7 @@ function NoteEditor(props){
                             <input className={c.type}
                             style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
                             id={"neid-" + index} 
+                            placeholder={ props.editable ? getPlaceholder(c.type): ''}
                             onFocus={()=>{setCurrentBlockId(index)}}
                             onMouseDown={()=>{setCurrentBlockId(index)}}
                             onSelectCapture={()=>{handleMouseUp();}}
