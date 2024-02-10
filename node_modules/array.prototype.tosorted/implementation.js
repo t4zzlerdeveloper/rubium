@@ -1,6 +1,5 @@
 'use strict';
 
-var GetIntrinsic = require('get-intrinsic');
 var callBound = require('call-bind/callBound');
 
 var ArrayCreate = require('es-abstract/2023/ArrayCreate');
@@ -10,7 +9,7 @@ var LengthOfArrayLike = require('es-abstract/2023/LengthOfArrayLike');
 var ToObject = require('es-abstract/2023/ToObject');
 var ToString = require('es-abstract/2023/ToString');
 
-var $TypeError = GetIntrinsic('%TypeError%');
+var $TypeError = require('es-errors/type');
 
 var $sort = callBound('Array.prototype.sort');
 

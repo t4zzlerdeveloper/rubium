@@ -296,6 +296,13 @@ function NoteEditor(props){
     }
 
 
+    function autoGrow(oField) {
+        if (oField.scrollHeight > oField.clientHeight) {
+          oField.style.height = oField.scrollHeight + "px";
+        }
+      }
+
+
     //Gen AI related
     const [prompt,setPrompt] = useState("");
     const [generated,setGenerated] = useState("");
@@ -366,17 +373,33 @@ function NoteEditor(props){
                         <div>{generated}</div>
                         <input value={prompt} onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e)=>{if(e.key === "Enter"){ generateContent()}}} placeholder="Enter Prompt"/>
                     </>
+                    : c.type == "p" ?
+                    <>
+                            <textarea className={c.type}
+                            style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
+                            id={"neid-" + index} 
+                            placeholder='Write a new paragraph....'
+                            onFocus={()=>{setCurrentBlockId(index)}}
+                            onMouseDown={()=>{setCurrentBlockId(index)}}
+                            onSelectCapture={()=>{handleMouseUp();}}
+                            onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
+                            onChange={(e)=>{updateContent(e,index)}}           
+                            value={c.text}
+                            disabled={!props.editable }
+                            onBlur={()=>{setCurrentBlockId(-1)}}
+                            rows={c.text.split(/\r\n|\r|\n/).length}
+                            />
+                    </>
                     :
                     <>
-                             {/* //! Fix cant select text */ }
                             <input className={c.type}
                             style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
                             id={"neid-" + index} 
                             onFocus={()=>{setCurrentBlockId(index)}}
                             onMouseDown={()=>{setCurrentBlockId(index)}}
                             onSelectCapture={()=>{handleMouseUp();}}
-                            onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
-                            onChange={(e)=>{updateContent(e,index)}}                
+                            onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
+                            onChange={(e)=>{updateContent(e,index);autoGrow(e)}}                
                             value={c.text}
                             disabled={!props.editable }
                             onBlur={()=>{setCurrentBlockId(-1)}}

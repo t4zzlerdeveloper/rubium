@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.1.14](https://github.com/inspect-js/which-typed-array/compare/v1.1.13...v1.1.14) - 2024-02-01
+
+### Commits
+
+- [patch] add types [`49c4d4c`](https://github.com/inspect-js/which-typed-array/commit/49c4d4c5db9bebb8d6f8c18a01047e44eea15e17)
+- [Dev Deps] update `aud`, `npmignore`, `tape` [`e5fab7b`](https://github.com/inspect-js/which-typed-array/commit/e5fab7b3dc9df2bceb88f15c3d0a2c0176cf2567)
+- [Deps] update `available-typed-arrays`, `call-bind` [`97e2b44`](https://github.com/inspect-js/which-typed-array/commit/97e2b44bad85c9183f1219e28211b3abd167677c)
+- [Deps] update `has-tostringtag` [`1efa8bf`](https://github.com/inspect-js/which-typed-array/commit/1efa8bf910c080c14f011aa7c645ac88bc7a7078)
+
 ## [v1.1.13](https://github.com/inspect-js/which-typed-array/compare/v1.1.12...v1.1.13) - 2023-10-19
 
 ### Commits

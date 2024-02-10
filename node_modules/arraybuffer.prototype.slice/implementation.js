@@ -3,7 +3,6 @@
 var GetIntrinsic = require('get-intrinsic');
 
 var $ArrayBuffer = GetIntrinsic('%ArrayBuffer%', true);
-var $TypeError = GetIntrinsic('%TypeError%');
 var $Uint8Array = GetIntrinsic('%Uint8Array%', true);
 
 var IsDetachedBuffer = require('es-abstract/2023/IsDetachedBuffer');
@@ -15,6 +14,7 @@ var ToIntegerOrInfinity = require('es-abstract/2023/ToIntegerOrInfinity');
 
 var arrayBufferByteLength = require('array-buffer-byte-length');
 var isArrayBuffer = require('is-array-buffer');
+var $TypeError = require('es-errors/type');
 
 module.exports = function slice(start, end) {
 	var O = this; // step 1

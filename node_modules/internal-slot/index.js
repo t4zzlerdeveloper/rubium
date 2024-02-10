@@ -1,10 +1,9 @@
 'use strict';
 
-var GetIntrinsic = require('get-intrinsic');
 var hasOwn = require('hasown');
 var channel = require('side-channel')();
 
-var $TypeError = GetIntrinsic('%TypeError%');
+var $TypeError = require('es-errors/type');
 
 var SLOT = {
 	assert: function (O, slot) {

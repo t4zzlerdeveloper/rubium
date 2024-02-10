@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.1.0](https://github.com/ljharb/safe-array-concat/compare/v1.0.1...v1.1.0) - 2024-01-15
+
+### Commits
+
+- [New] add types [`bd92413`](https://github.com/ljharb/safe-array-concat/commit/bd92413643b2bd0ad62e854172fad129d3899dc1)
+- [Dev Deps] update `aud`, `mock-property`, `npmignore`, `set-function-length`, `tape` [`497ffcb`](https://github.com/ljharb/safe-array-concat/commit/497ffcbb271ad61752756ec363ad5b9400e4d367)
+- [Deps] update `call-bind`, `get-intrinsic` [`770f870`](https://github.com/ljharb/safe-array-concat/commit/770f8704d3751b947c7f4772d9ee38d8bcdecf44)
+- [Dev Deps] update `mock-property`, `tape` [`be76bd9`](https://github.com/ljharb/safe-array-concat/commit/be76bd958fa73607a105122a8770677ecbdf78f0)
+- [Tests] use `set-function-length/env` [`89b1167`](https://github.com/ljharb/safe-array-concat/commit/89b116758d91ad521f963cccf056f9a3f0b18c20)
+- [meta] add missing npmrc values [`3185cc7`](https://github.com/ljharb/safe-array-concat/commit/3185cc7a6773baf625c65bb58ffb9b7ee5f3306e)
+- [meta] add `sideEffects` flag [`df6c7eb`](https://github.com/ljharb/safe-array-concat/commit/df6c7ebca7f2fd2f152fe2c2a2260d21728e70a3)
+
 ## [v1.0.1](https://github.com/ljharb/safe-array-concat/compare/v1.0.0...v1.0.1) - 2023-09-05
 
 ### Fixed

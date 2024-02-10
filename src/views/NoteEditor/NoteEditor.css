@@ -73,22 +73,23 @@
 
 
 
-.block:hover > input,.block > input:hover,.img:hover{
+.block:hover > input,.block > input:hover,.img:hover,.block:hover > textarea,.block > textarea:hover{
   background-color: rgba(255,255,255,0.02);
 }
 
 .block[editable=false] > input:hover,
-.block[editable=false] > .img:hover{
+.block[editable=false] > .img:hover,
+.block[editable=false] > textarea:hover{
   background-color: transparent;
   cursor: text;
 }
 
-.block > input:focus,.img:focus{
+.block > input:focus,.img:focus,.block > textarea:focus{
     background-color: rgba(255,255,255,0.05);
 }
 
 
-.block > input,.img{
+.block > input,.block > textarea,.img{
   display: block;
   width: 95%;
   height: 100%;
@@ -120,18 +121,29 @@
 
 
 .h1{
-  font-size: 40px;
+  font-size: 42px;
   font-weight: 600;
 }
 
 .h2{
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 500;
 }
 
 .p{
-  font-size: 14px;
+  resize: none;
+  font-family: inherit;
+  color:white;
+  border: none;
+  outline: none;
+  background-color: inherit;
+  width: 100%;
+  font-size: 18px;
   font-weight: 400;
+  height: auto;
+  overflow: hidden; 
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 
 .p > b{
@@ -155,9 +167,14 @@
   border: none;
   text-align: center;
   color:rgb(81, 81, 81);
-  font-size: 11px;
-  padding:0;
+  font-size: 14px;
+  padding: 2px 0;
   margin:0;
+  border-radius:  4px;
+}
+
+.img > input:focus{
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .img > img{
@@ -277,3 +294,6 @@
   .toolbar > img:hover{
     opacity: 1;
   }
+
+
+

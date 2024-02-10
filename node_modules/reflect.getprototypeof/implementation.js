@@ -4,10 +4,10 @@ var GetIntrinsic = require('get-intrinsic');
 var IsCallable = require('es-abstract/2023/IsCallable');
 var Type = require('es-abstract/2023/Type');
 var whichBuiltinType = require('which-builtin-type');
+var $TypeError = require('es-errors/type');
 
 var $gPO = GetIntrinsic('%Object.getPrototypeOf%', true);
 var $ObjectPrototype = GetIntrinsic('%Object.prototype%');
-var $TypeError = GetIntrinsic('%TypeError%');
 
 var hasProto = [].__proto__ === Array.prototype; // eslint-disable-line no-proto
 
@@ -29,7 +29,7 @@ module.exports = function getPrototypeOf(O) {
 	}
 	var type = whichBuiltinType(O);
 	if (type) {
-		var intrinsic = GetIntrinsic('%' + type + '%.prototype', true);
+		var intrinsic = GetIntrinsic('%' + type + '.prototype%', true);
 		if (intrinsic) {
 			return intrinsic;
 		}

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.0.1](https://github.com/ljharb/typed-array-buffer/compare/v1.0.0...v1.0.1) - 2024-02-06
+
+### Commits
+
+- [Dev Deps] update `aud`, `available-typed-arrays`, `npmignore`, `object-inspect`, `tape` [`5334477`](https://github.com/ljharb/typed-array-buffer/commit/53344773866f35820dc4deef1aa47ec7890f2b02)
+- [Refactor] use `es-errors`, so things that only need those do not need `get-intrinsic` [`e2511e0`](https://github.com/ljharb/typed-array-buffer/commit/e2511e011a2331bd4a36ad6003a98b1cf766bc26)
+- [Deps] update `call-bind`, `get-intrinsic`, `is-typed-array` [`36c3b11`](https://github.com/ljharb/typed-array-buffer/commit/36c3b11efc9bce98de8bee5f81dcae4305876893)
+- [meta] add `sideEffects` flag [`46cc1f4`](https://github.com/ljharb/typed-array-buffer/commit/46cc1f4a8b8875fc6e84b33182602ec37655bbbd)
+
 ## v1.0.0 - 2023-06-05
 
 ### Commits
