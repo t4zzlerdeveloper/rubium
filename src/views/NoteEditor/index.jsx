@@ -387,7 +387,7 @@ function NoteEditor(props){
                             value={c.text}
                             disabled={!props.editable }
                             onBlur={()=>{setCurrentBlockId(-1)}}
-                            rows={c.text.split(/\r\n|\r|\n/).length}
+                            rows={document.getElementById("neid-"+index) ? (document.getElementById("neid-"+index).scrollHeight / 22) : 1}
                             />
                     </>
                     :
