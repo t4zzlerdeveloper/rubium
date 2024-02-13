@@ -123,11 +123,13 @@
 .h1{
   font-size: 42px;
   font-weight: 600;
+  font-family: inherit;
 }
 
 .h2{
   font-size: 30px;
   font-weight: 500;
+  font-family: inherit;
 }
 
 .p{
@@ -206,6 +208,11 @@
   height: 100vh !important;
 }
 
+
+.separator{
+  width: 90%;
+  border-top: 1px solid  #F45B69;
+}
 
 
 

@@ -5,6 +5,7 @@ import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
 import formatP from '../../assets/format_p.svg'
 import formatImg from '../../assets/image.svg'
+import formatSep from '../../assets/tabs.svg'
 
 import addInd from '../../assets/add.svg'
 import removeInd from '../../assets/delete.svg'
@@ -120,6 +121,7 @@ function NoteEditor(props){
         setContent(ctCopy.filter((a,index)=>{
             if(index !== idx){ return a}
         }))
+        setFF(ff+1);
     }
 
     function handleKeyDown(e,index,type){
@@ -247,7 +249,7 @@ function NoteEditor(props){
             //!fix size to dynamic
             setCrtBlockStyle(
                 {
-                    top:rect.top - 150,
+                    top:rect.top - 185,
                     left:rect.left -15 ,
                     paddingBottom: "35px"
                 }
@@ -321,7 +323,6 @@ function NoteEditor(props){
 
       
     return (<div className='note-editor'>
-            
            <section 
                 id={"drop-0"}
                 onDragOver={(e)=>{handleDropEnter(0)}}
@@ -368,6 +369,10 @@ function NoteEditor(props){
                             <img  id={"neid-" + index} src={c.url} />
                             <input placeholder={ props.editable ? getPlaceholder(c.type): ''}  disabled={!props.editable } value={c.text}  onChange={(e)=>{updateContent(e,index)}} />
                         </div>
+                    </>
+                    : c.type == "sep" ?
+                    <>
+                        <div className='separator'></div>
                     </>
                     : c.type == "ai" ?
                     <>
@@ -456,6 +461,10 @@ function NoteEditor(props){
             <div onClick={()=>{addBlock("img")}}>
                 <img src={formatImg}/>
                 <p>Random Image</p>
+            </div>
+            <div onClick={()=>{addBlock("sep")}}>
+                <img src={formatSep}/>
+                <p>Separator</p>
             </div>
         </div>}
          <div>
