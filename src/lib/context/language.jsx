@@ -11,15 +11,15 @@ class LangTranslator{
 
     constructor(sec){
 
-        this.loading = true;
+        //this.loading = true;
 
         locale.get()
         .then((res)=>{
             this.locale = res.countryCode.toLowerCase();
-            this.loading = false;
+          //  this.loading = false;
         }).catch((err)=>{
             this.locale = "default";
-            this.loading = false;
+            //this.loading = false;
         });
         this.sec = sec;
     }

@@ -47,13 +47,15 @@ function NoteApp() {
     setSearchQuery(e.target.value);
   }
 
+
   function loadNoteById(id){
     if(id == "draft") setNote({$id:"draft",title:lang.tr("New Note"),content:""});
     setLoadingCurrentNote(true);
     databases.getDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,id)
     .then((res)=>{
       setNote(res)
-      setLoadingCurrentNote(false);
+      //!tmp fix
+      setTimeout(()=>{setLoadingCurrentNote(false);},400)
     })
     .catch(()=>{setLoadingCurrentNote(false);})
   }
