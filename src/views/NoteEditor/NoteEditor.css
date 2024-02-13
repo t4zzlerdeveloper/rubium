@@ -218,6 +218,157 @@
 
 
 
+.kanban{
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+  padding:2.5% 1%; 
+  width: 100%;
+  gap:8px;
+  border-radius: 8px;
+}
+
+.kanban:hover{
+  background-color: rgba(255,255,255,0.01);
+}
+
+
+.kanban > section > input{
+  background: transparent;
+  border: none;
+  color:white;
+  outline: none;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+
+  padding:8px 16px;
+  margin-bottom: 10px;
+}
+
+.kb-lower{
+  display: grid;
+  width: 100%;
+  place-content: center;
+  grid-template-columns: 1fr 1fr 1fr ;
+  gap:16px;
+}
+
+.kb-lower > section{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: 1px solid rgba(128, 128, 128, 0.1);
+  border-radius: 10px;
+  width: 100%;
+  padding:0;
+}
+
+.kb-lower > section > h4{
+  border-radius: 10px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin:0;
+  padding:10px;
+}
+
+.kb-lower > section > input{
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+  color:white;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+
+  padding:8px 16px;
+  padding-top: 10px;
+}
+
+.kb-lower > section > ul{
+  min-height: 10px;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  place-content: center;
+  padding:8px;
+  margin:0;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.kb-task{
+  display: flex;
+  place-content: center;
+  place-items: center;
+  flex-direction: row;
+  gap:10px;
+  background-color: rgba(255,255,255,0.05);
+  padding:8px 10px;
+  margin:4px;
+  width: 90%;
+  border-radius: 8px;
+  justify-content: space-between;
+  padding-left: 16px;
+}
+
+.kb-task >div{
+  display: flex;
+  flex-direction: row;
+  gap:4px;
+}
+
+.rt180{
+  transform: rotate(180deg);
+}
+
+.kb-name{
+  margin:0;
+  padding:0;
+}
+
+.kb-rm{
+  background: rgb(0, 0, 0);
+  padding:3px;
+  border-radius: 4px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  transition: 0.4s;
+  filter:opacity(0.6) brightness(500%) grayscale();
+}
+
+.kb-rm:hover{
+  background-color: rgba(0, 0, 0,0.4);
+  filter:none
+}
+
+
+
+.kb-lower >section:nth-child(1)>h4{
+  border: 0.5px solid #F45B69;
+  background-color: #f45b6823;
+}
+
+.kb-lower >section:nth-child(2)>h4{
+  border: 0.5px solid rgb(248, 248, 169);
+  background-color: rgba(248, 248, 169, 0.1);
+}
+
+.kb-lower >section:nth-child(3)>h4{
+  border: 0.5px solid rgb(127, 249, 127);
+  background-color: rgba(127, 249, 127, 0.1);
+
+}
+
+.kb-lower >section:nth-child(4)>h4{
+  border: 0.5px solid rgb(147, 234, 252);
+  background-color: rgba(147, 234, 252, 0.1);
+}
+
+
 
 .block-creator{
   position: absolute;

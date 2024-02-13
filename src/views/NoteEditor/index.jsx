@@ -5,10 +5,12 @@ import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
 import formatP from '../../assets/format_p.svg'
 import formatImg from '../../assets/image.svg'
-import formatSep from '../../assets/tabs.svg'
+import formatSep from '../../assets/separator.svg'
+import formatKanban from '../../assets/kanban.svg'
 
 import addInd from '../../assets/add.svg'
 import removeInd from '../../assets/delete.svg'
+import arrowRight from '../../assets/arrow-right.svg'
 import dragInd from '../../assets/drag_indicator.svg'
 
 import LangTranslator from '../../lib/context/language'
@@ -90,6 +92,17 @@ function NoteEditor(props){
             type:type,
             text:""
         };
+
+        if(type == "kb"){
+            initialContent = {
+                type:type,
+                title:"",
+                backlog:[],
+                doing:[],
+                review:[],
+                done:[]
+            }
+        }
 
         if(type =="img"){
             const x = Math.round(Math.random() * 300) + 200;
@@ -251,7 +264,7 @@ function NoteEditor(props){
             //!fix size to dynamic
             setCrtBlockStyle(
                 {
-                    top:rect.top - 185,
+                    top:rect.top - 218,
                     left:rect.left -15 ,
                     paddingBottom: "35px"
                 }
@@ -305,6 +318,15 @@ function NoteEditor(props){
     else if(type == "img") return lang.tr("Enter an image caption...")
     else if(type == "h1") return lang.tr("Enter Heading H1...")
     else if(type == "h2") return lang.tr("Enter Heading H2...")
+   }
+
+
+
+   function addKanbanBacklog(index,task){
+    let copy = content;
+    copy[index].backlog.push(task);
+    setContent(copy);
+    setFF(ff+1)
    }
 
 
@@ -375,6 +397,68 @@ function NoteEditor(props){
                     : c.type == "sep" ?
                     <>
                         <div className='separator'></div>
+                    </>
+                    : c.type == "kb" ?
+                    <>
+                        <div className='kanban'>
+                            <section><input placeholder={"Enter a title..."}/></section>
+                            <section className="kb-lower">
+                                <section>
+                                    <h4>Backlog</h4>
+                                    <input placeholder={"New Task..."} onKeyDown={(e)=>{if(e.key == "Enter") addKanbanBacklog(index,e.target.value); e.target.value = "";}}/>
+                                    <ul>
+                                        {c.backlog.map((task)=>{
+                                            return <>
+                                             <li className="kb-task">
+                                                <p className="kb-name">{task}</p>
+                                                <div>
+                                                    {/* <img className="kb-rm rt180" src={arrowRight} /> */}
+                                                    <img className="kb-rm" src={arrowRight} />
+                                                    <img className="kb-rm" src={removeInd} />
+                                                </div>                                    
+                                            </li>
+                                            </>
+                                        })}
+                                        {/* <li className="kb-task">
+                                            <p className="kb-name">Add support for ES (Spanish) language</p>
+                                            <div>
+                                              
+                                                <img className="kb-rm" src={arrowRight} />
+                                                <img className="kb-rm" src={removeInd} />
+                                            </div>                                    
+                                        </li> */}
+                                    </ul>
+                                </section>
+                                <section>
+                                    <h4>Doing</h4>
+                                    <input placeholder={"New Task..."}/>
+                                    <ul>
+                                        <li className="kb-task">
+                                            <p className="kb-name">Finish Kanban Block</p>
+                                            <div>
+                                                <img className="kb-rm rt180" src={arrowRight} />
+                                                <img className="kb-rm" src={arrowRight} />
+                                                <img className="kb-rm" src={removeInd} />
+                                            </div>      
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section>
+                                    <h4>Done</h4>
+                                    <input placeholder={"New Task..."}/>
+                                    <ul>
+                                    <li className="kb-task">
+                                            <p className="kb-name">Create a Language System</p>
+                                            <div>
+                                                <img className="kb-rm rt180" src={arrowRight} />
+                                                {/* <img className="kb-rm" src={arrowRight} /> */}
+                                                <img className="kb-rm" src={removeInd} />
+                                            </div>                                    
+                                        </li>
+                                    </ul>
+                                </section>
+                            </section>
+                        </div>
                     </>
                     : c.type == "ai" ?
                     <>
@@ -467,6 +551,10 @@ function NoteEditor(props){
             <div onClick={()=>{addBlock("sep")}}>
                 <img src={formatSep}/>
                 <p>{lang.tr("Separator")}</p>
+            </div>
+            <div onClick={()=>{addBlock("kb")}}>
+                <img src={formatKanban}/>
+                <p>Kanban</p>
             </div>
         </div>}
          <div>
