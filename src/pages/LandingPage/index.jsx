@@ -15,14 +15,19 @@ import screenshotNote from '../../assets/screenshots/note-page.png'
 import './LandingPage.css'
 import { useEffect } from 'react'
 import LangTranslator from '../../lib/context/language'
+import { useUser } from '../../lib/context/user'
 
 
 const DEV_GITHUB = "https://github.com/t4zzlerdeveloper";
 const RUBIUM_GITHUB = DEV_GITHUB + "/rubium";
 
+
 const lang = new LangTranslator("LandingPage");
 
+
 function LandingPage(){
+
+    const user = useUser();
 
     useEffect(()=>{
         window.scrollTo(0,0);

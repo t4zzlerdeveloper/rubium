@@ -135,7 +135,7 @@
 .p{
   resize: none;
   font-family: inherit;
-  color:white;
+  color:rgb(200, 200, 200) !important;
   border: none;
   outline: none;
   background-color: inherit;
@@ -211,7 +211,8 @@
 
 .separator{
   width: 90%;
-  border-top: 1px solid  #F45B69;
+  border-radius: 10px;
+  border-top: 1.5px solid  rgba(244, 91, 104, 0.25)
 }
 
 

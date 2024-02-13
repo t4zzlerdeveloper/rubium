@@ -63,7 +63,9 @@
             "Yesterday at ": "Ontem às ",
             "Draft Note": "Rascunho",
             "Shared with me": "Patilhado comigo",
-            "New Note": "Nova Nota"
+            "New Note": "Nova Nota",
+            "_invertName": true,
+            "of": "de"
         },
         "NoteEditor":{
             "Enter an image caption...":"Escreve uma legenda...",

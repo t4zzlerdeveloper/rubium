@@ -1,22 +1,37 @@
 import ptLang from '../../langs/pt.json'
 
+import { locale } from '../appwrite';
+
+const languages = {
+    "pt": ptLang,
+    "br": ptLang //tmp
+}
+
 class LangTranslator{
 
     constructor(sec){
-        const ll = localStorage.getItem("locale");
-        if(ll){
-          this.locale = ll;
-        }
-        else{
-           localStorage.setItem("locale","default");
-           this.locale = "default";
-        }
+
+        this.loading = true;
+
+        locale.get()
+        .then((res)=>{
+            this.locale = res.countryCode.toLowerCase();
+            this.loading = false;
+        }).catch((err)=>{
+            this.locale = "default";
+            this.loading = false;
+        });
         this.sec = sec;
     }
 
+    eval(text){
+        if(this.locale in languages) return languages[this.locale][this.sec][text] ? true : false;
+        return false;
+    }
+
     tr(text) {
-        if(this.locale == "default") return text;
-        else if(this.locale == "pt") return ptLang[this.sec][text];
+        if(this.locale in languages) return languages[this.locale][this.sec][text] ? languages[this.locale][this.sec][text] : text;
+        return text;
     }
 }
 

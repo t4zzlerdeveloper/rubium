@@ -259,7 +259,8 @@ useEffect(()=>{
       <div className='sidebar'>
         <div className='side-title'>
           <img src={rubiumLogo}/>
-          <p><strong>{user.current && user.current.name + "'s"}</strong><br/>Rubium</p>
+          {lang.eval("_invertName") ? <p>Rubium<strong><br/> {lang.tr("of")} {user.current && user.current.name}</strong></p> : <p><strong>{user.current && user.current.name + "'s"}</strong><br/>Rubium</p>}
+          
         </div>
 
         <div className='note-create'>
