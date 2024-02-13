@@ -16,7 +16,9 @@ import ConfirmationDialog from '../../views/ConfirmationDialog'
 import ShareDialog from '../../views/ShareDialog'
 import NoteEditor from '../../views/NoteEditor'
 
+import LangTranslator from '../../lib/context/language'
 
+const lang = new LangTranslator("NoteApp");
 
 function NoteApp() {
 
@@ -46,7 +48,7 @@ function NoteApp() {
   }
 
   function loadNoteById(id){
-    if(id == "draft") setNote({$id:"draft",title:"New Note",content:""});
+    if(id == "draft") setNote({$id:"draft",title:lang.tr("New Note"),content:""});
     setLoadingCurrentNote(true);
     databases.getDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,id)
     .then((res)=>{
@@ -84,11 +86,11 @@ function NoteApp() {
 
       databases.createDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,ID.unique(),data,permissions)
       .then((res)=>{
-        showToast("Saved new note successfully!","success")
+        showToast(lang.tr("Saved new note successfully!"),"success")
         loadNotes(true);
       })
       .catch(()=>{
-        showToast("Error saving new note...","error")
+        showToast(lang.tr("Error saving new note..."),"error")
         setLoadingNotes(false);
       })
     }
@@ -98,11 +100,11 @@ function NoteApp() {
         content: note.content,
       })
       .then((res)=>{
-        showToast("Changes saved successfully!","success")
+        showToast(lang.tr("Changes saved successfully!"),"success")
         loadNotes();
       })
       .catch(()=>{
-        showToast("Error saving changes...","error")
+        showToast(lang.tr("Error saving changes..."),"error")
       })
     }
   }
@@ -112,17 +114,19 @@ function NoteApp() {
 
     if(note.$id == "draft"){
       setNotes(notes.filter(item => item.$id !== "draft"));
-      showToast("Draft discarded successfully!","success")
+      showToast(lang.tr("Draft discarded successfully!"),"success")
       loadNotes(true);
     }
     else{
       databases.deleteDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id)
       .then((res)=>{
-        showToast("Note deleted successfully!","success")
+        showToast(lang.tr("Note deleted successfully!"),"success")
         loadNotes(true);
+        //! tmp fix ShareDialog Error
+        // window.location.reload();
       })
       .catch(()=>{
-        showToast("Error deleting note...","error")
+        showToast(lang.tr("Error deleting note..."),"error")
         setLoadingNotes(false);
       })
     }
@@ -135,7 +139,7 @@ function NoteApp() {
 
     setLoadingNotes(true);
     setEditable(true);
-    showToast("Created a new draft!","info")
+    showToast(lang.tr("Created a new draft!"),"info")
     setNotes([...notes,{$id:"draft",title:"New Note",content:[{type:"p",text:""}]}]);
     loadNoteById("draft");
     setLoadingNotes(false);
@@ -175,10 +179,10 @@ function NoteApp() {
     
     let dateString = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear(); 
     if (d.toDateString() == n.toDateString()) {
-      dateString = "Today at ";
+      dateString = lang.tr("Today at ");
        
     } else if(y.toDateString() == d.toDateString() ){
-      dateString = "Yesterday at ";
+      dateString = lang.tr("Yesterday at ");
     }
 
     return dateString + " " +
@@ -224,15 +228,15 @@ useEffect(()=>{
        />
 
       <ConfirmationDialog display={noteToDelete !== null} 
-      text={`Are you sure you want to delete the note named\n "${noteToDelete && noteToDelete.title}"?`} 
+      text={`${lang.tr("Are you sure you want to delete the note named")}\n "${noteToDelete && noteToDelete.title}"?`} 
       handleCancelation={()=>{setNoteToDelete(null);}} 
       handleConfirmation={()=>{deleteNote(noteToDelete);setNoteToDelete(null);}} />
 
       <ConfirmationDialog display={!userVerified && !emailResent} 
-      text={`Verify your account with the link sent to your email to continue using Rubium. Press 'Done' after you verified the email.`} 
-      title={"Email Verification Required"}
-      cancelText={"Re-send email"}
-      confirmText={"Done"}
+      text={lang.tr(`Verify your account with the link sent to your email to continue using Rubium. Press 'Done' after you verified the email.`)} 
+      title={lang.tr("Email Verification Required")}
+      cancelText={lang.tr("Re-send email")}
+      confirmText={lang.tr("Done")}
       handleCancelation={async () => {
         user.sendVerification();
         setEmailResent(true);
@@ -240,9 +244,9 @@ useEffect(()=>{
       handleConfirmation={()=>{document.location.reload()}} />
 
     <ConfirmationDialog display={!userVerified && emailResent} 
-      text={`We have re-sent the verification link to your email. Press 'Ok' when you are finished verifying it.`} 
-      title={"Check your email again"}
-      cancelText={"Re-send again"}
+      text={lang.tr(`We have re-sent the verification link to your email. Press 'Ok' when you are finished verifying it.`)} 
+      title={lang.tr("Check your email again")}
+      cancelText={lang.tr("Re-send again")}
       confirmText={"Ok"}
       handleCancelation={async () => {
         user.sendVerification();
@@ -260,7 +264,7 @@ useEffect(()=>{
 
         <div className='note-create'>
           <button onClick={()=>{createNewNote()}}>+</button>
-          <input type="text" placeholder="Search notes..." className='side-search' value={searchQuery} onChange={handleSearch}/>
+          <input type="text" placeholder={lang.tr("Search notes...")} className='side-search' value={searchQuery} onChange={handleSearch}/>
         </div>
         
         {loadingNotes ? <Loader/>
@@ -268,18 +272,18 @@ useEffect(()=>{
           return <div key={nt.$id} className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
             <p>{nt.title}
               <a className={nt.$id == "draft" ? "draft" : checkDelete(nt) ? "private" : "shared"}>&nbsp;
-               {checkDelete(nt) || nt.$id == "draft" ? nt.$id == "draft" ? "Draft Note" : parseDateTime(nt.$updatedAt) : "Shared with me"} </a>
+               {checkDelete(nt) || nt.$id == "draft" ? nt.$id == "draft" ? lang.tr("Draft Note") : parseDateTime(nt.$updatedAt) : lang.tr("Shared with me")} </a>
             </p>
             {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/> : <></>}
             </div>
-        }): <div className="side-item" >Nothing to see here.</div>}
+        }): <div className="side-item" >{lang.tr("Nothing to see here.")}</div>}
         <button
             className='side-logout'
             type="button"
             onClick={async () => {
               await user.logout();
             }}
-            >Logout <img src={logoutIcon}/></button>
+            >{lang.tr("Logout")} <img src={logoutIcon}/></button>
       </div>
       <div className='main-div'>
         <div className='main-controls'>
@@ -290,19 +294,18 @@ useEffect(()=>{
                 if(editable){saveCurrentNote()};setEditable(!editable)}}>
                 <img 
                 src={editable ? saveIcon : editIcon} />
-                <p>{editable ?  "Save" : "Edit"}</p>
+                <p>{editable ?  lang.tr("Save") : lang.tr("Edit") }</p>
               </div>
             : <></>}
             {checkDelete(note) ? 
             <div  className="share-icon" onClick={()=>{setSharing(true)}}>
               <img src={shareIcon}/>
-              <p>Share</p>
+              <p>{lang.tr("Share")}</p>
             </div>
             : <></>}
           </>}
         </div>
         {loadingCurrentNote ? <Loader/> : <div className='main-div-inner'>
-          {/* <p style={{position:"absolute",color:"gray",fontSize:"10px"}}>{note.$id}</p> */}
           <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
 
           <NoteEditor 

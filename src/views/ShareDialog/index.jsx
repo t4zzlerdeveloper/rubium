@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import './ShareDialog.css'
 
-import { avatars, client, databases,functions } from '../../lib/appwrite'
+import { avatars,databases,functions } from '../../lib/appwrite'
 import { useUser } from '../../lib/context/user';
 
 import removePerson from '../../assets/person_remove.svg'
 import closeIcon from '../../assets/close.svg'
 import { Functions, Permission, Role } from 'appwrite';
 import Loader from '../Loader';
+import LangTranslator from '../../lib/context/language';
 
-
+const lang = new LangTranslator("ShareDialog");
 
 function ShareDialog(props){
 
@@ -160,11 +161,18 @@ function ShareDialog(props){
           '/'+query,
           'GET'
           ).then((res)=>{
-            setSharedUsers(JSON.parse(res.responseBody));
-            setLoadingUsers(false);
-            setEmail("")
+            if(res.success){
+              setSharedUsers(JSON.parse(res.responseBody));
+              setLoadingUsers(false);
+              setEmail("")
+            }
+            else{
+              setSharedUsers([]);
+              setLoadingUsers(false);
+            }
           })
           .catch(()=>{
+            setSharedUsers([]);
             setLoadingUsers(false);
           })
 
@@ -174,21 +182,21 @@ function ShareDialog(props){
         <div className={props.display && !confirmed ? 'share-dialog' : 'share-dialog-hidden' }>
             <div>
                 <div className="sh-top" >
-                    <h4>Share this note</h4>
+                    <h4>{lang.tr("Share this note")}</h4>
                     <img  onClick={()=>{props.onClose();setConfirmed(true)}} src={closeIcon}/>
                 </div>
                
                 
-                    <p>You can quickly share a note with a friend to easily collaborate by providing the email associated to their Rubium account.</p>
+                    <p>{lang.tr("You can quickly share a note with a friend to easily collaborate by providing the email associated to their Rubium account.")}</p>
                     {/* <p>{props.noteId ? props.noteId : "No note id"}</p> */} 
                     <div className='sh-search'>
-                        <input placeholder="Enter the email to share with"
+                        <input placeholder={lang.tr("Enter the email to share with")}
                         value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-                         {loadingUsers ? <Loader/> : <button className="share-btn" onClick={()=>{shareNoteWithUser(email);}}>Add</button>}
+                         {loadingUsers ? <Loader/> : <button className="share-btn" onClick={()=>{shareNoteWithUser(email);}}>{lang.tr("Add")}</button>}
                     </div>
                     <div className='shared-list'>
                       {loadingUsers ? <></> : sharedUsers.length == 0 ? 
-                        <p>You haven´t shared this note with anyone yet.</p>
+                        <p>{lang.tr("You haven´t shared this note with anyone yet.")}</p>
                        : sharedUsers.map((u)=>{
                         return <div className='sh-list-item'>
                                   <img className="sh-profile" src={avatars.getInitials(u.name)}/>
@@ -199,15 +207,15 @@ function ShareDialog(props){
                     </div>
              
                     <br></br>
-                    <p>You can also publish it on the web, creating a share-able link</p>
+                    <p>(Experimental) {lang.tr("You can also publish it on the web, creating a share-able link")}</p>
                     {isPublished ?
                     <>
                       <div>
                         <a onClick={()=>{navigator.clipboard.writeText(`${window.location.host}/note/${note.$id}`)}}>{`${window.location.host}/note/${note.$id}` }</a>
                       </div>
-                      <button className="share-can-btn" onClick={()=>{unpublishNote()}}>Un-Publish</button>
+                      <button className="share-can-btn" onClick={()=>{unpublishNote()}}>{lang.tr("Un-Publish")}</button>
                     </>:
-                    <button className="share-can-btn" onClick={()=>{publishNote()}}>Publish</button>}
+                    <button className="share-can-btn" onClick={()=>{publishNote()}}>{lang.tr("Publish")}</button>}
                   
                    
             </div>

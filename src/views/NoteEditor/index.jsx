@@ -11,11 +11,13 @@ import addInd from '../../assets/add.svg'
 import removeInd from '../../assets/delete.svg'
 import dragInd from '../../assets/drag_indicator.svg'
 
+import LangTranslator from '../../lib/context/language'
+
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
-
+const lang = new LangTranslator("NoteEditor");
 
 const dummyContent = [
     {
@@ -94,7 +96,7 @@ function NoteEditor(props){
             const y = Math.round(Math.random() * 300) + 200;
             initialContent = {
                 type:type,
-                text : alt ? alt :`Enter an image caption.`,
+                text : alt ? alt :"",
                 url : url ? url : `//unsplash.it/${x}/${y}`
             }
         }
@@ -299,10 +301,10 @@ function NoteEditor(props){
 
 
    function getPlaceholder(type){
-    if(type == "p") return "Write a new paragraph...";
-    else if(type == "img") return "Enter an image caption..."
-    else if(type == "h1") return "Enter Heading H1..."
-    else if(type == "h2") return "Enter Heading H2..."
+    if(type == "p") return lang.tr("Write a new paragraph...");
+    else if(type == "img") return lang.tr("Enter an image caption...")
+    else if(type == "h1") return lang.tr("Enter Heading H1...")
+    else if(type == "h2") return lang.tr("Enter Heading H2...")
    }
 
 
@@ -377,7 +379,7 @@ function NoteEditor(props){
                     : c.type == "ai" ?
                     <>
                         <div>{generated}</div>
-                        <input value={prompt} onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e)=>{if(e.key === "Enter"){ generateContent()}}} placeholder="Enter Prompt"/>
+                        <input value={prompt} onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e)=>{if(e.key === "Enter"){ generateContent()}}} placeholder={lang.tr("Enter Prompt")}/>
                     </>
                     : c.type == "p" ?
                     <>
@@ -448,23 +450,23 @@ function NoteEditor(props){
 
             <div onClick={()=>{addBlock("h1")}}>
                 <img src={formatH1}/>
-                <p>Heading H1</p>
+                <p>{lang.tr("Heading H1")}</p>
             </div>
             <div onClick={()=>{addBlock("h2")}}>
                 <img src={formatH2}/>
-                <p>Heading H2</p>
+                <p>{lang.tr("Heading H2")}</p>
             </div>
             <div onClick={()=>{addBlock("p")}}>
                 <img src={formatP}/>
-                <p>Paragraph</p>
+                <p>{lang.tr("Paragraph")}</p>
             </div>
             <div onClick={()=>{addBlock("img")}}>
                 <img src={formatImg}/>
-                <p>Random Image</p>
+                <p>{lang.tr("Random Image")}</p>
             </div>
             <div onClick={()=>{addBlock("sep")}}>
                 <img src={formatSep}/>
-                <p>Separator</p>
+                <p>{lang.tr("Separator")}</p>
             </div>
         </div>}
          <div>

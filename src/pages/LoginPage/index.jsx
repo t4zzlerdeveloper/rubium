@@ -8,9 +8,12 @@ import Loader from '../../views/Loader';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../../views/Toast';
 import OAuthButton from '../../views/OAuthButton';
+import LangTranslator from '../../lib/context/language';
 
 const validStyle = {color:"rgba(255,255,255,0.8)"};
 const invalidStyle = {color:"rgba(211, 111, 111,0.8)"};
+
+const lang = new LangTranslator("LoginPage");
 
 function LoginPage(){
 
@@ -38,7 +41,7 @@ function LoginPage(){
         setLoading(false)
       })
       .catch(()=>{
-        showToast("Invalid credentials or account does not exist...","error")
+        showToast(lang.tr("Invalid credentials or account does not exist..."),"error")
         setLoading(false)
       });
      
@@ -88,7 +91,7 @@ function LoginPage(){
         <div className='login-logo-con'>
             <img src={rubiumLogo}/>
         </div>
-        <h1>Sign in to Rubium</h1>
+        <h1>{lang.tr("Sign in to Rubium")}</h1>
         <input 
           type="text" 
           placeholder="Email" 
@@ -112,8 +115,8 @@ function LoginPage(){
         <br></br>
         {loading ? <Loader/> :
         <div className='login-buttons'>
-             <a  onClick={() => navigate("/register")}>Not yet registered?</a>
-            <button id="lg-btn" disabled={!validEmail || !validPassword}  onClick={() => {if(validEmail && validPassword){login(email, password)}else{showToast("Invalid credentials...","error")}}}>Sign in</button>
+             <a  onClick={() => navigate("/register")}>{lang.tr("Not yet registered?")}</a>
+            <button id="lg-btn" disabled={!validEmail || !validPassword}  onClick={() => {if(validEmail && validPassword){login(email, password)}else{showToast("Invalid credentials...","error")}}}>{lang.tr("Sign in")}</button>
         </div>}   
 
         {loading ? <></> :<> 

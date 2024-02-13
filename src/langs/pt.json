@@ -1,0 +1,96 @@
+{
+        "LandingPage":{
+            "Our Story": "A nossa história",
+            "Pricing": "Preço",
+            "Suggestions":"Sugestões",
+            "Star on GitHub": "Adicionar no GitHub",
+            "Launch App": "Abrir App",
+            "Notes": "Notas",
+            "Should Only": "apenas deveriam",
+            "Cost Time": "custar tempo",
+            "Secure, Fast and Open-Source Note-taking app": "App Segura, Rápida e Open-Source para tirar Notas ",
+            "Secure Authentication": "Autenticação Segura",
+            "powered by Appwrite": "fornecida pela Appwrite",
+            "Free of charge": "Sem Custos",
+            "Notes already cost your time.": "Tirar notas já custa tempo.",
+            "Subscribe to our newsletter": "Subscreve a nossa newsletter",
+            "Get updates on your email about new and cool features.": "Recebe atualizações no teu email acerca de novas funcionalidades.",
+            "Subscribe": "Subscrever",
+            "Your email": "O teu email",
+            "Developed by": "Desenvolvido por"
+
+        },
+        "LoginPage":{
+            "Sign in to Rubium": "Entrar no Rubium",
+            "Sign in": "Entrar",
+            "Not yet registered?": "Ainda não tens conta?",
+            "Invalid credentials or account does not exist...": "Credenciais inválidas ou conta inexistente..."
+        },
+        "RegisterPage":{
+            "Invalid details or connection error...": "Detalhes inválidos ou erro de conexão...",
+            "Create your Rubium's Account": "Cria a tua Conta Rubium",
+            "Name": "Nome",
+            "Confirm": "Confirmar",
+            "Already have an account?":"Já tens uma conta?",
+            "Sign up": "Criar Conta"
+        },
+        "OAuthButton":{
+            "Sign in with": "Entrar com"
+        },
+        "NoteApp": {
+            "Saved new note successfully!": "Nova nota guardada com sucesso!",
+            "Error saving new note...": "Erro a guardar nova nota...",
+            "Changes saved successfully!": "Alterações guardadas com sucesso!",
+            "Error saving changes...": "Erro a guardar alterações...",
+            "Draft discarded successfully!": "Rascunho descartado com sucesso!",
+            "Note deleted successfully!": "Nota eliminada com sucesso!",
+            "Error deleting note...": "Erro a eliminar nota...",
+            "Created a new draft!": "Novo rascunho criado!",
+            "Are you sure you want to delete the note named": "Tens a certeza que queres eliminar a nota com o nome",
+            "Verify your account with the link sent to your email to continue using Rubium. Press 'Done' after you verified the email.": "Verifica a tua conta com o link enviado para o teu email para continuat a usar o Rubium. Clica em 'Feito' após teres verificado o email.",
+            "Email Verification Required": "Verificação de Email Necessária",
+            "Re-send email": "Re-enviar email",
+            "Done": "Feito",
+            "We have re-sent the verification link to your email. Press 'Ok' when you are finished verifying it.": "Re-enviámos um link de verificação para o teu email. Clica em 'Ok' quando terminares de verificá-lo.",
+            "Check your email again": "Verifica o teu email novamente",
+            "Nothing to see here.": "Nada para ver aqui.",
+            "Logout": "Sair",
+            "Save":"Guardar",
+            "Edit":"Editar",
+            "Share":"Partilhar",
+            "Search notes...": "Pesquisar notas...",
+            "Today at ": "Hoje às ",
+            "Yesterday at ": "Ontem às ",
+            "Draft Note": "Rascunho",
+            "Shared with me": "Patilhado comigo",
+            "New Note": "Nova Nota"
+        },
+        "NoteEditor":{
+            "Enter an image caption...":"Escreve uma legenda...",
+            "Write a new paragraph...": "Escreve um novo parágrafo...",
+            "Enter Heading H1...": "Introduz um Título H1...",
+            "Enter Heading H2...": "Introduz um Título H2...",
+            "Enter Prompt": "Escreve um prompt",
+            "Heading H1": "Título H1",
+            "Heading H2": "Título H2",
+            "Paragraph": "Parágrafo",
+            "Random Image": "Imagem Aleatória",
+            "Separator": "Separador"
+        },
+        "ConfirmationDialog":{
+            "Confirmation": "Confirmação",
+            "Are you sure you want to do that?": "Tens a certeza que queres fazer isso?",
+            "Cancel": "Cancelar",
+            "Confirm": "Confirmar"
+        },
+        "ShareDialog":{
+            "Share this note": "Partilhar esta nota",
+            "You can quickly share a note with a friend to easily collaborate by providing the email associated to their Rubium account.": "Podes partilhar uma nota com um amigo com facilidade através do email associado à sua Conta Rubium.",
+            "Enter the email to share with": "Introduz o email a partilhar",
+            "Add":"Adicionar",
+            "You haven´t shared this note with anyone yet.":"Ainda não partilhaste esta nota com ninguém.",
+            "You can also publish it on the web, creating a share-able link": "Também podes publicar esta nota na internet, criando um link partilhável",
+            "Publish": "Publicar",
+            "Un-Publish": "Des-Publicar"
+        }
+}

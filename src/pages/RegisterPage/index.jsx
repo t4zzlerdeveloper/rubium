@@ -7,10 +7,13 @@ import { useUser } from "../../lib/context/user";
 import Loader from '../../views/Loader';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../../views/Toast';
+import LangTranslator from '../../lib/context/language';
 
 
 const validStyle = {color:"rgba(255,255,255,0.8)"};
 const invalidStyle = {color:"rgba(211, 111, 111,0.8)"};
+
+const lang = new LangTranslator("RegisterPage");
 
 function RegisterPage(){
 
@@ -42,7 +45,7 @@ function RegisterPage(){
         setLoading(false)
       })
       .catch(()=>{
-        showToast("Invalid details or connection error...","error")
+        showToast(lang.tr("Invalid details or connection error..."),"error")
         setLoading(false)
       });
      
@@ -110,10 +113,10 @@ function RegisterPage(){
         <div className='register-logo-con'>
             <img src={rubiumLogo}/>
         </div>
-        <h1>Create your Rubium's Account </h1>
+        <h1>{lang.tr("Create your Rubium's Account")}</h1>
         <input 
           type="text" 
-          placeholder="Name*" 
+          placeholder={lang.tr("Name") + "*"} 
           value={name}
           onChange={(e)=>{handleNameChange(e)}}
           onKeyDown={(e)=>{if(e.key == "Enter"){document.getElementById("el-f").focus()}}} 
@@ -129,7 +132,7 @@ function RegisterPage(){
         <input 
           id='elc-f'  
           type="text" 
-          placeholder="Confirm Email*" 
+          placeholder={lang.tr("Confirm") + " Email*"}
           value={emailCopy} 
           onKeyDown={(e)=>{if(e.key == "Enter"){document.getElementById("pwd-f").focus()}}} 
           onChange={(e)=>{handleEmailCopyChange(e)}}
@@ -145,8 +148,8 @@ function RegisterPage(){
         <br></br>
         {loading ? <Loader/> :
         <div className='register-buttons'>
-             <a  onClick={() => navigate("/login")}>Already have an account?</a>
-            <button id="rg-f" disabled={!validName || !validEmail || !validEmailCopy || !validPassword} onClick={() => {if(validName && validEmail && validEmailCopy && validPassword){register(name,email, password)}}}>Sign up</button>
+             <a  onClick={() => navigate("/login")}>{lang.tr("Already have an account?")}</a>
+            <button id="rg-f" disabled={!validName || !validEmail || !validEmailCopy || !validPassword} onClick={() => {if(validName && validEmail && validEmailCopy && validPassword){register(name,email, password)}}}>{lang.tr("Sign up")}</button>
         </div>} 
     </div>
     <div className="register-back" style={{background: `url(${registerBack})`,backgroundSize:"cover"}}></div>

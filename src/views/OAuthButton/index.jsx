@@ -3,6 +3,7 @@ import './OAuthButton.css'
 
 import githubLogo from '../../assets/github.svg'
 import googleLogo from '../../assets/google.svg'
+import LangTranslator from '../../lib/context/language';
 
 const providerDict =
 {
@@ -16,7 +17,11 @@ const providerDict =
     }
 }
 
+const lang = new LangTranslator("OAuthButton");
+
+
 function GitHubButton(props){
+
 
     const user = useUser();
 
@@ -26,7 +31,7 @@ function GitHubButton(props){
         <button type="button" className="oauth-btn" onClick={()=>{user.loginWith(props.provider)}} >
         <div>
             <img src={provider.img}/>
-            <p>Sign in with {provider.name}</p>
+            <p>{lang.tr("Sign in with")} {provider.name}</p>
         </div>
 
         </button>)

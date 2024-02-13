@@ -14,9 +14,13 @@ import screenshotApp from '../../assets/screenshots/login-page.png'
 import screenshotNote from '../../assets/screenshots/note-page.png'
 import './LandingPage.css'
 import { useEffect } from 'react'
+import LangTranslator from '../../lib/context/language'
+
 
 const DEV_GITHUB = "https://github.com/t4zzlerdeveloper";
 const RUBIUM_GITHUB = DEV_GITHUB + "/rubium";
+
+const lang = new LangTranslator("LandingPage");
 
 function LandingPage(){
 
@@ -25,31 +29,32 @@ function LandingPage(){
     },[])
 
     const navigate = useNavigate();
-    return (<div className='landing-page' >
+
+    return (
+        <div className='landing-page' >
         <div style={{animation:"hero-back-anim 2s",backgroundPositionY:"-30vw",zIndex:"-1",position:"absolute",top:"0",backgroundImage:`url(${hero})`,width:"100vw",height:"130vw",backgroundRepeat:"no-repeat",backgroundSize:"contain"}}></div>
     
     <nav className='navbar'>
         <div className='nav-left'>
             <img className='nav-logo' src={rubiumLogo} onClick={()=>{document.location.reload()}}/>
-            <a>Our Story</a>
-            <a>Pricing</a>
-            <a>Suggestions</a>
+            <a>{lang.tr("Our Story")}</a>
+            <a>{lang.tr("Pricing")}</a>
+            <a>{lang.tr("Suggestions")}</a>
         </div>
         <div className='nav-right'>
             <button className='star-git' onClick={()=>{window.open(RUBIUM_GITHUB)}}>
                 <img src={star}/>
-                <p>Star on GitHub</p>
+                <p>{lang.tr("Star on GitHub")}</p>
             </button>
-            <button className='launch-app' onClick={()=>{navigate("/app")}}>Launch App</button>
+            <button className='launch-app' onClick={()=>{navigate("/app")}}>{lang.tr("Launch App")}</button>
         </div>
     </nav>
 
     <div className='hero'>
-      <h1><strong>Notes</strong> Should Only <strong>Cost Time</strong>.</h1>
-      <h4>Secure, Fast and Open-Source Note-taking app</h4>
+      <h1><strong>{lang.tr("Notes")}</strong> {lang.tr("Should Only")} <strong>{lang.tr("Cost Time")}</strong>.</h1>
+      <h4>{lang.tr("Secure, Fast and Open-Source Note-taking app")}</h4>
       <p></p>
       <p></p>
-      {/* <button  onClick={()=>{navigate("/app")}}>Start Rubiuming</button> */}
 
       <img className="arrow-down" src={arrow} 
       onClick={()=>{window.scrollTo({
@@ -63,8 +68,8 @@ function LandingPage(){
 
     <div className='screenshot-app'>
         <div className='scr-app-div'>
-            <img src={shield} />
-            <h2><strong>Secure Authentication</strong> powered by Appwrite</h2>
+            <img src={shield} /> 
+            <h2><strong>{lang.tr("Secure Authentication")}</strong> {lang.tr("powered by Appwrite")} </h2>
         </div>
         <img src={screenshotApp} onClick={()=>{navigate("/login")}}/>
      </div>
@@ -73,7 +78,7 @@ function LandingPage(){
      <img src={screenshotNote} onClick={()=>{navigate("/app")}}/>
         <div className='scr-app-div'>
             <img src={money} />
-            <h2><strong>Free of charge</strong><br></br> Notes already cost your time.</h2>
+            <h2><strong>{lang.tr("Free of charge")}</strong><br></br> {lang.tr("Notes already cost your time.")}</h2>
         </div>
      </div>
 
@@ -81,10 +86,10 @@ function LandingPage(){
 
     <footer>
         <div className='newsletter'>
-            <h4>Subscribe to our newsletter</h4>
-            <p>Get updates on your email about new and cool features.</p>
-            <input placeholder='Your email'></input>
-            <button enabled="false">Subscribe</button>
+            <h4>{lang.tr("Subscribe to our newsletter")}</h4>
+            <p>{lang.tr("Get updates on your email about new and cool features.")}</p>
+            <input placeholder={lang.tr('Your email')}></input>
+            <button enabled="false">{lang.tr("Subscribe")}</button>
         </div>
         <div className='socials'>
             <img src={github} onClick={()=>{window.open(RUBIUM_GITHUB)}}/>
@@ -92,7 +97,7 @@ function LandingPage(){
             <img src={linkedin}/>
         </div>
         <p className='copyright'>
-            &copy; {new Date().getFullYear() || "2024"} Rubium&nbsp;&nbsp;|&nbsp;&nbsp;Developed by <a onClick={()=>{window.open(DEV_GITHUB)}}> @t4zzlerdeveloper</a>
+            &copy; {new Date().getFullYear() || "2024"} Rubium&nbsp;&nbsp;|&nbsp;&nbsp;{lang.tr("Developed by")} <a onClick={()=>{window.open(DEV_GITHUB)}}> @t4zzlerdeveloper</a>
         </p>
     </footer>
 
