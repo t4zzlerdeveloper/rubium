@@ -99,7 +99,6 @@ function NoteEditor(props){
                 title:"",
                 backlog:[],
                 doing:[],
-                review:[],
                 done:[]
             }
         }
@@ -321,10 +320,31 @@ function NoteEditor(props){
    }
 
 
-
-   function addKanbanBacklog(index,task){
+   function setKanbanTitle(index,newTitle){
     let copy = content;
-    copy[index].backlog.push(task);
+    copy[index].title = newTitle;
+    setContent(copy);
+    setFF(ff+1)
+   }
+
+   function addKanban(phase,index,task){
+    let copy = content;
+    copy[index][phase].push(task);
+    setContent(copy);
+    setFF(ff+1)
+   }
+
+   function moveKanban(index,idx,currentPhase,newPhase){
+        let copy = content;
+        let task = copy[index][currentPhase].splice(idx,1);
+        copy[index][newPhase].push(task);
+        setContent(copy);
+        setFF(ff+1)
+   }
+
+   function removeKanban(phase,index,idx){
+    let copy = content;
+    copy[index][phase].splice(idx,1);
     setContent(copy);
     setFF(ff+1)
    }
@@ -401,60 +421,61 @@ function NoteEditor(props){
                     : c.type == "kb" ?
                     <>
                         <div className='kanban'>
-                            <section><input placeholder={"Enter a title..."}/></section>
+                            <section><input  disabled={!props.editable } placeholder={"Enter a title..."} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
                             <section className="kb-lower">
                                 <section>
                                     <h4>Backlog</h4>
-                                    <input placeholder={"New Task..."} onKeyDown={(e)=>{if(e.key == "Enter") addKanbanBacklog(index,e.target.value); e.target.value = "";}}/>
+                                    <input  disabled={!props.editable } placeholder={"New Task..."} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("backlog",index,e.target.value); e.target.value = "";}}}/>
                                     <ul>
-                                        {c.backlog.map((task)=>{
+                                        {c.backlog.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task">
+                                             <li className="kb-task" >
                                                 <p className="kb-name">{task}</p>
+                                                {props.editable ? 
                                                 <div>
                                                     {/* <img className="kb-rm rt180" src={arrowRight} /> */}
-                                                    <img className="kb-rm" src={arrowRight} />
-                                                    <img className="kb-rm" src={removeInd} />
-                                                </div>                                    
+                                                    <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"backlog","doing")}}/>
+                                                    <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("backlog",index,idx)}}/>
+                                                </div> :<></> }                             
                                             </li>
                                             </>
                                         })}
-                                        {/* <li className="kb-task">
-                                            <p className="kb-name">Add support for ES (Spanish) language</p>
-                                            <div>
-                                              
-                                                <img className="kb-rm" src={arrowRight} />
-                                                <img className="kb-rm" src={removeInd} />
-                                            </div>                                    
-                                        </li> */}
                                     </ul>
                                 </section>
                                 <section>
                                     <h4>Doing</h4>
-                                    <input placeholder={"New Task..."}/>
+                                    <input  disabled={!props.editable } placeholder={"New Task..."} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("doing",index,e.target.value); e.target.value = "";}}}/>
                                     <ul>
-                                        <li className="kb-task">
-                                            <p className="kb-name">Finish Kanban Block</p>
-                                            <div>
-                                                <img className="kb-rm rt180" src={arrowRight} />
-                                                <img className="kb-rm" src={arrowRight} />
-                                                <img className="kb-rm" src={removeInd} />
-                                            </div>      
-                                        </li>
+                                    {c.doing.map((task,idx)=>{
+                                            return <>
+                                             <li className="kb-task">
+                                                <p className="kb-name">{task}</p>
+                                                {props.editable ? <div>
+                                                    <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","backlog")}}/>
+                                                    <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","done")}} />
+                                                    <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("doing",index,idx)}}/>
+                                                </div>    :<></> }                                         
+                                            </li>
+                                            </>
+                                        })}
                                     </ul>
                                 </section>
                                 <section>
                                     <h4>Done</h4>
-                                    <input placeholder={"New Task..."}/>
+                                    <input  disabled={!props.editable } placeholder={"New Task..."} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("done",index,e.target.value); e.target.value = "";}}}/>
                                     <ul>
-                                    <li className="kb-task">
-                                            <p className="kb-name">Create a Language System</p>
-                                            <div>
-                                                <img className="kb-rm rt180" src={arrowRight} />
-                                                {/* <img className="kb-rm" src={arrowRight} /> */}
-                                                <img className="kb-rm" src={removeInd} />
-                                            </div>                                    
-                                        </li>
+                                        {c.done.map((task,idx)=>{
+                                            return <>
+                                             <li className="kb-task">
+                                                <p className="kb-name">{task}</p>
+                                                {props.editable ? <div>
+                                                    <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"done","doing")}} />
+                                                    {/* <img className="kb-rm" src={arrowRight} /> */}
+                                                    <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("done",index,idx)}}/>
+                                                </div>   :<></> }                                          
+                                            </li>
+                                            </>
+                                        })}
                                     </ul>
                                 </section>
                             </section>
