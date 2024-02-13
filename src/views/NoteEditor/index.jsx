@@ -421,7 +421,7 @@ function NoteEditor(props){
                     : c.type == "kb" ?
                     <>
                         <div className='kanban'>
-                            <section><input  disabled={!props.editable } placeholder={"Enter a title..."} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
+                            <section><input  disabled={!props.editable } placeholder={"Enter a title..."} value={c.title} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
                             <section className="kb-lower">
                                 <section>
                                     <h4>Backlog</h4>
