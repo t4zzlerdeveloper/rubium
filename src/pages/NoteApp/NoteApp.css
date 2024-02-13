@@ -348,3 +348,30 @@ hr.rounded {
   filter: drop-shadow(0 0 6px #f45b689a );
 }
 
+
+.mobile-dev{
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .mobile-dev{
+    position: absolute;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    background-color: black;
+    z-index: 9999;
+    flex-direction: column;
+    width: 90vw;
+    height: 100vh;
+    font-size: 10px;
+    padding:5vw;
+    overflow: hidden;
+    gap:5vh;
+  }
+
+  .mobile-dev>img{
+    width: 30vw;
+  }
+  
+}

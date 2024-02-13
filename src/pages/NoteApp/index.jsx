@@ -320,6 +320,10 @@ useEffect(()=>{
         </div>}
       </div>
       </>: <></>}
+      <div className='mobile-dev'>
+              <img src={rubiumLogo}/>
+              <h1>{lang.tr("We are sorry but our app is still under development for smaller screens...")}</h1>
+      </div>
     </div>
   )
 }

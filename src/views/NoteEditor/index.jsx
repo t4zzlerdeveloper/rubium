@@ -421,11 +421,11 @@ function NoteEditor(props){
                     : c.type == "kb" ?
                     <>
                         <div className='kanban'>
-                            <section><input  disabled={!props.editable } placeholder={"Enter a title..."} value={c.title} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
+                            <section><input  disabled={!props.editable } placeholder={lang.tr("Enter a title...")} value={c.title} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
                             <section className="kb-lower">
                                 <section>
-                                    <h4>Backlog</h4>
-                                    <input  disabled={!props.editable } placeholder={"New Task..."} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("backlog",index,e.target.value); e.target.value = "";}}}/>
+                                    <h4>{lang.tr("Backlog")}</h4>
+                                    {props.editable ? <input disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("backlog",index,e.target.value); e.target.value = "";}}}/> : <></>}
                                     <ul>
                                         {c.backlog.map((task,idx)=>{
                                             return <>
@@ -443,8 +443,8 @@ function NoteEditor(props){
                                     </ul>
                                 </section>
                                 <section>
-                                    <h4>Doing</h4>
-                                    <input  disabled={!props.editable } placeholder={"New Task..."} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("doing",index,e.target.value); e.target.value = "";}}}/>
+                                    <h4>{lang.tr("Doing")}</h4>
+                                    {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("doing",index,e.target.value); e.target.value = "";}}}/>: <></>}
                                     <ul>
                                     {c.doing.map((task,idx)=>{
                                             return <>
@@ -461,8 +461,8 @@ function NoteEditor(props){
                                     </ul>
                                 </section>
                                 <section>
-                                    <h4>Done</h4>
-                                    <input  disabled={!props.editable } placeholder={"New Task..."} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("done",index,e.target.value); e.target.value = "";}}}/>
+                                    <h4>{lang.tr("Done")}</h4>
+                                    {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("done",index,e.target.value); e.target.value = "";}}}/>: <></>}
                                     <ul>
                                         {c.done.map((task,idx)=>{
                                             return <>

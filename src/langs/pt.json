@@ -65,7 +65,8 @@
             "Shared with me": "Patilhado comigo",
             "New Note": "Nova Nota",
             "_invertName": true,
-            "of": "de"
+            "of": "de",
+            "We are sorry but our app is still under development for smaller screens...": "Pedimos desculpa mas a nossa app para ecrãs mais pequenos ainda se encontra em desenvolvimento..."
         },
         "NoteEditor":{
             "Enter an image caption...":"Escreve uma legenda...",
@@ -77,7 +78,12 @@
             "Heading H2": "Título H2",
             "Paragraph": "Parágrafo",
             "Random Image": "Imagem Aleatória",
-            "Separator": "Separador"
+            "Separator": "Separador",
+            "New Task...": "Nova Tarefa...",
+            "Enter a title...":"Introduz um Título...",
+            "Backlog": "Ainda por fazer",
+            "Doing":"Em andamento",
+            "Done": "Concluído"
         },
         "ConfirmationDialog":{
             "Confirmation": "Confirmação",
