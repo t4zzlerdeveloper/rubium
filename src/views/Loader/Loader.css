@@ -22,3 +22,18 @@
         transform: rotate(360deg);
     }
 }
+
+.fadein{
+    opacity: 1;
+    animation-name: fade-in;
+    animation-duration: 1s;
+}
+
+@keyframes fade-in {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
