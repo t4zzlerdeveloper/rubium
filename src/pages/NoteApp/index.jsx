@@ -7,7 +7,7 @@ import deleteIcon from '../../assets/delete.svg'
 
 import { useEffect, useRef, useState } from 'react'
 import './NoteApp.css'
-import { databases } from '../../lib/appwrite'
+import { avatars, databases } from '../../lib/appwrite'
 import { useUser } from '../../lib/context/user'
 import { Functions, ID, Permission, Query, Role } from 'appwrite'
 import Loader from '../../views/Loader'
@@ -297,13 +297,16 @@ useEffect(()=>{
             {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/> : <></>}
             </div>
         }): <div className="side-item" >{searchQuery.length > 0 ? lang.tr("No results found") : lang.tr("Nothing to see here.")}</div>}
+        
+        {/* <img src={avatars.getFlag(lang.getLocale())}/> */}
         <button
             className='side-logout'
             type="button"
             onClick={async () => {
               await user.logout();
             }}
-            >{lang.tr("Logout")} <img src={logoutIcon}/></button>
+            >{lang.tr("Logout")} <img src={logoutIcon}/>
+        </button>
       </div>
       <div className='main-div'>
         <div className='main-controls'>

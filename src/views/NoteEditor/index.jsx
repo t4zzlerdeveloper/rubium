@@ -405,7 +405,7 @@ function NoteEditor(props){
                                         {c.backlog.map((task,idx)=>{
                                             return <>
                                              <li className="kb-task" >
-                                                <p className="kb-name"><a className='kb-due'>No due date</a><br/>{task}</p>
+                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                
                                                 {props.editable ? 
                                                 <div>
@@ -427,7 +427,7 @@ function NoteEditor(props){
                                     {c.doing.map((task,idx)=>{
                                             return <>
                                              <li className="kb-task">
-                                             <p className="kb-name"><a className='kb-due'>No due date </a><br/>{task}</p>
+                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","backlog")}}/>
                                                     <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","done")}} />
@@ -445,7 +445,7 @@ function NoteEditor(props){
                                         {c.done.map((task,idx)=>{
                                             return <>
                                              <li className="kb-task">
-                                             <p className="kb-name"><a className='kb-due'>No due date</a><br/>{task}</p>
+                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"done","doing")}} />
                                                     {/* <img className="kb-rm" src={arrowRight} /> */}

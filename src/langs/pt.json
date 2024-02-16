@@ -84,7 +84,8 @@
             "Enter a title...":"Introduz um Título...",
             "Backlog": "Ainda por fazer",
             "Doing":"Em andamento",
-            "Done": "Concluído"
+            "Done": "Concluído",
+            "No deadline": "Sem prazo"
         },
         "ConfirmationDialog":{
             "Confirmation": "Confirmação",

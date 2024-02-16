@@ -11,17 +11,17 @@ class LangTranslator{
 
     constructor(sec){
 
-        //this.loading = true;
-
         locale.get()
         .then((res)=>{
             this.locale = res.countryCode.toLowerCase();
-          //  this.loading = false;
         }).catch((err)=>{
-            this.locale = "default";
-            //this.loading = false;
+            this.locale = "en";
         });
         this.sec = sec;
+    }
+
+    getLocale() {
+        return this.locale
     }
 
     eval(text){

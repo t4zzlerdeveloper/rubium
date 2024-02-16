@@ -297,6 +297,11 @@
   margin:0;
   font-family: inherit;
   font-size: 14px;
+  height: 50vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  justify-content: flex-start;
+  place-items: flex-start;
 }
 
 .kb-task{
