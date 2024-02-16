@@ -266,14 +266,14 @@ hr.rounded {
 
 .main-div{
   background-color: rgb(6, 8, 6);
-  padding: 20px 50px;
+  padding: 20px 40px;
   overflow-y: scroll;
   overflow-x: hidden;
   animation: slide-in2 1s;
 }
 
 .main-div-inner{
-  padding:1vw 2vw;
+  padding:1vw 1vw;
 }
 
 .main-controls{
