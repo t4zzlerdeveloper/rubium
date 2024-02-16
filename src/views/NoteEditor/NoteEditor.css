@@ -327,6 +327,25 @@
 .kb-name{
   margin:0;
   padding:0;
+  text-align: left;
+  font-size: 14px;
+}
+
+.kb-due{
+  width: 100%;
+  padding:1px 2px;
+  background-color: rgba(255,255,255,0.05);
+  color: #888888;
+  text-align: left;
+  font-size: 10px;
+  margin: 0;
+  border-radius: 10px;
+  transition: 0.4s;
+}
+
+
+.kb-due:hover{
+  color: #f77f89;
 }
 
 .kb-rm{

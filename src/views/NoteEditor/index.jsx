@@ -21,31 +21,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
 const lang = new LangTranslator("NoteEditor");
 
-const dummyContent = [
-    {
-        type:"h1",
-        text:"H1 block",
-        underline:true,
-    },
-    {
-        type:"h2",
-        text:"Another H2 block"
-    },
-    {
-        type:"img",
-        text:"unsplash.it random image ",
-        url:"https://unsplash.it/130/193"
-    },
-    {
-        type:"p",
-        text:"This is just some <b>bold text</b> that you can see as a <p/> object"
-    },
-    {
-        type:'ai'
-    }
-
-]
-
 
 function NoteEditor(props){
 
@@ -421,7 +396,7 @@ function NoteEditor(props){
                     : c.type == "kb" ?
                     <>
                         <div className='kanban'>
-                            <section><input  disabled={!props.editable } placeholder={lang.tr("Enter a title...")} value={c.title} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
+                            <section><input  disabled={!props.editable } placeholder={props.editable ? lang.tr("Enter a title...") : ""} value={c.title} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
                             <section className="kb-lower">
                                 <section>
                                     <h4>{lang.tr("Backlog")}</h4>
@@ -430,14 +405,17 @@ function NoteEditor(props){
                                         {c.backlog.map((task,idx)=>{
                                             return <>
                                              <li className="kb-task" >
-                                                <p className="kb-name">{task}</p>
+                                                <p className="kb-name"><a className='kb-due'>No due date</a><br/>{task}</p>
+                                               
                                                 {props.editable ? 
                                                 <div>
                                                     {/* <img className="kb-rm rt180" src={arrowRight} /> */}
                                                     <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"backlog","doing")}}/>
                                                     <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("backlog",index,idx)}}/>
-                                                </div> :<></> }                             
+                                                </div> :<></> }       
+                                                             
                                             </li>
+                                            
                                             </>
                                         })}
                                     </ul>
@@ -449,12 +427,12 @@ function NoteEditor(props){
                                     {c.doing.map((task,idx)=>{
                                             return <>
                                              <li className="kb-task">
-                                                <p className="kb-name">{task}</p>
+                                             <p className="kb-name"><a className='kb-due'>No due date </a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","backlog")}}/>
                                                     <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","done")}} />
                                                     <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("doing",index,idx)}}/>
-                                                </div>    :<></> }                                         
+                                                </div>:<></> }                                         
                                             </li>
                                             </>
                                         })}
@@ -467,7 +445,7 @@ function NoteEditor(props){
                                         {c.done.map((task,idx)=>{
                                             return <>
                                              <li className="kb-task">
-                                                <p className="kb-name">{task}</p>
+                                             <p className="kb-name"><a className='kb-due'>No due date</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"done","doing")}} />
                                                     {/* <img className="kb-rm" src={arrowRight} /> */}

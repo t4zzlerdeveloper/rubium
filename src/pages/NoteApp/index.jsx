@@ -37,6 +37,20 @@ function NoteApp() {
 
   useEffect(()=>{
     loadNotes();
+    
+    //Shortcuts added CTRL-E (Edit Mode) and CTRL-S (Save Note)
+    document.onkeydown = function(e) {
+      if(e.ctrlKey || e.metaKey){
+        if (e.key.toLowerCase() === 's') {
+          setEditable(false);
+          saveCurrentNote();
+        }
+        if (e.key.toLowerCase() === 'e') {
+          setEditable(true);
+        }
+      }
+      
+  };
   },[])
 
   useEffect(()=>{
@@ -164,7 +178,10 @@ function NoteApp() {
 
   function setNoteContent(newContent){
     //console.log(newContent)
+    //const oldContent = note.content;
     setNote({...note,content:newContent});
+
+   // if(oldContent !== newContent) saveCurrentNote();
   }
 
 
