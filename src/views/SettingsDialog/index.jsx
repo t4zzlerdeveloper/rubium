@@ -21,6 +21,7 @@ function SettingsDialog(props){
   const [email,setEmail] = useState("");
   const [locale,setLocale] = useState("en");
 
+  
     useEffect(()=>{
         if(props.display) setConfirmed(false);
         console.log(user);
@@ -31,7 +32,7 @@ function SettingsDialog(props){
       setName(user.current.name)
       setEmail(user.current.email)
       setLocale(user.current.prefs.locale);
-    },[user])
+    },[user,props.display])
 
   
     function getYear(datetime){
