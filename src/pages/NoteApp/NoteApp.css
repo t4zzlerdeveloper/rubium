@@ -280,11 +280,18 @@ hr.rounded {
   position: absolute;
   z-index: 1;
   right: 20px;
-  border-radius: 8px;
+  border-radius: 18px;
   width: auto;
   display: flex;
   gap:12px;
+  padding:8px;
+  background-color: rgba(6,8,6,0.95);
+  filter:drop-shadow(0 0 0.5px rgba(161, 66, 66, 0.6));
+  opacity: 0.8;
+  transition: 0.4s;
 }
+
+.main-controls:hover{opacity: 1;}
 
 .main-controls > div{
   outline: none;
@@ -348,6 +355,38 @@ hr.rounded {
   filter: drop-shadow(0 0 6px #f45b689a );
 }
 
+.sv-to-cloud{
+  transition: 0.1s;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+.sv-to-cloud > p {
+  font-size: 12px;
+  font-weight: 300;
+  padding: 0;
+  margin: 0;
+  color:#F45B69;
+}
+
+.sv-to-cloud > img {
+  width: 14px;
+  height: 14px;
+}
+
+.gray{
+  filter:grayscale();
+}
+
+.sync-rotate {
+  animation: rotate-sync 1.4s infinite linear;
+}
+
+@keyframes rotate-sync {
+  0%{transform: rotate(0deg);}
+  100%{transform: rotate(360deg);}
+}
 
 .mobile-dev{
   display: none;

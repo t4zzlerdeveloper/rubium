@@ -79,7 +79,8 @@
 
 .block[editable=false] > input:hover,
 .block[editable=false] > .img:hover,
-.block[editable=false] > textarea:hover{
+.block[editable=false] > textarea:hover,
+.kanban[editable=false]:hover{
   background-color: transparent;
   cursor: text;
 }

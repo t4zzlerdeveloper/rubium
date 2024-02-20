@@ -1,6 +1,9 @@
 import rubiumLogo from '../../assets/rubium-logomark.svg'
 import shareIcon from '../../assets/share.svg'
-import editIcon from '../../assets/edit.svg'
+import editIcon from '../../assets/edit_note.svg'
+import syncingIcon from '../../assets/sync.svg'
+import syncedIcon from '../../assets/cloud_upload.svg'
+import viewIcon from '../../assets/visibility.svg'
 import saveIcon from '../../assets/save.svg'
 import logoutIcon from '../../assets/logout.svg'
 import deleteIcon from '../../assets/delete.svg'
@@ -35,13 +38,15 @@ function NoteApp() {
   const [loadingNotes,setLoadingNotes] = useState(true);
   const [loadingCurrentNote,setLoadingCurrentNote] = useState(true);
 
+  const [synced,setSynced] = useState(true);
+
   useEffect(()=>{
     loadNotes();
     
-    //Shortcuts added CTRL-E (Edit Mode) and CTRL-S (Save Note)
+    //Shortcuts added CTRL-E (Edit Mode) and CTRL-V (Preview Note)
     document.onkeydown = function(e) {
       if(e.ctrlKey || e.metaKey){
-        if (e.key.toLowerCase() === 's') {
+        if (e.key.toLowerCase() === 'v') {
           setEditable(false);
           saveCurrentNote();
         }
@@ -91,8 +96,9 @@ function NoteApp() {
 
   }
 
-  function saveCurrentNote(){
-    setLoadingNotes(true);
+  function saveCurrentNote(type = false,ctt = false){
+    if(!ctt) setLoadingNotes(true);
+    setSynced(false);
     if (note.$id == "draft"){
       const role = Role.user(user.current.$id);
       const permissions = [Permission.read(role),Permission.update(role),Permission.delete(role)];
@@ -104,6 +110,7 @@ function NoteApp() {
       .then((res)=>{
         showToast(lang.tr("Saved new note successfully!"),"success")
         loadNotes(true);
+        setSynced(true);
       })
       .catch(()=>{
         showToast(lang.tr("Error saving new note..."),"error")
@@ -112,12 +119,13 @@ function NoteApp() {
     }
     else{
       databases.updateDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id,{
-        title: note.title,
-        content: note.content,
+        title:  type == "title" ? ctt : note.title,
+        content: type == "content" ? ctt : note.content,
       })
       .then((res)=>{
-        showToast(lang.tr("Changes saved successfully!"),"success")
-        loadNotes();
+        //showToast(lang.tr("Changes saved successfully!"),"success")
+        if(!ctt) loadNotes();
+        setSynced(true);
       })
       .catch(()=>{
         showToast(lang.tr("Error saving changes..."),"error")
@@ -171,17 +179,21 @@ function NoteApp() {
 
   function setNoteTitle(newTitle){
     if(newTitle.length > 32) return;
+    const oldTitle = note.title;
     setNote({...note,title:newTitle})
     let targetObject = notes.filter(n => n.$id === note.$id)
     targetObject[0].title = newTitle;
+
+    if(oldTitle !== newTitle && note.$id !== 'draft') saveCurrentNote("title",newTitle);
   }
 
   function setNoteContent(newContent){
     //console.log(newContent)
-    //const oldContent = note.content;
+    const oldContent = note.content;
     setNote({...note,content:newContent});
 
-   // if(oldContent !== newContent) saveCurrentNote();
+    if(oldContent !== newContent && note.$id !== 'draft') saveCurrentNote("content",newContent);
+
   }
 
 
@@ -224,7 +236,8 @@ function showToast(msg,type) {
   setToastMessage(msg)
   var x = document.getElementById("toast")
   const newClassName = "show " + type;
-  x.className = newClassName
+  x.className = x.className.replace(newClassName, "");
+  setTimeout(function(){x.className = newClassName}, 100);
   setTimeout(function(){ x.className = x.className.replace(newClassName, ""); }, 4900);
 }
 
@@ -312,12 +325,19 @@ useEffect(()=>{
         <div className='main-controls'>
           {loadingCurrentNote ? <></>:<>
             {/* <a>{charPosLog}</a> */}
+            { note.$id == "draft" ? <></>:
+            <div className={'sv-to-cloud ' + (synced ? "" : "gray")}>
+                <p>{synced ? lang.tr("Saved to the Cloud") : lang.tr("Saving...")}</p>
+                <img 
+                className={synced ? "" :  "sync-rotate"}
+                src={synced ? syncedIcon : syncingIcon} />
+            </div>}
             {checkUpdate(note) || note.$id == "draft" ?
               <div className='edit-icon' onClick={()=>{
                 if(editable){saveCurrentNote()};setEditable(!editable)}}>
                 <img 
-                src={editable ? saveIcon : editIcon} />
-                <p>{editable ?  lang.tr("Save") : lang.tr("Edit") }</p>
+                src={editable ? note.$id == "draft" ? saveIcon : viewIcon : editIcon} />
+                <p>{editable ? note.$id == "draft" ? lang.tr("Save") : lang.tr("Preview") : lang.tr("Edit") }</p>
               </div>
             : <></>}
             {checkDelete(note) ? 
