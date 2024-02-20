@@ -6,7 +6,9 @@ import syncedIcon from '../../assets/cloud_upload.svg'
 import viewIcon from '../../assets/visibility.svg'
 import saveIcon from '../../assets/save.svg'
 import logoutIcon from '../../assets/logout.svg'
+import settingsIcon from '../../assets/settings.svg'
 import deleteIcon from '../../assets/delete.svg'
+
 
 import { useEffect, useRef, useState } from 'react'
 import './NoteApp.css'
@@ -20,12 +22,14 @@ import ShareDialog from '../../views/ShareDialog'
 import NoteEditor from '../../views/NoteEditor'
 
 import LangTranslator from '../../lib/context/language'
+import SettingsDialog from '../../views/SettingsDialog'
 
-const lang = new LangTranslator("NoteApp");
+
 
 function NoteApp() {
 
   const user = useUser();
+  const lang = new LangTranslator("NoteApp",user);
 
   const [editable, setEditable] = useState(false)
   const [charPosLog,setCharPosLog] = useState(0)
@@ -243,6 +247,7 @@ function showToast(msg,type) {
 
 const [noteToDelete,setNoteToDelete] = useState(null);
 const [sharing,setSharing] = useState(false);
+const [settings,setSettings] = useState(false);
 const [userVerified,setUserVerified] = useState(true); 
 const [emailResent,setEmailResent] = useState(false);
 
@@ -257,6 +262,10 @@ useEffect(()=>{
       <ShareDialog display={sharing}
        noteId={note.$id}
        onClose={()=>{setSharing(false)}}
+       />
+
+      <SettingsDialog display={settings}
+       onClose={()=>{setSettings(false)}}
        />
 
       <ConfirmationDialog display={noteToDelete !== null} 
@@ -312,14 +321,20 @@ useEffect(()=>{
         }): <div className="side-item" >{searchQuery.length > 0 ? lang.tr("No results found") : lang.tr("Nothing to see here.")}</div>}
         
         {/* <img src={avatars.getFlag(lang.getLocale())}/> */}
-        <button
-            className='side-logout'
-            type="button"
-            onClick={async () => {
-              await user.logout();
-            }}
-            >{lang.tr("Logout")} <img src={logoutIcon}/>
-        </button>
+        <div className='side-btns'>
+          <button
+              onClick={() => {setSettings(true)}}
+              >{lang.tr("Settings")}<img src={settingsIcon}/>
+          </button>
+          <button
+              onClick={async () => {
+                await user.logout();
+              }}
+              >{lang.tr("Logout")} <img src={logoutIcon}/>
+          </button>
+          
+        </div>
+       
       </div>
       <div className='main-div'>
         <div className='main-controls'>

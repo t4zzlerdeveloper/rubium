@@ -4,11 +4,15 @@ import rubium from '../../assets/rubium-logomark.svg'
 import noBack from '../../assets/no-back.jpg'
 import { useNavigate } from 'react-router-dom'
 import LangTranslator from '../../lib/context/language'
+import { useUser } from '../../lib/context/user'
 
-const lang = new LangTranslator("NoPage");
+
 
 function NoPage(){
     const navigate = useNavigate();
+
+    const user = useUser();
+    const lang = new LangTranslator("NoPage",user);
 
     return (<>
     

@@ -10,16 +10,17 @@ import { Functions, Permission, Role } from 'appwrite';
 import Loader from '../Loader';
 import LangTranslator from '../../lib/context/language';
 
-const lang = new LangTranslator("ShareDialog");
+
 
 function ShareDialog(props){
+
+  const user = useUser();
+  const lang = new LangTranslator("ShareDialog",user);
 
     const [confirmed,setConfirmed] = useState(false);
     const [email,setEmail] = useState("");
 
     const [loadingUsers,setLoadingUsers] = useState(true);
-
-    const user = useUser();
 
     useEffect(()=>{
         if(props.display) fetchNote();setConfirmed(false);

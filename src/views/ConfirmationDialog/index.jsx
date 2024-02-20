@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import './ConfirmationDialog.css'
 import LangTranslator from '../../lib/context/language';
+import { useUser } from '../../lib/context/user';
 
 
-const lang = new LangTranslator("ConfirmationDialog");
+
 function ConfirmationDialog (props){
+
+    const user = useUser();
+    const lang = new LangTranslator("ConfirmationDialog",user);
 
     const[confirmed,setConfirmed] = useState(false);
 

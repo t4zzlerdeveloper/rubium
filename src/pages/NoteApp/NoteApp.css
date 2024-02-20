@@ -155,10 +155,17 @@
   opacity: 1;
 }
 
-.side-logout{
+
+.side-btns {
   position: absolute;
   bottom: 10px;
   left:10px;
+  display: flex;
+  flex-direction: row;
+  gap:8px;
+}
+
+.side-btns > button{
   display: flex;
   place-items: center;
   gap:8px;
@@ -169,16 +176,17 @@
   opacity: 0.6;
   color:white;
   font-size: 14px;
+  padding: 8px 10px;
 }
 
-.side-logout:hover{
+.side-btns> button:hover{
   transition: 0.4s;
   background-color: rgba(255, 255, 255, 0.1);
   outline:1px solid white;
   opacity: 1;
 }
 
-.side-logout > img{
+.side-btns> button > img{
   width: 20px;
   height: 20px;
 }

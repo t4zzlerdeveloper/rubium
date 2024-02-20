@@ -55,6 +55,7 @@
             "Check your email again": "Verifica o teu email novamente",
             "Nothing to see here.": "Nada para ver aqui.",
             "No results found": "Nenhum resultado encontrado",
+            "Settings":"Definições",
             "Logout": "Sair",
             "Save":"Guardar",
             "Edit":"Editar",
@@ -112,6 +113,13 @@
         "NoPage":{
             "Looks like you got lost. This page does not exist...": "Parece que te perdes-te. Esta página não existe...",
             "Go to Home Page": "Ir para a Página Principal"
+        },
+        "SettingsDialog":{
+            "Settings": "Definições",
+            "Save Changes": "Guardar Alterações",
+            "You are a Rubium member since": "És um membro Rubium desde",
+            "Name":"Nome",
+            "Language":"Idioma"
         }
 
 }

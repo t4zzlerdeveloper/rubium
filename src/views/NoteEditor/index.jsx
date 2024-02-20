@@ -17,12 +17,17 @@ import LangTranslator from '../../lib/context/language'
 
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { useUser } from '../../lib/context/user'
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
-const lang = new LangTranslator("NoteEditor");
+
 
 
 function NoteEditor(props){
+
+
+    const user = useUser();
+    const lang = new LangTranslator("NoteEditor",user);
 
     const [ff,setFF] = useState(0);
 

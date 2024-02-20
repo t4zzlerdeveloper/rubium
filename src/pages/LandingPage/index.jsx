@@ -22,16 +22,18 @@ const DEV_GITHUB = "https://github.com/t4zzlerdeveloper";
 const RUBIUM_GITHUB = DEV_GITHUB + "/rubium";
 
 
-const lang = new LangTranslator("LandingPage");
+
 
 
 function LandingPage(){
 
     const user = useUser();
+    const lang = new LangTranslator("LandingPage",user);
 
     useEffect(()=>{
         window.scrollTo(0,0);
     },[])
+
 
     const navigate = useNavigate();
 

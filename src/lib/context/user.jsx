@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { ID, account } from "../appwrite";
+import { ID, account, locale } from "../appwrite";
 
 const UserContext = createContext();
 
@@ -29,11 +29,19 @@ export function UserProvider(props) {
   async function register(name,email, password) {
     await account.create(ID.unique(),email, password,name);
     await login(email, password);
+    const locale = await locale.get();
+    await updatePrefs({"locale":locale ? locale : 'en'})
     await sendVerification();
   }
 
   async function sendVerification(){
     await account.createVerification("https://rubium.vercel.app/verify");
+  }
+
+  async function updateUserSettings(newName,newPrefs){
+    await account.updateName(newName);
+    await account.updatePrefs(newPrefs);
+    await init();
   }
 
 
@@ -52,7 +60,7 @@ export function UserProvider(props) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ current: user, login,loginWith, logout, register,sendVerification }}>
+    <UserContext.Provider value={{ current: user, login,loginWith, logout, register,sendVerification,updateUserSettings}}>
       {props.children}
     </UserContext.Provider>
   );

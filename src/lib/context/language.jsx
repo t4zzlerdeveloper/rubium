@@ -3,21 +3,41 @@ import ptLang from '../../langs/pt.json'
 import { locale } from '../appwrite';
 
 const languages = {
-    "pt": ptLang,
-    "br": ptLang //tmp
+    "en": {name:"English"},
+    "pt": {name:"Português (Portugal)", data: ptLang},
+    "br": {name:"Português (Brasil)", data: ptLang} //tmp
 }
 
 class LangTranslator{
 
-    constructor(sec){
+    constructor(sec,user = undefined){
 
-        locale.get()
-        .then((res)=>{
-            this.locale = res.countryCode.toLowerCase();
-        }).catch((err)=>{
-            this.locale = "en";
-        });
+        if(user && user.current){
+            this.locale = user.current.prefs.locale;
+        }
+        else{
+            //If not logged in, set locale by geo-ip
+             locale.get()
+            .then((res)=>{
+                this.locale = res.countryCode.toLowerCase();
+            }).catch((err)=>{
+                this.locale = "en";
+            });
+        }
+       
         this.sec = sec;
+    }
+
+    setLocale(newLocale){
+        this.locale = newLocale;
+    }
+
+    getLangs(){
+        let langs = [];
+        for (const [key, value] of Object.entries(languages)) {
+            langs.push({locale:key,name:value.name})
+          }
+        return langs;
     }
 
     getLocale() {
@@ -25,12 +45,22 @@ class LangTranslator{
     }
 
     eval(text){
-        if(this.locale in languages) return languages[this.locale][this.sec][text] ? true : false;
+        try{
+            if(languages[this.locale].data) return languages[this.locale].data[this.sec][text] ? true : false;
+        }
+        catch{
+            return false;
+        }
         return false;
     }
 
     tr(text) {
-        if(this.locale in languages) return languages[this.locale][this.sec][text] ? languages[this.locale][this.sec][text] : text;
+        try{
+            if(languages[this.locale].data) return languages[this.locale].data[this.sec][text] ? languages[this.locale].data[this.sec][text] : text;
+        }
+        catch{
+            return text;
+        }
         return text;
     }
 }
