@@ -1,11 +1,16 @@
 import ptLang from '../../langs/pt.json'
+import brLang from '../../langs/br.json'
+import esLang from '../../langs/es.json'
+import cnLang from '../../langs/cn.json'
 
 import { locale } from '../appwrite';
 
 const languages = {
     "en": {name:"English"},
     "pt": {name:"Português (Portugal)", data: ptLang},
-    "br": {name:"Português (Brasil)", data: ptLang} //tmp
+    "br": {name:"Português (Brasil)", data: brLang},
+    "es": {name: "Español",data: esLang},
+    "cn": {name:"中国人",data:cnLang}
 }
 
 class LangTranslator{

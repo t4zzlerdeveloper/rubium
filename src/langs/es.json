@@ -1,0 +1,123 @@
+{
+    "LandingPage":{
+        "Our Story": "Nuestra historia",
+        "Pricing": "Precio",
+        "Suggestions":"Sugerencias",
+        "Star on GitHub": "Agregar en GitHub",
+        "Launch App": "Abrir aplicación",
+        "Notes": "Notas",
+        "Should Only": "solo deberían",
+        "Cost Time": "costar tiempo",
+        "Secure, Fast and Open-Source Note-taking app": "Aplicación segura, rápida y de código abierto para tomar notas",
+        "Secure Authentication": "Autenticación segura",
+        "powered by Appwrite": "proporcionada por Appwrite",
+        "Free of charge": "Gratis",
+        "Notes already cost your time.": "Tomar notas ya cuesta tiempo.",
+        "Subscribe to our newsletter": "Suscríbete a nuestro boletín",
+        "Get updates on your email about new and cool features.": "Recibe actualizaciones en tu correo electrónico sobre nuevas y geniales características.",
+        "Subscribe": "Suscribirse",
+        "Your email": "Tu correo electrónico",
+        "Developed by": "Desarrollado por"
+    },
+    "LoginPage":{
+        "Sign in to Rubium": "Iniciar sesión en Rubium",
+        "Sign in": "Iniciar sesión",
+        "Not yet registered?": "¿Todavía no estás registrado?",
+        "Invalid credentials or account does not exist...": "Credenciales inválidas o la cuenta no existe..."
+    },
+    "RegisterPage":{
+        "Invalid details or connection error...": "Detalles inválidos o error de conexión...",
+        "Create your Rubium's Account": "Crea tu cuenta de Rubium",
+        "Name": "Nombre",
+        "Confirm": "Confirmar",
+        "Already have an account?":"¿Ya tienes una cuenta?",
+        "Sign up": "Registrarse"
+    },
+    "OAuthButton":{
+        "Sign in with": "Iniciar sesión con"
+    },
+    "NoteApp": {
+        "Saved new note successfully!": "¡Nota nueva guardada con éxito!",
+        "Error saving new note...": "Error al guardar nota nueva...",
+        "Changes saved successfully!": "¡Cambios guardados con éxito!",
+        "Error saving changes...": "Error al guardar cambios...",
+        "Draft discarded successfully!": "¡Borrador descartado con éxito!",
+        "Note deleted successfully!": "¡Nota eliminada con éxito!",
+        "Error deleting note...": "Error al eliminar nota...",
+        "Created a new draft!": "¡Se ha creado un nuevo borrador!",
+        "Are you sure you want to delete the note named": "¿Estás seguro de que quieres eliminar la nota llamada",
+        "Verify your account with the link sent to your email to continue using Rubium. Press 'Done' after you verified the email.": "Verifica tu cuenta con el enlace enviado a tu correo electrónico para seguir usando Rubium. Presiona 'Hecho' después de verificar el correo electrónico.",
+        "Email Verification Required": "Verificación de correo electrónico requerida",
+        "Re-send email": "Reenviar correo electrónico",
+        "Done": "Hecho",
+        "We have re-sent the verification link to your email. Press 'Ok' when you are finished verifying it.": "Hemos reenviado el enlace de verificación a tu correo electrónico. Presiona 'Ok' cuando hayas terminado de verificarlo.",
+        "Check your email again": "Vuelve a verificar tu correo electrónico",
+        "Nothing to see here.": "Aquí no hay nada que ver.",
+        "No results found": "No se encontraron resultados",
+        "Settings":"Ajustes",
+        "Logout": "Cerrar sesión",
+        "Save":"Guardar",
+        "Edit":"Editar",
+        "Share":"Compartir",
+        "Search notes...": "Buscar notas...",
+        "Today at ": "Hoy a las ",
+        "Yesterday at ": "Ayer a las ",
+        "Draft Note": "Borrador",
+        "Saved to the Cloud":"Guardado en la nube",
+        "Syncing...":"Sincronizando...",
+        "Preview":"Vista previa",
+        "Shared with me": "Compartido conmigo",
+        "New Note": "Nueva nota",
+        "_invertName": true,
+        "of": "de",
+        "We are sorry but our app is still under development for smaller screens...": "Lo sentimos, pero nuestra aplicación aún está en desarrollo para pantallas más pequeñas..."
+    },
+    "NoteEditor":{
+        "Enter an image caption...":"Introduce una leyenda de imagen...",
+        "Write a new paragraph...": "Escribe un nuevo párrafo...",
+        "Enter Heading H1...": "Introduce un Título H1...",
+        "Enter Heading H2...": "Introduce un Título H2...",
+        "Enter Prompt": "Introduce un indicio",
+        "Heading H1": "Título H1",
+        "Heading H2": "Título H2",
+        "Paragraph": "Párrafo",
+        "Random Image": "Imagen aleatoria",
+        "Separator": "Separador",
+        "New Task...": "Nueva tarea...",
+        "Enter a title...":"Introduce un título...",
+        "Backlog": "Pendiente",
+        "Doing":"Haciendo",
+        "Done": "Hecho",
+        "No deadline": "Sin fecha límite"
+    },
+    "ConfirmationDialog":{
+        "Confirmation": "Confirmación",
+        "Are you sure you want to do that?": "¿Estás seguro de que quieres hacer eso?",
+        "Cancel": "Cancelar",
+        "Confirm": "Confirmar"
+    },
+    "ShareDialog":{
+        "Share this note": "Compartir esta nota",
+        "You can quickly share a note with a friend to easily collaborate by providing the email associated to their Rubium account.": "Puedes compartir rápidamente una nota con un amigo para colaborar fácilmente proporcionando el correo electrónico asociado a su cuenta de Rubium.",
+        "Enter the email to share with": "Introduce el correo electrónico con el que compartir",
+        "Add":"Agregar",
+        "You haven´t shared this note with anyone yet.":"Todavía no has compartido esta nota con nadie.",
+        "You can also publish it on the web, creating a share-able link": "También puedes publicarlo en la web, creando un enlace compartible",
+        "Publish": "Publicar",
+        "Un-Publish": "Despublicar"
+    },
+    "Toast":{
+        "We're sorry but an error occured!": "¡Lo sentimos, pero ocurrió un error!"
+    },
+    "NoPage":{
+        "Looks like you got lost. This page does not exist...": "Parece que te perdiste. Esta página no existe...",
+        "Go to Home Page": "Ir a la página de inicio"
+    },
+    "SettingsDialog":{
+        "Settings": "Ajustes",
+        "Save Changes": "Guardar cambios",
+        "You are a Rubium member since": "Eres miembro de Rubium desde",
+        "Name":"Nombre",
+        "Language":"Idioma"
+    }
+}

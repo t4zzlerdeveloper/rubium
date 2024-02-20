@@ -1,0 +1,123 @@
+{
+    "LandingPage":{
+        "Our Story": "我们的故事",
+        "Pricing": "定价",
+        "Suggestions":"建议",
+        "Star on GitHub": "在 GitHub 上标星",
+        "Launch App": "启动应用",
+        "Notes": "笔记",
+        "Should Only": "应该只",
+        "Cost Time": "花费时间",
+        "Secure, Fast and Open-Source Note-taking app": "安全、快速且开源的记笔记应用",
+        "Secure Authentication": "安全认证",
+        "powered by Appwrite": "由 Appwrite 提供支持",
+        "Free of charge": "免费",
+        "Notes already cost your time.": "记笔记已经花费了你的时间。",
+        "Subscribe to our newsletter": "订阅我们的新闻通讯",
+        "Get updates on your email about new and cool features.": "获取关于新功能和酷炫功能的邮件更新。",
+        "Subscribe": "订阅",
+        "Your email": "您的电子邮件",
+        "Developed by": "开发者"
+    },
+    "LoginPage":{
+        "Sign in to Rubium": "登录 Rubium",
+        "Sign in": "登录",
+        "Not yet registered?": "还没有注册？",
+        "Invalid credentials or account does not exist...": "无效的凭据或帐户不存在..."
+    },
+    "RegisterPage":{
+        "Invalid details or connection error...": "无效的细节或连接错误...",
+        "Create your Rubium's Account": "创建您的 Rubium 帐户",
+        "Name": "姓名",
+        "Confirm": "确认",
+        "Already have an account?":"已经有帐户？",
+        "Sign up": "注册"
+    },
+    "OAuthButton":{
+        "Sign in with": "使用以下方式登录"
+    },
+    "NoteApp": {
+        "Saved new note successfully!": "成功保存新笔记！",
+        "Error saving new note...": "保存新笔记时出错...",
+        "Changes saved successfully!": "更改保存成功！",
+        "Error saving changes...": "保存更改时出错...",
+        "Draft discarded successfully!": "成功放弃草稿！",
+        "Note deleted successfully!": "成功删除笔记！",
+        "Error deleting note...": "删除笔记时出错...",
+        "Created a new draft!": "创建了一个新草稿！",
+        "Are you sure you want to delete the note named": "您确定要删除名为的笔记吗",
+        "Verify your account with the link sent to your email to continue using Rubium. Press 'Done' after you verified the email.": "使用发送到您电子邮件的链接验证您的帐户以继续使用 Rubium。验证电子邮件后按“完成”键。",
+        "Email Verification Required": "需要电子邮件验证",
+        "Re-send email": "重新发送电子邮件",
+        "Done": "完成",
+        "We have re-sent the verification link to your email. Press 'Ok' when you are finished verifying it.": "我们已将验证链接重新发送到您的电子邮件。完成验证后按“确定”。",
+        "Check your email again": "再次检查您的电子邮件",
+        "Nothing to see here.": "这里没什么好看的。",
+        "No results found": "找不到结果",
+        "Settings":"设置",
+        "Logout": "注销",
+        "Save":"保存",
+        "Edit":"编辑",
+        "Share":"分享",
+        "Search notes...": "搜索笔记...",
+        "Today at ": "今天",
+        "Yesterday at ": "昨天",
+        "Draft Note": "草稿",
+        "Saved to the Cloud":"保存到云端",
+        "Syncing...":"同步中...",
+        "Preview":"预览",
+        "Shared with me": "与我分享",
+        "New Note": "新笔记",
+        "_invertName": true,
+        "of": "的",
+        "We are sorry but our app is still under development for smaller screens...": "很抱歉，但我们的应用还在为较小的屏幕开发中..."
+    },
+    "NoteEditor":{
+        "Enter an image caption...":"输入图片标题...",
+        "Write a new paragraph...": "写一个新段落...",
+        "Enter Heading H1...": "输入标题 H1...",
+        "Enter Heading H2...": "输入标题 H2...",
+        "Enter Prompt": "输入提示",
+        "Heading H1": "标题 H1",
+        "Heading H2": "标题 H2",
+        "Paragraph": "段落",
+        "Random Image": "随机图片",
+        "Separator": "分隔符",
+        "New Task...": "新任务...",
+        "Enter a title...":"输入标题...",
+        "Backlog": "待办事项",
+        "Doing":"进行中",
+        "Done": "已完成",
+        "No deadline": "无截止日期"
+    },
+    "ConfirmationDialog":{
+        "Confirmation": "确认",
+        "Are you sure you want to do that?": "您确定要这样做吗？",
+        "Cancel": "取消",
+        "Confirm": "确认"
+    },
+    "ShareDialog":{
+        "Share this note": "分享此笔记",
+        "You can quickly share a note with a friend to easily collaborate by providing the email associated to their Rubium account.": "您可以通过提供与他们的 Rubium 帐户相关联的电子邮件，快速与朋友共享笔记，以便轻松合作。",
+        "Enter the email to share with": "输入要共享的电子邮件",
+        "Add":"添加",
+        "You haven´t shared this note with anyone yet.":"您还没有与任何人分享此笔记。",
+        "You can also publish it on the web, creating a share-able link": "您还可以将其发布到网络上，创建一个可共享的链接",
+        "Publish": "发布",
+        "Un-Publish": "取消发布"
+    },
+    "Toast":{
+        "We're sorry but an error occured!": "对不起，出现了一个错误！"
+    },
+    "NoPage":{
+        "Looks like you got lost. This page does not exist...": "看起来你迷路了。此页面不存在...",
+        "Go to Home Page": "转到首页"
+    },
+    "SettingsDialog":{
+        "Settings": "设置",
+        "Save Changes": "保存更改",
+        "You are a Rubium member since": "您是 Rubium 的会员",
+        "Name":"名称",
+        "Language":"语言"
+    }
+}
