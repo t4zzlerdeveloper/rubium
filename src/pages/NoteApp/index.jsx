@@ -23,6 +23,7 @@ import NoteEditor from '../../views/NoteEditor'
 
 import LangTranslator from '../../lib/context/language'
 import SettingsDialog from '../../views/SettingsDialog'
+import GetStarted from '../../views/GetStarted'
 
 
 
@@ -75,8 +76,8 @@ function NoteApp() {
   }
 
 
-  function loadNoteById(id){
-    if(id == "draft") setNote({$id:"draft",title:lang.tr("New Note"),content:""});
+  function loadNoteById(id,draftTitle){
+    if(id == "draft") setNote({$id:"draft",title:draftTitle ? draftTitle :lang.tr("New Note"),content:""});
     setLoadingCurrentNote(true);
     databases.getDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,id)
     .then((res)=>{
@@ -166,14 +167,14 @@ function NoteApp() {
   }
 
 
-  function createNewNote(){
+  function createNewNote(title = undefined){
     if(notes.find(item => item.$id === "draft")) return;
 
     setLoadingNotes(true);
     setEditable(true);
     showToast(lang.tr("Created a new draft!"),"info")
-    setNotes([...notes,{$id:"draft",title:"New Note",content:[{type:"p",text:""}]}]);
-    loadNoteById("draft");
+    setNotes([...notes,{$id:"draft",title: title ? title : lang.tr("New Note"),content:[{type:"p",text:""}]}]);
+    loadNoteById("draft",title);
     setLoadingNotes(false);
   }
 
@@ -367,7 +368,9 @@ useEffect(()=>{
             : <></>}
           </>}
         </div>
-        {loadingCurrentNote ? <Loader/> : <div className='main-div-inner'>
+        {!loadingNotes && notes.length == 0 ?
+        <GetStarted onStart={(t)=>{createNewNote(t)}}/>
+        :loadingCurrentNote ? <Loader/> : <div className='main-div-inner'>
           <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
 
           <NoteEditor 

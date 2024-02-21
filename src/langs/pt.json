@@ -120,6 +120,12 @@
             "You are a Rubium member since": "És um membro Rubium desde",
             "Name":"Nome",
             "Language":"Idioma"
+        },
+        "GetStarted":{
+            "Start your journey with":"Começa a tua jornada com o",
+            "What are you taking notes of today?":"Do que vais tirar notas hoje?",
+            "Get Started": "Vamos Começar",
+            "Answer here...": "Responde aqui..."
         }
 
 }

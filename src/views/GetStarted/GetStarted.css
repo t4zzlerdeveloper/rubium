@@ -1,0 +1,96 @@
+.get-started{
+    margin:auto;
+    display: flex;
+    padding: 8vh 4vw;
+}
+
+.gs-main{
+    border-radius: 26px;
+    border: 0.5px solid #f45b6877;
+    padding:5% 10%;
+    display: grid;
+    gap:5px;
+    grid-template-columns: 1fr 1fr;
+
+    animation-name: glowing;
+    animation-duration: 3.4s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function:ease-in;
+
+    place-content: center;
+    place-items: center;
+}
+
+@keyframes glowing {
+    0%{
+        
+        filter:drop-shadow(0 0 26px #f45b68ae) grayscale(0%);
+        transform: rotate(0.4deg) translateY(15px);
+    }
+    100%{
+        filter:drop-shadow(0 0 56px #f45b6860) grayscale(100%);
+        transform: rotate(-0.4deg) scale(1.01);
+    }
+}
+
+.gs-left > img{
+ width: 100px;
+ height: 100px;
+}
+
+.gs-left > h1{
+    font-size: 32px;
+    color:rgb(162, 162, 162);
+}
+
+.gs-left > h1 > b{
+    color:white;
+}
+
+
+.gs-right{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.gs-right > h3{
+    font-size: 22px;
+    font-weight: 300;
+    padding:0;
+    margin: 5px;
+    color:#b0474fce;
+}
+
+.gs-right > input::placeholder{
+    color:#d2d2d29d;
+}
+
+.gs-right > input{
+    color:rgb(183, 142, 142);
+    background-color: rgb(6,8,6);
+    padding:8px 22px;
+    font-family: inherit;
+    font-weight: 200;
+    font-size: 18px;
+    background-color: transparent;
+    outline: none;
+    border-radius: 26px;
+    border: 1.5px solid #f45b6877;
+    
+}
+
+.gs-right > button{
+    margin:16px 32px;
+    color:rgb(194, 129, 129);
+    outline: none;
+    border: 1px solid #f45b6877; 
+    background-color: black;
+    transition: 0.4s;
+}
+
+.gs-right > button:hover{
+    background-color:#f45b68;
+    color:white;
+}
