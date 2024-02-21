@@ -9,6 +9,7 @@ export function useUser() {
 
 export function UserProvider(props) {
   const [user, setUser] = useState(null);
+  const [geoLocale,setGeoLocale] = useState("");
 
   async function login(email, password) {
     const loggedIn = await account.createEmailSession(email, password);
@@ -29,13 +30,16 @@ export function UserProvider(props) {
   async function register(name,email, password) {
     await account.create(ID.unique(),email, password,name);
     await login(email, password);
-    const locale = await locale.get();
-    await updatePrefs({"locale":locale ? locale : 'en'})
     await sendVerification();
   }
 
   async function sendVerification(){
     await account.createVerification("https://rubium.vercel.app/verify");
+  }
+
+  async function updateLocale(newLocale){
+    await account.updatePrefs({...user.prefs,"locale":newLocale});
+    await init();
   }
 
   async function updateUserSettings(newName,newPrefs){
@@ -50,6 +54,7 @@ export function UserProvider(props) {
       const loggedIn = await account.get();
       const session = await account.getSession("current");
       setUser({...loggedIn,sessionId:session.$id});
+
     } catch (err) {
       setUser(null);
     }
@@ -59,8 +64,9 @@ export function UserProvider(props) {
     init();
   }, []);
 
+
   return (
-    <UserContext.Provider value={{ current: user, login,loginWith, logout, register,sendVerification,updateUserSettings}}>
+    <UserContext.Provider value={{ current: user, login,loginWith, logout, register,sendVerification,updateUserSettings,updateLocale}}>
       {props.children}
     </UserContext.Provider>
   );

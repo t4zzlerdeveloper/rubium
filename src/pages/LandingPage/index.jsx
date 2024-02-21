@@ -13,9 +13,10 @@ import linkedin from '../../assets/socials/linkedin.svg'
 import screenshotApp from '../../assets/screenshots/login-page.png'
 import screenshotNote from '../../assets/screenshots/note-page.png'
 import './LandingPage.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import LangTranslator from '../../lib/context/language'
 import { useUser } from '../../lib/context/user'
+import { locale } from '../../lib/appwrite'
 
 
 const DEV_GITHUB = "https://github.com/t4zzlerdeveloper";
@@ -33,6 +34,7 @@ function LandingPage(){
     useEffect(()=>{
         window.scrollTo(0,0);
     },[])
+
 
 
     const navigate = useNavigate();

@@ -63,6 +63,10 @@ function NoteApp() {
   },[])
 
   useEffect(()=>{
+    window.document.title = (note.title ? note.title + " | " : "")  + "Rubium";
+  },[note])
+
+  useEffect(()=>{
     loadNotes();
   },[searchQuery])
 

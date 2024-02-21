@@ -24,7 +24,6 @@ function SettingsDialog(props){
   
     useEffect(()=>{
         if(props.display) setConfirmed(false);
-        console.log(user);
     },[props.display])
 
     useEffect(()=>{

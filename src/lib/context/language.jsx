@@ -18,20 +18,33 @@ class LangTranslator{
     constructor(sec,user = undefined){
 
         if(user && user.current){
-            this.locale = user.current.prefs.locale;
+
+            if(user.current.prefs.locale){
+                this.locale = user.current.prefs.locale;
+            }
+            else{
+                locale.get()
+                .then((res)=>{
+                    const cc = res.countryCode.toLowerCase();
+                    user.updateLocale(cc);
+                    this.locale = cc;
+                })
+            }
         }
         else{
             //If not logged in, set locale by geo-ip
-             locale.get()
+            locale.get()
             .then((res)=>{
-                this.locale = res.countryCode.toLowerCase();
+                const cc = res.countryCode.toLowerCase(); 
+                this.locale = cc;
             }).catch((err)=>{
                 this.locale = "en";
             });
         }
-       
+
         this.sec = sec;
     }
+
 
     setLocale(newLocale){
         this.locale = newLocale;
@@ -46,7 +59,7 @@ class LangTranslator{
     }
 
     getLocale() {
-        return this.locale
+        return this.locale;
     }
 
     eval(text){
