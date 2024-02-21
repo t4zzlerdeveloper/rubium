@@ -343,7 +343,7 @@ useEffect(()=>{
       </div>
       <div className='main-div'>
         <div className='main-controls'>
-          {loadingCurrentNote ? <></>:<>
+          {loadingCurrentNote || (!loadingNotes && notes.length == 0) ? <></>:<>
             {/* <a>{charPosLog}</a> */}
             { note.$id == "draft" ? <></>:
             <div className={'sv-to-cloud ' + (synced ? "" : "gray")}>
