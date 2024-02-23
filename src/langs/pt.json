@@ -89,7 +89,8 @@
             "Backlog": "Ainda por fazer",
             "Doing":"Em andamento",
             "Done": "Concluído",
-            "No deadline": "Sem prazo"
+            "No deadline": "Sem prazo",
+            "Language": "Linguagem"
         },
         "ConfirmationDialog":{
             "Confirmation": "Confirmação",

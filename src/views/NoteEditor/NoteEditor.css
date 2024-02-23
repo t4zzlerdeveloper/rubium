@@ -228,6 +228,7 @@
   width: 100%;
   gap:8px;
   border-radius: 8px;
+  transition: 0.4s;
 }
 
 .kanban:hover{
@@ -392,6 +393,74 @@
   border: 0.5px solid rgb(147, 234, 252);
   background-color: rgba(147, 234, 252, 0.1);
 }
+
+
+.code{
+  margin: 1%;
+  padding:16px 24px;
+  padding-top:8px;
+  background-color: rgba(6, 8, 6, 0.6);
+  border-radius: 8px;
+  width: 100%;
+  cursor:text;
+  border: 1px solid rgba(128, 128, 128, 0.1);
+  transition: 0.4s;
+}
+
+.code:hover{
+  background-color: rgba(255,255,255,0.01);
+}
+
+
+.cd-flex{
+  font-size: 14px;
+  color:#434343;
+  font-family: inherit;
+  font-weight: 500;
+  padding-bottom:8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cd-logo{
+  display: flex;
+  place-items: center;
+  place-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color:#4c4c4c;
+  opacity: 0.6;
+}
+
+.cd-logo > img{
+  object-fit: contain;
+  width: 9px;
+  height: 9px;
+  position: relative;
+  top:0;
+  left: 0;
+  padding: 0;
+  margin: 0 1px;
+  background-color: #4c4c4c;
+  border-radius: 11px;
+  padding:1px;
+  filter: grayscale();
+}
+
+
+.cd-flex > div > select{
+  font-size: 12px;
+  font:inherit;
+  padding:4px 12px;
+  color: gray;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+
 
 
 

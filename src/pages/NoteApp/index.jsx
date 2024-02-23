@@ -314,6 +314,7 @@ useEffect(()=>{
           <input type="text" placeholder={lang.tr("Search notes...")} className='side-search' value={searchQuery} onChange={handleSearch}/>
         </div>
         
+        <div className='notes-area'>
         {loadingNotes ? <Loader/>
          : notes.length !== 0 ? notes.map((nt)=>{
           return <div key={nt.$id} className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
@@ -324,7 +325,8 @@ useEffect(()=>{
             {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/> : <></>}
             </div>
         }): <div className="side-item" >{searchQuery.length > 0 ? lang.tr("No results found") : lang.tr("Nothing to see here.")}</div>}
-        
+        </div>
+
         {/* <img src={avatars.getFlag(lang.getLocale())}/> */}
         <div className='side-btns'>
           <button
@@ -343,7 +345,7 @@ useEffect(()=>{
       </div>
       <div className='main-div'>
         <div className='main-controls'>
-          {loadingCurrentNote || (!loadingNotes && notes.length == 0) ? <></>:<>
+          {loadingCurrentNote || (!loadingNotes && notes.length == 0 && searchQuery.length == 0) ? <></>:<>
             {/* <a>{charPosLog}</a> */}
             { note.$id == "draft" ? <></>:
             <div className={'sv-to-cloud ' + (synced ? "" : "gray")}>
@@ -368,7 +370,7 @@ useEffect(()=>{
             : <></>}
           </>}
         </div>
-        {!loadingNotes && notes.length == 0 ?
+        {!loadingNotes && notes.length == 0 && searchQuery.length == 0 ?
         <GetStarted onStart={(t)=>{createNewNote(t)}}/>
         :loadingCurrentNote ? <Loader/> : <div className='main-div-inner'>
           <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>

@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import './NoteEditor.css'
 
+import rubiumLogo from '../../assets/rubium-logomark.svg'
+
 import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
 import formatP from '../../assets/format_p.svg'
 import formatImg from '../../assets/image.svg'
 import formatSep from '../../assets/separator.svg'
 import formatKanban from '../../assets/kanban.svg'
+import formatCode from '../../assets/code.svg'
 
 import addInd from '../../assets/add.svg'
 import removeInd from '../../assets/delete.svg'
@@ -18,9 +21,27 @@ import LangTranslator from '../../lib/context/language'
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useUser } from '../../lib/context/user'
+import CodeBlock from '../blocks/CodeBlock'
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
 
+
+const codeLangs = [
+    "JavaScript",
+    "TypeScript",
+    "HTML",
+    "CSS",
+    "Markdown",
+    "Java",
+    "Go",
+    "Python",
+    "Swift",
+    "C#",
+    "C++",
+    "C",
+    "PHP",
+    "SQL"
+]
 
 
 function NoteEditor(props){
@@ -90,6 +111,14 @@ function NoteEditor(props){
                 type:type,
                 text : alt ? alt :"",
                 url : url ? url : `//unsplash.it/${x}/${y}`
+            }
+        }
+
+        if(type == "cd"){
+            initialContent = {
+                type:type,
+                text:"",
+                lang:codeLangs[0]          
             }
         }
 
@@ -169,6 +198,13 @@ function NoteEditor(props){
         setFF(ff+1)
     }
 
+    function updateCodeLang(e,index){
+        let copy = content;
+        copy[index].lang = e.target.value;
+        setContent(copy);
+        setFF(ff+1)
+    }
+
     function updateUrl(index,newUrl,newText){
         let copy = content;
         copy[index].url = newUrl;
@@ -243,7 +279,7 @@ function NoteEditor(props){
             //!fix size to dynamic
             setCrtBlockStyle(
                 {
-                    top:rect.top - 218,
+                    top:rect.top - 248,
                     left:rect.left -15 ,
                     paddingBottom: "35px"
                 }
@@ -398,6 +434,28 @@ function NoteEditor(props){
                     <>
                         <div className='separator'></div>
                     </>
+                     : c.type == "cd" ?
+                     <>
+                         <div className='code'>
+                        
+                            <div className='cd-flex'>
+                                <div className='cd-logo'>- C<img src={rubiumLogo} />DE -</div>
+                                <div>
+                                {lang.tr("Language")}&nbsp;&nbsp;&nbsp;<select value={c.lang} onChange={(e)=>{updateCodeLang(e,index)}} disabled={!props.editable}>
+                                    {codeLangs.map((l)=>{
+                                        return <option value={l}>{l}</option>
+                                    })}
+                                </select>
+                                </div>
+                            </div>
+                           
+                            <CodeBlock 
+                            editable={props.editable} 
+                            value={c.text}
+                            onChange={(e)=>{updateContent(e,index)}}
+                            language={c.lang}/>
+                         </div>
+                     </>
                     : c.type == "kb" ?
                     <>
                         <div className='kanban' editable={props.editable ? "true": "false"}>
@@ -559,6 +617,10 @@ function NoteEditor(props){
             <div onClick={()=>{addBlock("kb")}}>
                 <img src={formatKanban}/>
                 <p>Kanban</p>
+            </div>
+            <div onClick={()=>{addBlock("cd")}}>
+                <img src={formatCode}/>
+                <p>Embed Code</p>
             </div>
         </div>}
          <div>

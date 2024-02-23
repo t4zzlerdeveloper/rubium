@@ -16,6 +16,22 @@
   /* filter:drop-shadow(0 0 16px rgba(255, 0, 0, 0.4)); */
 }
 
+.notes-area{
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  --mask: linear-gradient(to bottom, 
+  rgba(0,0,0, 1) 0,   rgba(0,0,0, 1) 75%, 
+  rgba(0,0,0, 0) 95%, rgba(0,0,0, 0) 0
+) 100% 50% / 100% 100% repeat-x;
+
+border: none;
+font: 2em/1.6em Arial;
+-webkit-mask: var(--mask); 
+mask: var(--mask);
+}
+
+
 .side-title{
   display: flex;
   flex-direction: row;
@@ -78,6 +94,10 @@
   filter:grayscale();
   opacity: 0.9;
 } 
+
+.side-item:last-child{
+  margin-bottom: 17.5vh;
+}
 
 @keyframes slide-in {
   0%{

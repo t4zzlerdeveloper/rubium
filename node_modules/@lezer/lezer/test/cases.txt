@@ -1,0 +1,244 @@
+# Precedence
+
+@precedence { cond, power @right, statement @cut }
+
+==>
+
+Grammar(PrecedenceDeclaration(@precedence, PrecedenceBody(
+  Precedence(PrecedenceName),
+  Precedence(PrecedenceName, @right),
+  Precedence(PrecedenceName, @cut))))
+
+# Top rule
+
+@top Script { (newline | statement)+ }
+
+==>
+
+Grammar(RuleDeclaration(@top, RuleName, Body(Repeat1(ParenExpression(Choice(RuleName, RuleName))))))
+
+# Skip rule
+
+@skip { space | Comment }
+
+==>
+
+Grammar(TopSkipDeclaration(@skip, Body(Choice(RuleName, RuleName))))
+
+# Skip scope
+
+@skip {} {
+  String { '"' stringContent* '"' }
+}
+
+==>
+
+Grammar(SkipScope(@skip, Body(), SkipBody(RuleDeclaration(RuleName, Body(Sequence(Literal, Repeat(RuleName), Literal))))))
+
+# Rule
+
+Decorator { AtName ArgList? newline }
+
+==>
+
+Grammar(RuleDeclaration(RuleName, Body(Sequence(RuleName, Optional(RuleName), RuleName))))
+
+# Rule with props
+
+statement[@isGroup=Statement] { simpleStatement | compoundStatement }
+other[custom=foo "bar",@export] { x }
+
+==>
+
+Grammar(
+  RuleDeclaration(RuleName, Props(Prop(AtName, "=", Name)), Body(Choice(RuleName, RuleName))),
+  RuleDeclaration(RuleName, Props(Prop(Name, "=", Name, Literal), Prop(AtName)), Body(RuleName)))
+
+# Rule with params
+
+commaSep<expr> { expr ("," expr)* ","? }
+
+==>
+
+Grammar(RuleDeclaration(RuleName, ParamList(Name), Body(Sequence(
+  RuleName,
+  Repeat(ParenExpression(Sequence(Literal, RuleName))),
+  Optional(Literal)))))
+
+# Call expression
+
+WhileStatement { kw<"while"> testNamed Body }
+
+==>
+
+Grammar(RuleDeclaration(RuleName, Body(Sequence(Call(RuleName, ArgList(Literal)), RuleName, RuleName))))
+
+# Scoped rule name
+
+Rule { foo.bar }
+
+==>
+
+Grammar(RuleDeclaration(RuleName, Body(ScopedName(RuleName, RuleName))))
+
+# Empty expression
+
+Rule1 {}
+Rule2 {|foo|()}
+Rule3 {foo||}
+
+==>
+
+Grammar(
+  RuleDeclaration(RuleName, Body),
+  RuleDeclaration(RuleName, Body(Choice("|",RuleName,"|",ParenExpression))),
+  RuleDeclaration(RuleName, Body(Choice(RuleName,"|","|"))))
+
+# Inline rule
+
+test {
+ testInner |
+ ConditionalExpression { kw<"if"> testInner } |
+ LambdaExpression { kw<"lambda"> lambda }
+}
+
+==>
+
+Grammar(RuleDeclaration(RuleName, Body(Choice(
+  RuleName,
+  InlineRule(RuleName, Body(Sequence(Call(RuleName, ArgList(Literal)), RuleName))),
+  InlineRule(RuleName, Body(Sequence(Call(RuleName, ArgList(Literal)), RuleName)))))))
+
+# Precedence marker
+
+binaryTest {
+  testInner !or kw<"or"> testInner |
+  testInner !and kw<"and"> testInner |
+  !start x
+}
+
+==>
+
+Grammar(RuleDeclaration(RuleName, Body(Choice(
+  Sequence(RuleName, PrecedenceMarker(PrecedenceName), Call(RuleName, ArgList(Literal)), RuleName),
+  Sequence(RuleName, PrecedenceMarker(PrecedenceName), Call(RuleName, ArgList(Literal)), RuleName),
+  Sequence(PrecedenceMarker(PrecedenceName), RuleName)))))
+
+# Ambiguity marker
+
+Identifier { ~id identifier }
+
+==>
+
+Grammar(RuleDeclaration(RuleName, Body(Sequence(AmbiguityMarker(Name), RuleName))))
+
+# Character sets
+
+Rule { repeat<![\\] | "\\" $[abc\]de] | _> }
+
+==>
+
+Grammar(RuleDeclaration(RuleName, Body(Call(RuleName, ArgList(Choice(InvertedCharSet, Sequence(Literal, CharSet), AnyChar))))))
+
+# Specialization
+
+kw<term> { @specialize<identifier, term> }
+
+==>
+
+Grammar(RuleDeclaration(RuleName, ParamList(Name), Body(
+  Specialization(@specialize, ArgList(RuleName, RuleName)))))
+
+# Comments
+
+// FIXME
+
+Rule { Body }
+
+/* this is a 
+block */
+
+==>
+
+Grammar(LineComment, RuleDeclaration(RuleName, Body(RuleName)), BlockComment)
+
+# Context declaration
+
+@context trackIndent from "./tokens.js"
+
+==>
+
+Grammar(ContextDeclaration(@context, Name, from, Literal))
+
+# External token declaration
+
+@external tokens indentation from "./tokens" {
+  indent,
+  dedent[@name=DEDENT]
+}
+
+==>
+
+Grammar(ExternalTokensDeclaration(@external, tokens, Name, from, Literal, TokensBody(
+  Token(RuleName),
+  Token(RuleName, Props(Prop(AtName, "=", Name))))))
+
+# External prop declaration
+
+@external prop p as u from "props"
+
+==>
+
+Grammar(ExternalPropDeclaration(@external, prop, Name, as, Name, from, Literal))
+
+# Tokens declaration
+
+@tokens {
+  CompareOp { "<" | ">" }
+  At[@name=Ta] { "@"+ }
+  "."
+  "..."[@name=Ellipsis]
+}
+
+==>
+
+Grammar(TokensDeclaration(@tokens, TokensBody(
+  RuleDeclaration(RuleName, Body(Choice(Literal, Literal))),
+  RuleDeclaration(RuleName, Props(Prop(AtName, Name)), Body(Repeat1(Literal))),
+  LiteralTokenDeclaration(Literal),
+  LiteralTokenDeclaration(Literal, Props(Prop(AtName, Name))))))
+
+# Token precedence
+
+@tokens {
+  @precedence { one two "three" }
+}
+
+==>
+
+Grammar(TokensDeclaration(@tokens, TokensBody(TokenPrecedenceDeclaration(@precedence, PrecedenceBody(
+  RuleName, RuleName, Literal)))))
+
+# Token conflict
+
+@tokens {
+  @conflict { one two }
+}
+
+==>
+
+Grammar(TokensDeclaration(@tokens, TokensBody(TokenConflictDeclaration(ConflictBody(RuleName, RuleName)))))
+
+# Char Classes
+
+@tokens {
+  foo { std.asciiLetter+ @digit+ @eof }
+}
+
+==>
+
+Grammar(TokensDeclaration(@tokens,TokensBody(
+  RuleDeclaration(RuleName,Body(Sequence(
+    Repeat1(ScopedName(RuleName,RuleName)),
+    Repeat1(CharClass),
+    CharClass))))))
