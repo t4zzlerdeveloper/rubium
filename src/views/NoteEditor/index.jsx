@@ -473,7 +473,7 @@ function NoteEditor(props){
                         
                             <div className='cd-flex'>
                             <div className="cd-copy" ><img  onClick={(e)=>{handleCodeCopy(e,c.text)}} src={copyIcon}/>{lang.tr("Copy")}                 
-                            <img className={!c.cl ? 'cd-rot' : 'cd-collapse'} src={formatCode} onClick={()=>{invertCodeCL(index)}}/> {c.cl ? lang.tr("Expand") : lang.tr("Collapse")}</div>
+                            {props.editable ? <>&nbsp;&nbsp;&nbsp;<img className={!c.cl ? 'cd-rot' : 'cd-collapse'} src={formatCode} onClick={()=>{invertCodeCL(index)}}/> {c.cl ? lang.tr("Expand") : lang.tr("Collapse")} </>: <></>}</div>
                                 
                                 <div>
                                 {lang.tr("Language")}&nbsp;&nbsp;&nbsp;<select value={c.lang} onChange={(e)=>{updateCodeLang(e,index)}} disabled={!props.editable}>

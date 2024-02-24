@@ -326,7 +326,6 @@ hr.rounded {
   border: none;
   border-radius: 14px;
   transition: 0.4s;
-  cursor: pointer;
   display: flex;
   place-content: center;
   place-items: center;
@@ -334,6 +333,7 @@ hr.rounded {
   padding:0;
   gap:6px;
   padding:6px 10px;
+  cursor: pointer;
 }
 
 .share-icon{

@@ -202,6 +202,8 @@ function NoteApp() {
     const oldContent = note.content;
     setNote({...note,content:newContent});
 
+
+    //TODO: Only save the note after 5 seconds of changing or when content stopped changing for 1 seconds
     if(oldContent !== newContent && note.$id !== 'draft') saveCurrentNote("content",newContent);
 
   }
