@@ -207,6 +207,13 @@ function NoteEditor(props){
         setFF(ff+1)
     }
 
+    function invertCodeCL(index){
+        let copy = content;
+        copy[index].cl = !copy[index].cl;
+        setContent(copy);
+        setFF(ff+1)
+    }
+
     function updateUrl(index,newUrl,newText){
         let copy = content;
         copy[index].url = newUrl;
@@ -465,7 +472,8 @@ function NoteEditor(props){
                          <div className='code'>
                         
                             <div className='cd-flex'>
-                            <div className="cd-copy" ><img  onClick={(e)=>{handleCodeCopy(e,c.text)}} src={copyIcon}/>{lang.tr("Copy")}</div>
+                            <div className="cd-copy" ><img  onClick={(e)=>{handleCodeCopy(e,c.text)}} src={copyIcon}/>{lang.tr("Copy")}                 
+                            <img className={!c.cl ? 'cd-rot' : 'cd-collapse'} src={formatCode} onClick={()=>{invertCodeCL(index)}}/> {c.cl ? lang.tr("Expand") : lang.tr("Collapse")}</div>
                                 
                                 <div>
                                 {lang.tr("Language")}&nbsp;&nbsp;&nbsp;<select value={c.lang} onChange={(e)=>{updateCodeLang(e,index)}} disabled={!props.editable}>
@@ -480,8 +488,9 @@ function NoteEditor(props){
                             editable={props.editable} 
                             value={c.text}
                             onChange={(e)=>{updateContent(e,index)}}
+                            collapsed={c.cl}
                             language={c.lang}/>
-
+                            
                             <div className='cd-logo'>POWERED BY C<img src={rubiumLogo} />DE MIRROR</div>
                          </div>
                          

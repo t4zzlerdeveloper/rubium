@@ -93,7 +93,9 @@
             "Language": "Linguagem",
             "Copy":"Copiar",
             "Copied!":"Copiado!",
-            "Error Copying...":"Erro a copiar..."
+            "Error Copying...":"Erro a copiar...",
+            "Collapse": "Minimizar",
+            "Expand": "Expandir"
         },
         "ConfirmationDialog":{
             "Confirmation": "Confirmação",

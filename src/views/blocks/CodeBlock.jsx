@@ -93,9 +93,9 @@ export default function CodeBlock(props) {
   return (
     <CodeMirror
       value={props.value}
-      height="100%"
-      minHeight='100px'
-      width='100%'
+      height={props.collapsed ? "140px" : '100%'}
+      minHeight='140px'
+      width="100%"
       editable={props.editable}
       theme={myTheme}
       extensions={getLangByName(props.language)}

@@ -492,6 +492,33 @@
 }
 
 
+.cd-collapse{
+  position: relative;
+  top:0px;
+  
+
+  width: 18px;
+  height: 18px;
+  padding:4px;
+  background-color: #ffffffe2 !important;
+  border-radius: 10px;
+  transition: 0.4s;
+  cursor: pointer;
+
+  transform: rotate(90deg);
+  transition: 0.4s;
+}
+
+.cd-rot{
+  transition: 0.4s;
+  transform: rotate(270deg);
+}
+
+.cd-collapse:hover{
+  background-color: #ffffff !important;
+}
+
+
 
 
 
