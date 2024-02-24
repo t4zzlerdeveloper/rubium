@@ -51,10 +51,11 @@ function NoteApp() {
     //Shortcuts added CTRL-E (Edit Mode) and CTRL-V (Preview Note)
     document.onkeydown = function(e) {
       if(e.ctrlKey || e.metaKey){
-        if (e.key.toLowerCase() === 'v') {
-          setEditable(false);
-          saveCurrentNote();
-        }
+        //disabled due to paste problems
+        // if (e.key.toLowerCase() === 'v') {
+        //   setEditable(false);
+        //   saveCurrentNote();
+        // }
         if (e.key.toLowerCase() === 'e') {
           setEditable(true);
         }

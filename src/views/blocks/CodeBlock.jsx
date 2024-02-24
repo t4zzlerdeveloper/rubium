@@ -93,7 +93,8 @@ export default function CodeBlock(props) {
   return (
     <CodeMirror
       value={props.value}
-      height="200px"
+      height="100%"
+      minHeight='100px'
       width='100%'
       editable={props.editable}
       theme={myTheme}
