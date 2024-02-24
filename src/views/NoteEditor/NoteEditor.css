@@ -398,14 +398,17 @@
 .code{
   margin: 1%;
   padding:16px 24px;
+  padding-bottom: 8px;
   padding-top:8px;
   background-color: rgba(6, 8, 6, 0.6);
   border-radius: 8px;
   width: 100%;
-  cursor:text;
+
   border: 1px solid rgba(128, 128, 128, 0.1);
   transition: 0.4s;
 }
+
+.code > *> *{cursor:text;}
 
 .code:hover{
   background-color: rgba(255,255,255,0.01);
@@ -413,7 +416,7 @@
 
 
 .cd-flex{
-  font-size: 14px;
+  font-size: 13px;
   color:#434343;
   font-family: inherit;
   font-weight: 500;
@@ -423,19 +426,21 @@
 }
 
 .cd-logo{
+  padding-top: 8px;
   display: flex;
   place-items: center;
   place-content: center;
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 8px;
+  font-weight: 400;
   color:#4c4c4c;
-  opacity: 0.6;
+  opacity: 0.4;
+  letter-spacing: 1.5px;
 }
 
 .cd-logo > img{
   object-fit: contain;
-  width: 9px;
-  height: 9px;
+  width: 7px;
+  height: 7px;
   position: relative;
   top:0;
   left: 0;
@@ -444,7 +449,33 @@
   background-color: #4c4c4c;
   border-radius: 11px;
   padding:1px;
-  filter: grayscale();
+  filter: grayscale() opacity(0.6);
+}
+
+
+.cd-copy{
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  place-content: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+
+.cd-copy >img{
+  width: 18px;
+  height: 18px;
+  padding:4px;
+  background-color: #4c4c4c;
+  opacity: 0.2;
+  border-radius: 10px;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.cd-copy>img:hover{
+  opacity: 0.4;
 }
 
 

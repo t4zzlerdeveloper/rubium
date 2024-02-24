@@ -11,6 +11,8 @@ import formatSep from '../../assets/separator.svg'
 import formatKanban from '../../assets/kanban.svg'
 import formatCode from '../../assets/code.svg'
 
+
+import copyIcon from '../../assets/content_copy.svg'
 import addInd from '../../assets/add.svg'
 import removeInd from '../../assets/delete.svg'
 import arrowRight from '../../assets/arrow-right.svg'
@@ -365,6 +367,30 @@ function NoteEditor(props){
     setFF(ff+1)
    }
 
+   function handleCodeCopy(e,text){
+    const type = "text/plain";
+    const blob = new Blob([text], { type });
+    const data = [new ClipboardItem({ [type]: blob })];
+
+    const parent = e.target.parentNode;
+    const copyTR = lang.tr("Copy");
+    const copiedTR = lang.tr("Copied!");
+    const errorTR = lang.tr("Error copying...");
+
+    navigator.clipboard.write(data)
+    .then(()=>{
+        parent.innerHTML =  parent.innerHTML.replace(copyTR,copiedTR);
+        setTimeout(()=>{
+            parent.innerHTML =  parent.innerHTML.replace(copiedTR,copyTR);
+        },1500)
+    }).catch(()=>{
+        parent.innerHTML =  parent.innerHTML.replace(copyTR,errorTR);
+        setTimeout(()=>{
+            parent.innerHTML =  parent.innerHTML.replace(errorTR,copyTR);
+        },1500)
+    });
+   }
+
 
     //Gen AI related
     const [prompt,setPrompt] = useState("");
@@ -439,7 +465,8 @@ function NoteEditor(props){
                          <div className='code'>
                         
                             <div className='cd-flex'>
-                                <div className='cd-logo'>- C<img src={rubiumLogo} />DE -</div>
+                            <div className="cd-copy" ><img  onClick={(e)=>{handleCodeCopy(e,c.text)}} src={copyIcon}/>{lang.tr("Copy")}</div>
+                                
                                 <div>
                                 {lang.tr("Language")}&nbsp;&nbsp;&nbsp;<select value={c.lang} onChange={(e)=>{updateCodeLang(e,index)}} disabled={!props.editable}>
                                     {codeLangs.map((l)=>{
@@ -454,7 +481,10 @@ function NoteEditor(props){
                             value={c.text}
                             onChange={(e)=>{updateContent(e,index)}}
                             language={c.lang}/>
+
+                            <div className='cd-logo'>POWERED BY C<img src={rubiumLogo} />DE MIRROR</div>
                          </div>
+                         
                      </>
                     : c.type == "kb" ?
                     <>
@@ -467,7 +497,7 @@ function NoteEditor(props){
                                     <ul>
                                         {c.backlog.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" >
+                                             <li className="kb-task" key={ index + "-task-" + idx}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                
                                                 {props.editable ? 
@@ -489,7 +519,7 @@ function NoteEditor(props){
                                     <ul>
                                     {c.doing.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task">
+                                             <li className="kb-task" key={ index + "-task-" + idx}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","backlog")}}/>
@@ -507,7 +537,7 @@ function NoteEditor(props){
                                     <ul>
                                         {c.done.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task">
+                                             <li className="kb-task" key={ index + "-task-" + idx}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"done","doing")}} />

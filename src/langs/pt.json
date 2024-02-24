@@ -90,7 +90,10 @@
             "Doing":"Em andamento",
             "Done": "Concluído",
             "No deadline": "Sem prazo",
-            "Language": "Linguagem"
+            "Language": "Linguagem",
+            "Copy":"Copiar",
+            "Copied!":"Copiado!",
+            "Error Copying...":"Erro a copiar..."
         },
         "ConfirmationDialog":{
             "Confirmation": "Confirmação",
