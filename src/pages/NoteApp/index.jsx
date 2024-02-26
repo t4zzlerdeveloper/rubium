@@ -68,6 +68,7 @@ function NoteApp() {
 
   useEffect(()=>{
     window.document.title = (note.title ? note.title + " | " : "")  + "Rubium";
+    setOpenEmoji(false);
   },[note])
 
   useEffect(()=>{
