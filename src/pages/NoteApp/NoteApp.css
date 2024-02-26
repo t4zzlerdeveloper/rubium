@@ -215,7 +215,6 @@ mask: var(--mask);
 
 .note-title,.note-title:disabled{
   font-family:inherit;
-  margin-top: 40px;
   font-size: 50px;
   padding:10px 0px;
   width: 100%;
@@ -420,6 +419,7 @@ hr.rounded {
   display: none;
 }
 
+
 @media only screen and (max-width: 600px) {
   .mobile-dev{
     position: absolute;
@@ -441,4 +441,47 @@ hr.rounded {
     width: 30vw;
   }
   
+}
+
+
+
+
+.emoji-title{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+  place-content: center;
+  place-items: center;
+}
+
+.emoji-con{
+  border-radius: 18px;
+  position: relative;
+  transition: 0.4s;
+  border: 1px solid rgb(12, 16, 12);
+  cursor: pointer;
+  width: 66px;
+  height:54px;
+  display: flex;
+  place-content: center;
+  place-items: center;
+}
+
+.emoji-con:hover{
+  border: 1px solid rgb(26, 30, 26);
+}
+
+
+.emoji-con > p{
+  transition: 0.6s;
+  padding: 0;
+  margin: 0;
+  color: rgb(72, 72, 72);
+  font-size: 32px;
+  text-align: center;
+}
+
+.emoji-con:hover > p{
+  color: rgb(100, 100, 100);
 }

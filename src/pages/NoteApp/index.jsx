@@ -24,6 +24,8 @@ import NoteEditor from '../../views/NoteEditor'
 import LangTranslator from '../../lib/context/language'
 import SettingsDialog from '../../views/SettingsDialog'
 import GetStarted from '../../views/GetStarted'
+import EmojiSelector from '../../views/EmojiSelector'
+import Emoji from '../../views/Emoji'
 
 
 
@@ -113,7 +115,7 @@ function NoteApp() {
       const role = Role.user(user.current.$id);
       const permissions = [Permission.read(role),Permission.update(role),Permission.delete(role)];
       
-      const data = {title:note.title,content:note.content};
+      const data = {emoji:note.emoji,title:note.title,content:note.content};
       setNotes(notes.filter(item => item.$id !== "draft"));
 
       databases.createDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,ID.unique(),data,permissions)
@@ -129,6 +131,7 @@ function NoteApp() {
     }
     else{
       databases.updateDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id,{
+        emoji:  type == "emoji" ? ctt : note.emoji,
         title:  type == "title" ? ctt : note.title,
         content: type == "content" ? ctt : note.content,
       })
@@ -187,8 +190,18 @@ function NoteApp() {
     loadNoteById(newNote.$id);
   }
 
+
+  function setNoteEmoji(newEmoji){
+    if(newEmoji.length > 32) return;
+    const oldEmoji = note.emoji;
+    setNote({...note,emoji:newEmoji})
+    let targetObject = notes.filter(n => n.$id === note.$id)
+    targetObject[0].emoji = newEmoji;
+
+    if(oldEmoji !== newEmoji && note.$id !== 'draft') saveCurrentNote("emoji",newEmoji);
+  }
+
   function setNoteTitle(newTitle){
-    if(newTitle.length > 32) return;
     const oldTitle = note.title;
     setNote({...note,title:newTitle})
     let targetObject = notes.filter(n => n.$id === note.$id)
@@ -252,6 +265,8 @@ function showToast(msg,type) {
   setTimeout(function(){x.className = newClassName}, 100);
   setTimeout(function(){ x.className = x.className.replace(newClassName, ""); }, 4900);
 }
+
+const[openEmoji,setOpenEmoji] = useState();
 
 const [noteToDelete,setNoteToDelete] = useState(null);
 const [sharing,setSharing] = useState(false);
@@ -376,7 +391,13 @@ useEffect(()=>{
         {!loadingNotes && notes.length == 0 && searchQuery.length == 0 ?
         <GetStarted onStart={(t)=>{createNewNote(t)}}/>
         :loadingCurrentNote ? <Loader/> : <div className='main-div-inner'>
-          <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
+
+          <div className='emoji-title'>
+            {!note.emoji && !editable ? <></> : <div className='emoji-con' onClick={()=>{if(editable){setOpenEmoji(!openEmoji)}}}>{note.emoji ? <Emoji size={"36px"} name={note.emoji}/> : editable ? <p>+</p> : <p></p>}</div>}
+            <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
+          </div>
+
+          {openEmoji ? <EmojiSelector onSelect={(emj)=>{setNoteEmoji(emj);setOpenEmoji(false)}}/> : <></>}
 
           <NoteEditor 
           editable={editable}

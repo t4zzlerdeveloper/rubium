@@ -1,0 +1,57 @@
+.emjsel{
+    background: rgb(16,16,16);
+    padding: 18px;
+    width: 600px;
+    height: 190px;
+    overflow:hidden;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    border-radius: 12px;
+    padding-top: 0px;
+
+    filter:drop-shadow(0 0 16px rgba(233, 120, 120, 0.1));
+    border: 1px solid rgb(30, 30,30);
+    animation: emj-fadein 1s;
+}
+
+.emjsel > input{
+   outline: none;
+   border: none;
+   background-color: transparent;
+   border: 1px solid rgb(30, 30,30);
+   border-radius: 11px;
+   margin: 10px 0px;
+   width: 90%;
+   padding: 6px 12px;
+   font-size: 14px;
+   color:#faafb5;
+   font-weight: 500;
+}
+
+.emjsel > input:focus,.emjsel > input:hover{
+    border: 1px solid rgb(40, 30,30);
+}
+
+.emjsel > div{
+    display: grid;
+    grid-template-columns: repeat(10,1fr);
+    overflow-y: scroll;
+    gap:0px;
+}
+
+.emjsel > div > *{
+    border-radius: 4px;
+    transition: 0.2s;
+    cursor: pointer;
+    animation: emj-fadein 1s;
+}
+
+@keyframes emj-fadein {
+    0%{opacity: 0;filter: grayscale(100%);}
+    100%{opacity: 1;filter:grayscale(0%);}
+}
+
+.emjsel > div > *:hover{
+    background-color: rgba(253, 128, 128, 0.05);
+}

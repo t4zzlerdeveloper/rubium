@@ -132,6 +132,10 @@
             "What are you taking notes of today?":"Do que vais tirar notas hoje?",
             "Get Started": "Vamos Começar",
             "Answer here...": "Responde aqui..."
+        },
+        "EmojiSelector":{
+            "Search Emojis...":"Pesquisar Emojis..."
         }
+        
 
 }

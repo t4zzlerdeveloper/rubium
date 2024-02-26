@@ -285,8 +285,8 @@
   font-family: inherit;
   font-size: 14px;
 
-  padding:8px 16px;
-  padding-top: 10px;
+  padding:10px 16px;
+  padding-top: 12px;
 }
 
 .kb-lower > section > ul{
@@ -528,7 +528,7 @@
   left: 0;
   padding:12px ;
   border-radius: 8px;
-  background: rgb(16,18,16);
+  background: rgb(16,16,16);
   z-index: 99;
   filter:drop-shadow(0 0 16px rgba(233, 120, 120, 0.1));
   border: 1px solid rgb(30, 30,30);
