@@ -35,6 +35,10 @@ function LandingPage(){
         window.scrollTo(0,0);
     },[])
 
+    useEffect(()=>{
+        window.document.title = "Rubium - " + lang.tr("Notes") + " " +  lang.tr("Should Only") + " " + lang.tr("Cost Time")
+    },[user])
+
 
 
     const navigate = useNavigate();

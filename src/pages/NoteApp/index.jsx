@@ -53,11 +53,6 @@ function NoteApp() {
     //Shortcuts added CTRL-E (Edit Mode) and CTRL-V (Preview Note)
     document.onkeydown = function(e) {
       if(e.ctrlKey || e.metaKey){
-        //disabled due to paste problems
-        // if (e.key.toLowerCase() === 'v') {
-        //   setEditable(false);
-        //   saveCurrentNote();
-        // }
         if (e.key.toLowerCase() === 'e') {
           setEditable(true);
         }
@@ -98,7 +93,6 @@ function NoteApp() {
     const queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")]
     databases.listDocuments(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID, queries)
     .then((res)=>{
-      //console.log(res.documents)
       setNotes(res.documents);
 
       if(note == "" || last) switchToNote(res.documents[0]);
@@ -160,8 +154,6 @@ function NoteApp() {
       .then((res)=>{
         showToast(lang.tr("Note deleted successfully!"),"success")
         loadNotes(true);
-        //! tmp fix ShareDialog Error
-        // window.location.reload();
       })
       .catch(()=>{
         showToast(lang.tr("Error deleting note..."),"error")
@@ -346,7 +338,6 @@ useEffect(()=>{
         }): <div className="side-item" >{searchQuery.length > 0 ? lang.tr("No results found") : lang.tr("Nothing to see here.")}</div>}
         </div>
 
-        {/* <img src={avatars.getFlag(lang.getLocale())}/> */}
         <div className='side-btns'>
           <button
               onClick={() => {setSettings(true)}}
