@@ -182,16 +182,46 @@ function NoteApp() {
     setEditable(false);
     loadNoteById(newNote.$id);
   }
+  
+
+
+  const [saveTime,setSaveTime] = useState(-1);
+  const [timerId, setTimerId] = useState(null);
+  const[numChanges,setNumChanges] = useState(0);
+
+
+  function triggerNoteChange(type,value){
+    setSynced(false);
+    setNumChanges(numChanges+1);
+
+    const copyTime = Date.now();
+
+    if (saveTime == -1) setSaveTime(copyTime);
+    else if(saveTime !== -1 && saveTime + 5000 <= copyTime ){
+      setSaveTime(copyTime);
+      saveCurrentNote(type,value);
+    }
+
+    let timeout = 1000;
+    if(numChanges < 10 || type == "emoji"){
+      timeout = 600;
+    }
+  
+    clearTimeout(timerId);
+    setTimerId(setTimeout(() => {
+      saveCurrentNote(type,value);
+    }, timeout));
+  }
 
 
   function setNoteEmoji(newEmoji){
     if(newEmoji.length > 32) return;
     const oldEmoji = note.emoji;
-    setNote({...note,emoji:newEmoji})
+        setNote({...note,emoji:newEmoji})
     let targetObject = notes.filter(n => n.$id === note.$id)
     targetObject[0].emoji = newEmoji;
 
-    if(oldEmoji !== newEmoji && note.$id !== 'draft') saveCurrentNote("emoji",newEmoji);
+    if(oldEmoji !== newEmoji && note.$id !== 'draft') triggerNoteChange("emoji",newEmoji);
   }
 
   function setNoteTitle(newTitle){
@@ -200,7 +230,7 @@ function NoteApp() {
     let targetObject = notes.filter(n => n.$id === note.$id)
     targetObject[0].title = newTitle;
 
-    if(oldTitle !== newTitle && note.$id !== 'draft') saveCurrentNote("title",newTitle);
+    if(oldTitle !== newTitle && note.$id !== 'draft') triggerNoteChange("title",newTitle);
   }
 
   function setNoteContent(newContent){
@@ -208,9 +238,7 @@ function NoteApp() {
     const oldContent = note.content;
     setNote({...note,content:newContent});
 
-
-    //TODO: Only save the note after 5 seconds of changing or when content stopped changing for 1 seconds
-    if(oldContent !== newContent && note.$id !== 'draft') saveCurrentNote("content",newContent);
+    if(oldContent !== newContent && note.$id !== 'draft') triggerNoteChange("content",newContent);
 
   }
 
@@ -366,7 +394,7 @@ useEffect(()=>{
             </div>}
             {checkUpdate(note) || note.$id == "draft" ?
               <div className='edit-icon' onClick={()=>{
-                if(editable){saveCurrentNote()};setEditable(!editable)}}>
+                if(editable){saveCurrentNote()};setEditable(!editable);setOpenEmoji(false)}}>
                 <img 
                 src={editable ? note.$id == "draft" ? saveIcon : viewIcon : editIcon} />
                 <p>{editable ? note.$id == "draft" ? lang.tr("Save") : lang.tr("Preview") : lang.tr("Edit") }</p>

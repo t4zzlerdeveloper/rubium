@@ -83,8 +83,8 @@ function getLangByName(name){
         case "php":
             return langs.php();  
         case "sql":
-            return langs.sql();  
-    }
+            return langs.sql();
+            }
    
 }
 

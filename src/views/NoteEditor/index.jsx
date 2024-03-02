@@ -194,6 +194,7 @@ function NoteEditor(props){
 
     function updateContent(e,index){
         let copy = content;
+
         copy[index].text = e.target.value;
         setContent(copy);
         //console.log(content)
