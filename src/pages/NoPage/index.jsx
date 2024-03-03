@@ -1,7 +1,7 @@
 import './NoPage.css'
 
 import rubium from '../../assets/rubium-logomark.svg'
-import noBack from '../../assets/no-back.jpg'
+import noBack from '../../assets/no-back.webp'
 import { useNavigate } from 'react-router-dom'
 import LangTranslator from '../../lib/context/language'
 import { useUser } from '../../lib/context/user'

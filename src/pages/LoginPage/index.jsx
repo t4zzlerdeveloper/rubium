@@ -1,6 +1,6 @@
 import './LoginPage.css'
 import rubiumLogo from '../../assets/rubium-logomark.svg'
-import loginBack from '../../assets/login-back.jpg'
+import loginBack from '../../assets/login-back.webp'
 import { useEffect, useState } from 'react'
 
 import { useUser } from "../../lib/context/user";

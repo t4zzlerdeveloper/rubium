@@ -1,6 +1,6 @@
 import './RegisterPage.css'
 import rubiumLogo from '../../assets/rubium-logomark.svg'
-import registerBack from '../../assets/register-back.jpg'
+import registerBack from '../../assets/register-back.webp'
 import { useEffect, useState } from 'react'
 
 import { useUser } from "../../lib/context/user";
