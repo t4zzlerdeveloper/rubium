@@ -8,7 +8,7 @@ import money from '../../assets/paid.svg'
 
 import github from '../../assets/socials/github.svg'
 import appwrite from '../../assets/socials/appwrite.svg'
-import linkedin from '../../assets/socials/linkedin.svg'
+import discord from '../../assets/socials/discord.svg'
 
 import screenshotApp from '../../assets/screenshots/login-page.webp'
 import screenshotNote from '../../assets/screenshots/note-page.webp'
@@ -16,11 +16,14 @@ import './LandingPage.css'
 import { useEffect, useState } from 'react'
 import LangTranslator from '../../lib/context/language'
 import { useUser } from '../../lib/context/user'
-import { locale } from '../../lib/appwrite'
 
 
 const DEV_GITHUB = "https://github.com/t4zzlerdeveloper";
 const RUBIUM_GITHUB = DEV_GITHUB + "/rubium";
+const SUGGESTIONS_URL = RUBIUM_GITHUB + "issues/new/choose";
+
+const APPWRITE_URL = "https://builtwith.appwrite.io/projects/65d4ad25a374f89996e6/";
+const DISCORD_URL = "https://discord.com/invite/twnjGqHZQn"; 
 
 
 
@@ -52,7 +55,7 @@ function LandingPage(){
             <img className='nav-logo' src={rubiumLogo} onClick={()=>{document.location.reload()}}/>
             <a>{lang.tr("Our Story")}</a>
             <a>{lang.tr("Pricing")}</a>
-            <a>{lang.tr("Suggestions")}</a>
+            <a onClick={()=>{window.open(SUGGESTIONS_URL)}}>{lang.tr("Suggestions")}</a>
         </div>
         <div className='nav-right'>
             <button className='star-git' onClick={()=>{window.open(RUBIUM_GITHUB)}}>
@@ -106,8 +109,8 @@ function LandingPage(){
         </div>
         <div className='socials'>
             <img src={github} onClick={()=>{window.open(RUBIUM_GITHUB)}}/>
-            <img src={appwrite}/>
-            <img src={linkedin}/>
+            <img src={appwrite} onClick={()=>{window.open(APPWRITE_URL)}}/>
+            <img src={discord}  onClick={()=>{window.open(DISCORD_URL)}}/>
         </div>
         <p className='copyright'>
             &copy; {new Date().getFullYear() || "2024"} Rubium&nbsp;&nbsp;|&nbsp;&nbsp;{lang.tr("Developed by")} <a onClick={()=>{window.open(DEV_GITHUB)}}> @t4zzlerdeveloper</a>
