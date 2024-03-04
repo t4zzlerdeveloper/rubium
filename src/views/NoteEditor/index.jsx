@@ -601,12 +601,12 @@ function NoteEditor(props){
                             />
                     </>
                 }
-                 <img 
+                 {content.length > 1 ? <img 
                         className='b-remove'
                         src={removeInd} 
                         draggable="false" 
                         onClick={()=>{removeBlock(index)}}
-                      />
+                      /> : <></>}
 
                 </div>
                 <section 
