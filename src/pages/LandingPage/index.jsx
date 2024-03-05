@@ -13,6 +13,7 @@ import discord from '../../assets/socials/discord.svg'
 import screenshotApp from '../../assets/screenshots/login-page.webp'
 import screenshotNote from '../../assets/screenshots/note-page.webp'
 import './LandingPage.css'
+
 import { useEffect, useState } from 'react'
 import LangTranslator from '../../lib/context/language'
 import { useUser } from '../../lib/context/user'

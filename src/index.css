@@ -77,3 +77,25 @@ button:focus-visible {
   padding:2.5px 5px;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 14px;
+  cursor:default;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent; 
+  border-radius: 8px;
+  margin:4px;
+  cursor:default;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  cursor:default;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: #2e2b2b;
+}

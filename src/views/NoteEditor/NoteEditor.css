@@ -379,8 +379,8 @@
 }
 
 .kb-lower >section:nth-child(2)>h4{
-  border: 0.5px solid rgb(248, 248, 169);
-  background-color: rgba(248, 248, 169, 0.1);
+  border: 0.5px solid rgb(255, 239, 65);
+  background-color: rgba(255, 239, 65, 0.1);
 }
 
 .kb-lower >section:nth-child(3)>h4{
