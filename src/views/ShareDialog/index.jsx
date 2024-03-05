@@ -42,7 +42,6 @@ function ShareDialog(props){
         .catch(()=>{
 
         })
-
     }
 
 
@@ -162,15 +161,9 @@ function ShareDialog(props){
           '/'+query,
           'GET'
           ).then((res)=>{
-            if(res.success){
               setSharedUsers(JSON.parse(res.responseBody));
               setLoadingUsers(false);
-              setEmail("")
-            }
-            else{
-              setSharedUsers([]);
-              setLoadingUsers(false);
-            }
+              setEmail("");
           })
           .catch(()=>{
             setSharedUsers([]);

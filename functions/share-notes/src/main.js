@@ -88,7 +88,7 @@ export default async ({ req, res, log, error }) => {
       return res.json(sharedUsers);
     }
     catch{
-      return res.json({success:false});
+      return res.json([]);
     }
 
 
