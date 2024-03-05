@@ -285,7 +285,7 @@ function NoteEditor(props){
         let addButton = document.getElementById("addeid-"+index);
         const rect = addButton.getBoundingClientRect();
 
-        if(rect.top > window.innerHeight -200){
+        if(rect.top > window.innerHeight -268){
             //!fix size to dynamic
             setCrtBlockStyle(
                 {
@@ -448,6 +448,7 @@ function NoteEditor(props){
                         draggable="false" 
                         enabled={creatingBlock == index+1 ? "true" : "false"}
                         onMouseEnter={(e)=>{handleBlockCreationOpen(e,index+1)}}
+                        onWheel={()=>{setCreatingBlock(-1)}}
                       />
 
                     <img 
@@ -631,7 +632,7 @@ function NoteEditor(props){
         { creatingBlock == -1 ? <></> : 
         <div 
             className="block-creator" 
-            style={crtBlockStyle} 
+            style={crtBlockStyle}             
             onMouseLeave={()=>{setCreatingBlock(-1)}}>
 
             <div onClick={()=>{addBlock("h1")}}>
