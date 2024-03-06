@@ -36,7 +36,9 @@ function App() {
                   </Route>
                   <Route path="register" element={<RegisterPage />} />
                   <Route path="verify" element={<VerifyPage/>} />
-                  <Route path="app" element={<RequireAuth><NoteApp/></RequireAuth>} />
+                  <Route path="app" element={<RequireAuth><NoteApp/></RequireAuth>}>
+                    <Route path=":paramId" element={<RequireAuth><NoteApp/></RequireAuth>}/>
+                  </Route>
                   <Route path="note" element={<PublishedNote/>}>
                     <Route path="*" element={<PublishedNote/>}/>
                   </Route>

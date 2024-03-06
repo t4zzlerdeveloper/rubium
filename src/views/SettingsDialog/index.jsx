@@ -82,7 +82,7 @@ function SettingsDialog(props){
                     <p>{lang.tr("Language")}
                   <select value={locale} onChange={(e)=>{handleLocaleChange(e)}}>
                   {lang.getLangs().map(l => {
-                      return <option value={l.locale}>{l.name}</option>
+                      return <option key={"st-"+l.locale} value={l.locale}>{l.name}</option>
                   })}
                   </select></p>
                   </div>

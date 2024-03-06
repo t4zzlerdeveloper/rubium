@@ -12,7 +12,7 @@ import deleteIcon from '../../assets/delete.svg'
 
 import { useEffect, useRef, useState } from 'react'
 import './NoteApp.css'
-import { avatars, databases } from '../../lib/appwrite'
+import { avatars, client, databases } from '../../lib/appwrite'
 import { useUser } from '../../lib/context/user'
 import { Functions, ID, Permission, Query, Role } from 'appwrite'
 import Loader from '../../views/Loader'
@@ -26,12 +26,16 @@ import SettingsDialog from '../../views/SettingsDialog'
 import GetStarted from '../../views/GetStarted'
 import EmojiSelector from '../../views/EmojiSelector'
 import Emoji from '../../views/Emoji'
+import { useNavigate, useParams,} from 'react-router-dom'
 
+
+const channel = `databases.${import.meta.env.VITE_DATABASE_ID}.collections.${import.meta.env.VITE_NOTES_COLLECTION_ID}.documents`;
 
 
 function NoteApp() {
 
   const user = useUser();
+  const navigate = useNavigate();
   const lang = new LangTranslator("NoteApp",user);
 
   const [editable, setEditable] = useState(false)
@@ -47,6 +51,13 @@ function NoteApp() {
 
   const [synced,setSynced] = useState(true);
 
+
+  let {paramId} = useParams();
+
+  useEffect(()=>{
+    loadNoteById(paramId);
+  },[paramId])
+
   useEffect(()=>{
     loadNotes();
     
@@ -57,9 +68,16 @@ function NoteApp() {
           setEditable(true);
         }
       }
-      
+
+    client.subscribe(channel,(data)=>{
+      console.log(data);
+      loadNotes(false,true);
+    })
+   
   };
   },[])
+
+
 
   useEffect(()=>{
     window.document.title = (note.title ? note.title + " | " : "")  + "Rubium";
@@ -75,56 +93,48 @@ function NoteApp() {
   }
 
 
-  function loadNoteById(id,draftTitle){
-    if(id == "draft") setNote({$id:"draft",title:draftTitle ? draftTitle :lang.tr("New Note"),content:""});
+  function loadNoteById(id){
     setLoadingCurrentNote(true);
+   
     databases.getDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,id)
     .then((res)=>{
       setNote(res)
-      //!tmp fix
+
       setTimeout(()=>{setLoadingCurrentNote(false);},400)
     })
-    .catch(()=>{setLoadingCurrentNote(false);})
+    .catch((err)=>{
+      if(err.toString().includes("requested ID could not be found.")){
+        loadNotes(true);
+      }
+      else{
+        setLoadingCurrentNote(false);
+      }
+    
+    })
   }
 
 
-  function loadNotes(last = false){
-    setLoadingNotes(true);
+  function loadNotes(last = false,disableLoading = false){
+    if(!disableLoading) setLoadingNotes(true);
+
     const queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")]
     databases.listDocuments(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID, queries)
     .then((res)=>{
       setNotes(res.documents);
 
-      if(note == "" || last) switchToNote(res.documents[0]);
+      if(!paramId || last) switchToNote(res.documents[0]);
 
       setLoadingNotes(false);
     })
     .catch(()=>{setLoadingNotes(false);})
+
 
   }
 
   function saveCurrentNote(type = false,ctt = false){
     if(!ctt) setLoadingNotes(true);
     setSynced(false);
-    if (note.$id == "draft"){
-      const role = Role.user(user.current.$id);
-      const permissions = [Permission.read(role),Permission.update(role),Permission.delete(role)];
-      
-      const data = {emoji:note.emoji,title:note.title,content:note.content};
-      setNotes(notes.filter(item => item.$id !== "draft"));
-
-      databases.createDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,ID.unique(),data,permissions)
-      .then((res)=>{
-        showToast(lang.tr("Saved new note successfully!"),"success")
-        loadNotes(true);
-        setSynced(true);
-      })
-      .catch(()=>{
-        showToast(lang.tr("Error saving new note..."),"error")
-        setLoadingNotes(false);
-      })
-    }
-    else{
+   
       databases.updateDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id,{
         emoji:  type == "emoji" ? ctt : note.emoji,
         title:  type == "title" ? ctt : note.title,
@@ -138,18 +148,11 @@ function NoteApp() {
       .catch(()=>{
         showToast(lang.tr("Error saving changes..."),"error")
       })
-    }
   }
 
   function deleteNote(note){
     setLoadingNotes(true);
 
-    if(note.$id == "draft"){
-      setNotes(notes.filter(item => item.$id !== "draft"));
-      showToast(lang.tr("Draft discarded successfully!"),"success")
-      loadNotes(true);
-    }
-    else{
       databases.deleteDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id)
       .then((res)=>{
         showToast(lang.tr("Note deleted successfully!"),"success")
@@ -159,28 +162,39 @@ function NoteApp() {
         showToast(lang.tr("Error deleting note..."),"error")
         setLoadingNotes(false);
       })
-    }
    
   }
 
 
   function createNewNote(title = undefined){
-    if(notes.find(item => item.$id === "draft")) return;
 
-    setLoadingNotes(true);
-    setEditable(true);
-    showToast(lang.tr("Created a new draft!"),"info")
-    setNotes([...notes,{$id:"draft",title: title ? title : lang.tr("New Note"),content:[{type:"p",text:""}]}]);
-    loadNoteById("draft",title);
-    setLoadingNotes(false);
+      const role = Role.user(user.current.$id);
+      const permissions = [Permission.read(role),Permission.update(role),Permission.delete(role)];
+      
+      const data = {emoji:"",title:title ? title : lang.tr("New Note"),content:JSON.stringify([{type:"p",text:""}])};
+
+      databases.createDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,ID.unique(),data,permissions)
+      .then((res)=>{
+        showToast(lang.tr("Created a new note!"),"info")
+        loadNoteById(res.$id);
+        setEditable(true);
+        setSynced(true);
+      })
+      .catch(()=>{
+        showToast(lang.tr("Error creating new note..."),"error")
+        setLoadingNotes(false);
+      })
+ 
   }
 
   function switchToNote(newNote){
-    if(newNote.$id === note.$id) return;
+    if(!newNote) return;
 
+    navigate("./"+newNote.$id)
     setSearchQuery("");
+    
+    if(newNote && newNote.$id === note.$id) return;
     setEditable(false);
-    loadNoteById(newNote.$id);
   }
   
 
@@ -191,6 +205,7 @@ function NoteApp() {
 
 
   function triggerNoteChange(type,value){
+    if(!note) return;
     setSynced(false);
     setNumChanges(numChanges+1);
 
@@ -221,7 +236,7 @@ function NoteApp() {
     let targetObject = notes.filter(n => n.$id === note.$id)
     targetObject[0].emoji = newEmoji;
 
-    if(oldEmoji !== newEmoji && note.$id !== 'draft') triggerNoteChange("emoji",newEmoji);
+    if(oldEmoji !== newEmoji) triggerNoteChange("emoji",newEmoji);
   }
 
   function setNoteTitle(newTitle){
@@ -230,7 +245,7 @@ function NoteApp() {
     let targetObject = notes.filter(n => n.$id === note.$id)
     targetObject[0].title = newTitle;
 
-    if(oldTitle !== newTitle && note.$id !== 'draft') triggerNoteChange("title",newTitle);
+    if(oldTitle !== newTitle) triggerNoteChange("title",newTitle);
   }
 
   function setNoteContent(newContent){
@@ -238,8 +253,7 @@ function NoteApp() {
     const oldContent = note.content;
     setNote({...note,content:newContent});
 
-    if(oldContent !== newContent && note.$id !== 'draft') triggerNoteChange("content",newContent);
-
+    if(oldContent !== newContent) triggerNoteChange("content",newContent);
   }
 
 
@@ -267,7 +281,9 @@ function NoteApp() {
    
   }
   
-
+function checkNewNote(note){
+  return user.current && note.$updatedAt === note.$createdAt;
+}
 
 function checkUpdate(note){
   return user.current &&  note.$permissions && note.$permissions.includes(Permission.update(Role.user(user.current.$id)))
@@ -358,8 +374,8 @@ useEffect(()=>{
          : notes.length !== 0 ? notes.map((nt)=>{
           return <div key={nt.$id} className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
             <p>{nt.title}
-              <a className={nt.$id == "draft" ? "draft" : checkDelete(nt) ? "private" : "shared"}>&nbsp;
-               {checkDelete(nt) || nt.$id == "draft" ? nt.$id == "draft" ? lang.tr("Draft Note") : parseDateTime(nt.$updatedAt) : lang.tr("Shared with me")} </a>
+              <a className={checkDelete(nt) ? checkNewNote(nt) ? "new" : "private" : "shared"}>&nbsp;
+               {checkDelete(nt) ? parseDateTime(nt.$updatedAt) : lang.tr("Shared with me")} </a>
             </p>
             {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/> : <></>}
             </div>
@@ -385,19 +401,19 @@ useEffect(()=>{
         <div className='main-controls'>
           {loadingCurrentNote || (!loadingNotes && notes.length == 0 && searchQuery.length == 0) ? <></>:<>
             {/* <a>{charPosLog}</a> */}
-            { note.$id == "draft" ? <></>:
+          
             <div className={'sv-to-cloud ' + (synced ? "" : "gray")}>
                 <p>{synced ? lang.tr("Saved to the Cloud") : lang.tr("Saving...")}</p>
                 <img 
                 className={synced ? "" :  "sync-rotate"}
                 src={synced ? syncedIcon : syncingIcon} />
-            </div>}
-            {checkUpdate(note) || note.$id == "draft" ?
+            </div>
+            {checkUpdate(note) ?
               <div className='edit-icon' onClick={()=>{
                 if(editable){saveCurrentNote()};setEditable(!editable);setOpenEmoji(false)}}>
                 <img 
-                src={editable ? note.$id == "draft" ? saveIcon : viewIcon : editIcon} />
-                <p>{editable ? note.$id == "draft" ? lang.tr("Save") : lang.tr("Preview") : lang.tr("Edit") }</p>
+                src={editable ? viewIcon : editIcon} />
+                <p>{editable ?  lang.tr("Preview") : lang.tr("Edit") }</p>
               </div>
             : <></>}
             {checkDelete(note) ? 

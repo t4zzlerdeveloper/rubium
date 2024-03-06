@@ -58,6 +58,7 @@ function NoteEditor(props){
 
     const [content,setContent] = useState(initialContent)
 
+
     useEffect(()=>{
         try{document.getElementById("neid-"+(content.length-1)).focus();}
         catch{}
@@ -480,7 +481,7 @@ function NoteEditor(props){
                                 <div>
                                 {lang.tr("Language")}&nbsp;&nbsp;&nbsp;<select value={c.lang} onChange={(e)=>{updateCodeLang(e,index)}} disabled={!props.editable}>
                                     {codeLangs.map((l)=>{
-                                        return <option value={l}>{l}</option>
+                                        return <option key={"b-cd-"+l} value={l}>{l}</option>
                                     })}
                                 </select>
                                 </div>
@@ -508,7 +509,7 @@ function NoteEditor(props){
                                     <ul>
                                         {c.backlog.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={ index + "-task-" + idx}>
+                                             <li className="kb-task" key={ index + "-td-task-" + idx}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                
                                                 {props.editable ? 
@@ -530,7 +531,7 @@ function NoteEditor(props){
                                     <ul>
                                     {c.doing.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={ index + "-task-" + idx}>
+                                             <li className="kb-task" key={ index + "-dg-task-" + idx}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","backlog")}}/>
@@ -548,7 +549,7 @@ function NoteEditor(props){
                                     <ul>
                                         {c.done.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={ index + "-task-" + idx}>
+                                             <li className="kb-task" key={ index + "-dn-task-" + idx}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"done","doing")}} />
