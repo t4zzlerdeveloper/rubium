@@ -28,7 +28,7 @@ import EmojiSelector from '../../views/EmojiSelector'
 import Emoji from '../../views/Emoji'
 import { useNavigate, useParams,} from 'react-router-dom'
 
-
+const MAX_TOKENS = 10000;
 
 
 function NoteApp() {
@@ -126,8 +126,10 @@ function NoteApp() {
   }
 
   function saveCurrentNote(type = false,ctt = false){
+
     if(!ctt) setLoadingNotes(true);
     setSynced(false);
+    if(computeTokensLeft() == 0) return;
    
       databases.updateDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id,{
         emoji:  type == "emoji" ? ctt : note.emoji,
@@ -140,6 +142,7 @@ function NoteApp() {
         setSynced(true);
       })
       .catch(()=>{
+        setLoadingNotes(false)
         showToast(lang.tr("Error saving changes..."),"error")
       })
   }
@@ -175,6 +178,7 @@ function NoteApp() {
         switchToNote({...data,$id:res.$id},true)
       })
       .catch(()=>{
+        setLoadingNotes(false);
         showToast(lang.tr("Error creating new note..."),"error")
       })
  
@@ -241,8 +245,8 @@ function NoteApp() {
   }
 
   function setNoteContent(newContent){
-    //console.log(newContent)
-    const oldContent = note.content;
+
+    const oldContent = note.content;    
     setNote({...note,content:newContent});
 
     if(oldContent !== newContent) triggerNoteChange("content",newContent);
@@ -283,6 +287,14 @@ function checkUpdate(note){
 
 function checkDelete(note){
   return user.current && note.$permissions && note.$permissions.includes(Permission.delete(Role.user(user.current.$id)))
+}
+
+function computeTokensLeft(customContent = note.content){
+  return Math.max(MAX_TOKENS - JSON.stringify(customContent).length,0); 
+}
+
+function computePercentageTokens(){
+  return JSON.stringify(note.content).length /  MAX_TOKENS ; 
 }
 
 const [toastMessage,setToastMessage] = useState("");
@@ -393,13 +405,20 @@ useEffect(()=>{
         <div className='main-controls'>
           {loadingCurrentNote || (!loadingNotes && notes.length == 0 && searchQuery.length == 0) ? <></>:<>
             {/* <a>{charPosLog}</a> */}
+     
           
             <div className={'sv-to-cloud ' + (synced ? "" : "gray")}>
-                <p>{synced ? lang.tr("Saved to the Cloud") : lang.tr("Saving...")}</p>
-                <img 
+                <p>{computeTokensLeft() == 0 ? lang.tr("Token Limit reached :(") : synced ? lang.tr("Saved to the Cloud") : lang.tr("Saving...")}</p>
+                {computeTokensLeft() > 0 && <img 
                 className={synced ? "" :  "sync-rotate"}
-                src={synced ? syncedIcon : syncingIcon} />
+                src={synced ? syncedIcon : syncingIcon} />}
             </div>
+
+            {editable && <div className='rem-tokens'>
+                <p>{computeTokensLeft()} {lang.tr("tokens left")}</p>
+                <progress value={computePercentageTokens()} full={ computePercentageTokens() >= 1 ? "true": "false"} ></progress>
+            </div>}
+            
             {checkUpdate(note) ?
               <div className='edit-icon' onClick={()=>{
                 if(editable){saveCurrentNote()};setEditable(!editable);setOpenEmoji(false)}}>

@@ -382,11 +382,87 @@ hr.rounded {
   filter: drop-shadow(0 0 6px #f45b689a );
 }
 
+
+.rem-tokens{
+  display: flex;
+  margin-right:10px;
+  flex-direction: column;
+  gap:0px;
+  place-content: center;
+  place-items: center;
+  background-color: #fd949d06;
+  padding: 2px;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.rem-tokens:hover{
+  background-color: #fd949d09;
+}
+
+.rem-tokens > p{
+  padding: 0;
+  margin: 0;
+  font-weight:400;
+  color:rgb(131, 110, 110);
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.rem-tokens > progress{
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  height: 4px;
+	border-radius: 20px;
+  transition: 0.2s;
+}
+
+.rem-tokens > progress[value] {
+  --color: rgb(197, 172, 172); 
+  --full-color:rgb(244, 97, 97); 
+  --background: rgb(29, 29, 29);
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: 100px;
+  margin: 0 10px;
+  border-radius: 10em;
+  background: var(--background);
+  transition: 0.2s;
+}
+.rem-tokens > progress[value]::-webkit-progress-bar {
+  border-radius: 10em;
+  background: var(--background);
+}
+.rem-tokens > progress[value]::-webkit-progress-value {
+  border-radius: 10em;
+  background: var(--color);
+}
+.rem-tokens > progress[value]::-moz-progress-bar {
+  border-radius: 10em;
+  background: var(--color);
+}
+
+.rem-tokens > progress[full=true]::-webkit-progress-value {
+  border-radius: 10em;
+  background: var(--full-color);
+}
+.rem-tokens > progress[full=true]::-moz-progress-bar {
+  border-radius: 10em;
+  background: var(--full-color);
+}
+
+
+
 .sv-to-cloud{
   transition: 0.1s;
   padding: 0;
   margin: 0;
   background-color: transparent;
+  cursor: default;
 }
 
 .sv-to-cloud > p {
