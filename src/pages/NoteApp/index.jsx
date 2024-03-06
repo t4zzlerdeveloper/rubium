@@ -29,7 +29,6 @@ import Emoji from '../../views/Emoji'
 import { useNavigate, useParams,} from 'react-router-dom'
 
 
-const channel = `databases.${import.meta.env.VITE_DATABASE_ID}.collections.${import.meta.env.VITE_NOTES_COLLECTION_ID}.documents`;
 
 
 function NoteApp() {
@@ -68,11 +67,6 @@ function NoteApp() {
           setEditable(true);
         }
       }
-
-    client.subscribe(channel,(data)=>{
-      console.log(data);
-      loadNotes(false,true);
-    })
    
   };
   },[])
@@ -114,8 +108,8 @@ function NoteApp() {
   }
 
 
-  function loadNotes(last = false,disableLoading = false){
-    if(!disableLoading) setLoadingNotes(true);
+  function loadNotes(last = false){
+    setLoadingNotes(true);
 
     const queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")]
     databases.listDocuments(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID, queries)
@@ -173,28 +167,26 @@ function NoteApp() {
       
       const data = {emoji:"",title:title ? title : lang.tr("New Note"),content:JSON.stringify([{type:"p",text:""}])};
 
+      setLoadingNotes(true);
       databases.createDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,ID.unique(),data,permissions)
       .then((res)=>{
+        loadNotes();
         showToast(lang.tr("Created a new note!"),"info")
-        loadNoteById(res.$id);
-        setEditable(true);
-        setSynced(true);
+        switchToNote({...data,$id:res.$id},true)
       })
       .catch(()=>{
         showToast(lang.tr("Error creating new note..."),"error")
-        setLoadingNotes(false);
       })
  
   }
 
-  function switchToNote(newNote){
+  function switchToNote(newNote,edit = false){
     if(!newNote) return;
 
     navigate("./"+newNote.$id)
     setSearchQuery("");
-    
-    if(newNote && newNote.$id === note.$id) return;
-    setEditable(false);
+    setEditable(edit);
+    setSynced(true);
   }
   
 
