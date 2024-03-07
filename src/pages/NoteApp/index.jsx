@@ -111,7 +111,7 @@ function NoteApp() {
   function loadNotes(last = false){
     setLoadingNotes(true);
 
-    const queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","$permissions"]),Query.orderDesc("$updatedAt")]
+    const queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions","emoji"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","$permissions","emoji"]),Query.orderDesc("$updatedAt")]
     databases.listDocuments(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID, queries)
     .then((res)=>{
       setNotes(res.documents);
@@ -137,7 +137,6 @@ function NoteApp() {
         content: type == "content" ? ctt : note.content,
       })
       .then((res)=>{
-        //showToast(lang.tr("Changes saved successfully!"),"success")
         if(!ctt) loadNotes();
         setSynced(true);
       })
@@ -379,7 +378,8 @@ useEffect(()=>{
         {loadingNotes ? <Loader/>
          : notes.length !== 0 ? notes.map((nt)=>{
           return <div key={nt.$id} className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
-            <p>{nt.title}
+            <p>
+            <Emoji name={nt.emoji} textOnly={true}/>&nbsp;{nt.title}
               <a className={checkDelete(nt) ? checkNewNote(nt) ? "new" : "private" : "shared"}>&nbsp;
                {checkDelete(nt) ? parseDateTime(nt.$updatedAt) : lang.tr("Shared with me")} </a>
             </p>

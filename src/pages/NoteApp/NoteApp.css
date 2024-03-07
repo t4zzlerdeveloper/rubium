@@ -125,6 +125,7 @@ mask: var(--mask);
   line-height: 17px;
 }
 
+
 .side-item > p > a{font-size: 10px; transition: 0.3s;animation:fade-in 0.7s;}
 .side-item > p > .new{color:rgba(243, 202, 79,0.9)}
 .side-item > p > .private{color:rgba(244, 91, 104, 0.9)}
