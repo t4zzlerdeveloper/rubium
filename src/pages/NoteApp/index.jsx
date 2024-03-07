@@ -290,10 +290,12 @@ function checkDelete(note){
 }
 
 function computeTokensLeft(customContent = note.content){
+  if(!customContent) return 0;
   return Math.max(MAX_TOKENS - JSON.stringify(customContent).length,0); 
 }
 
 function computePercentageTokens(){
+  if(!note && !note.content) return 0;
   return JSON.stringify(note.content).length /  MAX_TOKENS ; 
 }
 
