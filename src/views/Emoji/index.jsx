@@ -5,9 +5,12 @@ function Emoji(props){
     function getTextEmoji(name){
         var i = document.createElement('i');
         i.className = 'em_' + name;
+        i.style.display = "none";
         document.body.appendChild(i);
         var style = window.getComputedStyle(i, '::after');
         var afterContent = style.getPropertyValue('content');
+        document.body.removeChild(i);
+        if (afterContent == "none") return "";
         return afterContent.replace(/['"]+/g, '');
     }
 

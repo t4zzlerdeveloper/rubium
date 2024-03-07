@@ -126,7 +126,7 @@ mask: var(--mask);
 }
 
 
-.side-item > p > a{font-size: 10px; transition: 0.3s;animation:fade-in 0.7s;}
+.side-item > p > a{margin-left: 2.5px;font-size: 10px; transition: 0.3s;animation:fade-in 0.7s;}
 .side-item > p > .new{color:rgba(243, 202, 79,0.9)}
 .side-item > p > .private{color:rgba(244, 91, 104, 0.9)}
 .side-item > p > .shared{color:rgba(83, 91, 242, 0.9)}
