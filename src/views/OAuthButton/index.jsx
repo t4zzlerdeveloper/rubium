@@ -20,7 +20,7 @@ const providerDict =
 const lang = new LangTranslator("OAuthButton");
 
 
-function GitHubButton(props){
+function OAuthButton(props){
 
 
     const user = useUser();
@@ -37,4 +37,4 @@ function GitHubButton(props){
         </button>)
 }
 
-export default GitHubButton
+export default OAuthButton

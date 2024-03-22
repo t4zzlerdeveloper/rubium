@@ -23,7 +23,8 @@
         "Sign in to Rubium": "Entrar no Rubium",
         "Sign in": "Entrar",
         "Not yet registered?": "Ainda não está registrado?",
-        "Invalid credentials or account does not exist...": "Credenciais inválidas ou conta não existe..."
+        "Invalid credentials or account does not exist...": "Credenciais inválidas ou conta não existe...",
+        "In order to use these authentication methods, 3rd party cookies must be enabled in your browser.":"Para que seja possível a autenticação por estes métodos, terá de ativar as cookies de terceiros no seu navegador."
     },
     "RegisterPage":{
         "Invalid details or connection error...": "Detalhes inválidos ou erro de conexão...",

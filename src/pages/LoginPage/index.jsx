@@ -123,6 +123,8 @@ function LoginPage(){
         <section className='login-sep'><br/></section>
         <OAuthButton provider="google"/>
         <OAuthButton provider="github"/>
+        <p className='login-cookie'>{lang.tr("In order to use these authentication methods, 3rd party cookies must be enabled in your browser.")}</p>
+
         </>}
     </div>
     <div className="login-back" style={{background: `url(${loginBack})`,backgroundSize:"cover"}}></div>

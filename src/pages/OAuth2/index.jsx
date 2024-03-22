@@ -12,16 +12,16 @@ function OAuth2(){
     useEffect(()=>{
         const status = window.location.pathname.replace("/auth/oauth2/","");
         if(status == "success"){
-           
+            navigate("/login");
         }
         setTimeout(()=>{
             navigate("/login");
-        },3000)
+        },5000)
     },[])
 
 
     return(<>
-        {"Sorry but this type of authentication is still under development... Redirecting..."}
+        {"Sorry but an error ocurred while authenticating your account, please try again and make sure you have 3rd party cookies enabled on your browser... Redirecting back..."}
     </>)
 }
 

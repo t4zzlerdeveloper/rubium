@@ -23,7 +23,8 @@
         "Sign in to Rubium": "登录 Rubium",
         "Sign in": "登录",
         "Not yet registered?": "还没有注册？",
-        "Invalid credentials or account does not exist...": "无效的凭据或帐户不存在..."
+        "Invalid credentials or account does not exist...": "无效的凭据或帐户不存在...",
+        "In order to use these authentication methods, 3rd party cookies must be enabled in your browser.":"为了能够使用这些方法进行身份验证，您必须在浏览器中启用第三方 cookie。"
     },
     "RegisterPage":{
         "Invalid details or connection error...": "无效的细节或连接错误...",

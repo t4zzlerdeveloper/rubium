@@ -121,7 +121,17 @@
 
 .login-sep{
     margin-top: 25px;
+
     border-top: 2px solid #2c2c2c54;
+}
+
+.login-cookie{
+
+    color:rgba(211, 211, 211, 0.3);
+    font-size: 9px;
+    padding: 0 40px;
+    margin: 0;
+    margin-top: 8px;
 }
 
 @media only screen and (max-width: 600px) {
