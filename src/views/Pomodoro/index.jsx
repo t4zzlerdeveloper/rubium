@@ -4,6 +4,7 @@ import './Pomodoro.css'
 import LangTranslator from '../../lib/context/language';
 
 import timeIcon from '../../assets/timer.svg'
+import { useUser } from '../../lib/context/user';
 
 const pomodoroPhases = [
     {
@@ -38,6 +39,8 @@ const pomodoroPhases = [
 const lang = new LangTranslator("Pomodoro");
 
 function Pomodoro(){
+
+    const user = useUser();
 
     const [open,setOpen] = useState(false);
     const [phase,setPhase] = useState(0);

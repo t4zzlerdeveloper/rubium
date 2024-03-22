@@ -125,6 +125,8 @@
         "Search Emojis...":"Buscar Emojis..."
     },
     "Pomodoro":{
-            
+        "Rest for":"Descansar por",
+        "Work for":"Trabalhar por",
+        "Phase":"Fase"
     }
 }

@@ -125,6 +125,8 @@
         "Search Emojis...":"搜索表情符号..."
     },
     "Pomodoro":{
-            
+        "Rest for":"休息一下",
+        "Work for":"为。。。工作",
+        "Phase":"阶段"
     }
 }
