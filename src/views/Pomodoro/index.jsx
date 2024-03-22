@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import './Pomodoro.css'
 
+import LangTranslator from '../../lib/context/language';
+
 import timeIcon from '../../assets/timer.svg'
 
 const pomodoroPhases = [
@@ -33,6 +35,8 @@ const pomodoroPhases = [
     },
 ]
 
+const lang = new LangTranslator("Pomodoro");
+
 function Pomodoro(){
 
     const [open,setOpen] = useState(false);
@@ -43,7 +47,6 @@ function Pomodoro(){
 
     useEffect(()=>{
         if (open) {
-            initPomodoro();
             timerInterval = setInterval(updateTimeLeft, 250);
         } else {
             clearInterval(timerInterval);
@@ -76,7 +79,8 @@ function Pomodoro(){
     }
 
     function initPomodoro(){
-        setTime(Date.now() + pomodoroPhases[phase].time * 1000 * 60);
+        setTime(Date.now() + pomodoroPhases[0].time * 1000 * 60);
+        setPhase(0);
     }
 
     function changePomodoroPhase(){
@@ -96,10 +100,12 @@ function Pomodoro(){
     return (
         <div className={'pomodoro-sm'}>
             <img className={!open ? "pmd-white" : pomodoroPhases[phase].rest ? "pmd-green" : ""} src={timeIcon} onClick={handleOpen}/>
-            {open ? 
+            {open ?
                 <>
                     <h3>{timeLeft}</h3>
-                    <p>{phase > -1 && pomodoroPhases[phase].rest ? "Rest for" : "Work for"}</p>
+                    <p> {phase > -1 && pomodoroPhases[phase].rest ? lang.tr("Rest for") : lang.tr("Work for")}</p>
+                    -
+                    <a className={pomodoroPhases[phase].rest ? "pmd-t-green" :""} >{lang.tr("Phase")} {phase+1}</a>
                 </>
                 : <></>
             }

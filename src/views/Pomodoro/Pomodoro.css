@@ -16,6 +16,8 @@
     filter: drop-shadow(0 0 16px #ff7b8618);
     gap:7.5px;
     padding:2px 0px;
+    z-index: 999;
+    color:gray;
 }
 
 
@@ -37,19 +39,37 @@
 .pomodoro-sm > h3{
     font-family: inherit;
     font-size: 18px;
+    color: rgb(205, 205, 205);
 }
 
 .pomodoro-sm > p{
     color:gray;
     font-family: inherit;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 14px;
+    
+    display: flex;
+    flex-direction:column;
+    gap:0;
+}
+
+.pomodoro-sm  > a{
+    color: #ff7b86;
+    font-size: 12px;
+    display: block;
+    padding: 0;
     padding-left: 12px;
+    margin:0;
+    font-weight: 200;
 }
 
 .pmd-green{
     background-color: #66f881 !important;
 }  
+
+.pmd-t-green{
+    color: #66f881 !important;
+}
 
 .pmd-white{
     background-color: rgb(166, 166, 166) !important;
