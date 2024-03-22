@@ -28,7 +28,7 @@ function OAuthButton(props){
     const provider = providerDict[props.provider];
 
     return(
-        <button type="button" className="oauth-btn" onClick={()=>{user.loginWith(props.provider)}} >
+        <button type="button" className="oauth-btn" onClick={()=>{props.onClick();user.loginWith(props.provider);}} >
         <div>
             <img src={provider.img}/>
             <p>{lang.tr("Sign in with")} {provider.name}</p>

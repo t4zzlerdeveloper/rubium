@@ -121,8 +121,8 @@ function LoginPage(){
 
         {loading ? <></> :<> 
         <section className='login-sep'><br/></section>
-        <OAuthButton provider="google"/>
-        <OAuthButton provider="github"/>
+        <OAuthButton provider="google" onClick={()=>{setLoading(true)}}/>
+        <OAuthButton provider="github" onClick={()=>{setLoading(true)}}/>
         <p className='login-cookie'>{lang.tr("In order to use these authentication methods, 3rd party cookies must be enabled in your browser.")}</p>
 
         </>}

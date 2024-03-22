@@ -12,7 +12,7 @@ function OAuth2(){
     useEffect(()=>{
         const status = window.location.pathname.replace("/auth/oauth2/","");
         if(status.startsWith("success")){
-            navigate("/login");
+            navigate("/app");
         }
         setTimeout(()=>{
             navigate("/login");
