@@ -11,7 +11,7 @@ function OAuth2(){
     const navigate = useNavigate();
     useEffect(()=>{
         const status = window.location.pathname.replace("/auth/oauth2/","");
-        if(status == "success"){
+        if(status.startsWith("success")){
             navigate("/login");
         }
         setTimeout(()=>{
