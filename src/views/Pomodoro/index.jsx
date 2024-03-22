@@ -36,11 +36,12 @@ const pomodoroPhases = [
     },
 ]
 
-const lang = new LangTranslator("Pomodoro");
+
 
 function Pomodoro(){
 
     const user = useUser();
+    const lang = new LangTranslator("Pomodoro",user);
 
     const [open,setOpen] = useState(false);
     const [phase,setPhase] = useState(0);
