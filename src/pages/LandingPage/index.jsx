@@ -14,18 +14,17 @@ import screenshotApp from '../../assets/screenshots/login-page.webp'
 import screenshotNote from '../../assets/screenshots/note-page.webp'
 import './LandingPage.css'
 
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
 import LangTranslator from '../../lib/context/language'
 import { useUser } from '../../lib/context/user'
 
 
 const DEV_GITHUB = "https://github.com/t4zzlerdeveloper";
 const RUBIUM_GITHUB = DEV_GITHUB + "/rubium";
-const SUGGESTIONS_URL = RUBIUM_GITHUB + "issues/new/choose";
+const SUGGESTIONS_URL = RUBIUM_GITHUB + "/issues/new/choose";
 
 const APPWRITE_URL = "https://builtwith.appwrite.io/projects/65d4ad25a374f89996e6/";
 const DISCORD_URL = "https://discord.com/invite/twnjGqHZQn"; 
-
 
 
 

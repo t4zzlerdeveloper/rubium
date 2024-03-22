@@ -17,6 +17,7 @@ import { useUser } from '../../lib/context/user'
 import { Functions, ID, Permission, Query, Role } from 'appwrite'
 import Loader from '../../views/Loader'
 import Toast from '../../views/Toast'
+import Pomodoro from '../../views/Pomodoro'
 import ConfirmationDialog from '../../views/ConfirmationDialog'
 import ShareDialog from '../../views/ShareDialog'
 import NoteEditor from '../../views/NoteEditor'
@@ -322,6 +323,9 @@ useEffect(()=>{
 
   return (
     <div className='app'>
+      
+      <Pomodoro/>
+
       <Toast message={toastMessage}/>
 
       <ShareDialog display={sharing}

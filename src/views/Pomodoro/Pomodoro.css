@@ -1,0 +1,60 @@
+
+.pomodoro-sm{
+    position: absolute;
+    bottom:42px;
+    right:32px;
+
+    border-radius: 32px;
+    background-color: #060606;
+    height:32px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row-reverse;
+    place-content: center;
+    place-items: center;
+    border: 1px solid #322b2d;
+    filter: drop-shadow(0 0 16px #ff7b8618);
+    gap:7.5px;
+    padding:2px 0px;
+}
+
+
+.pomodoro-sm > img:hover{
+    transform: scale(1.1);
+    background-color: #ff7b86;
+}
+
+.pomodoro-sm > img{
+    cursor: pointer;
+    transition: 0.4s;
+    padding:8px;
+    border-radius: 32px;
+    width: 28px;
+    height: 28px;
+    background-color: #F45B69;
+}
+
+.pomodoro-sm > h3{
+    font-family: inherit;
+    font-size: 18px;
+}
+
+.pomodoro-sm > p{
+    color:gray;
+    font-family: inherit;
+    font-weight: 300;
+    font-size: 14px;
+    padding-left: 12px;
+}
+
+.pmd-green{
+    background-color: #66f881 !important;
+}  
+
+.pmd-white{
+    background-color: rgb(166, 166, 166) !important;
+}  
+
+.pmd-white:hover{
+    background-color: #ffffff !important;
+}
