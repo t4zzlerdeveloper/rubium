@@ -60,17 +60,16 @@ function NoteApp() {
 
   useEffect(()=>{
     loadNotes();
-    
-    //Shortcuts added CTRL-E to toggle view modes (Edit Mode & Read Mode)
-    document.onkeydown = function(e) {
-      if(e.ctrlKey || e.metaKey){
-        if (e.key.toLowerCase() === 'e') {
-          setEditable(!editable);
-        }
-      }
-   
-  };
   },[])
+
+      //Shortcuts added CTRL-E to toggle view modes (Edit Mode & Read Mode)
+      document.addEventListener('keydown', function(e) {
+        if(e.ctrlKey || e.metaKey){
+          if (e.key.toLowerCase() === 'e') {
+            setEditable(!editable);
+          }
+        }
+      });
 
 
 
