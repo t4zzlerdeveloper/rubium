@@ -347,6 +347,13 @@ function NoteEditor(props){
    }
 
 
+   const[kanbanDragArea,setKanbanDragArea] = useState(null);
+
+   function handleKanbanDrop(index,idx,phase){
+        if(kanbanDragArea) moveKanban(index,idx,phase,kanbanDragArea);
+    }
+
+
    function setKanbanTitle(index,newTitle){
     let copy = content;
     copy[index].title = newTitle;
@@ -503,13 +510,13 @@ function NoteEditor(props){
                         <div className='kanban' editable={props.editable ? "true": "false"}>
                             <section><input  disabled={!props.editable } placeholder={props.editable ? lang.tr("Enter a title...") : ""} value={c.title} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
                             <section className="kb-lower">
-                                <section>
+                                <section onDragEnterCapture={()=>{setKanbanDragArea("backlog")}}>
                                     <h4>{lang.tr("Backlog")}</h4>
                                     {props.editable ? <input disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("backlog",index,e.target.value); e.target.value = "";}}}/> : <></>}
-                                    <ul>
+                                    {<ul>
                                         {c.backlog.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={ index + "-td-task-" + idx}>
+                                             <li className="kb-task" key={ index + "-td-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleKanbanDrop(index,idx,"backlog")}}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                
                                                 {props.editable ? 
@@ -518,20 +525,19 @@ function NoteEditor(props){
                                                     <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"backlog","doing")}}/>
                                                     <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("backlog",index,idx)}}/>
                                                 </div> :<></> }       
-                                                             
                                             </li>
                                             
                                             </>
                                         })}
-                                    </ul>
+                                    </ul>}
                                 </section>
-                                <section>
+                                <section onDragEnterCapture={()=>{setKanbanDragArea("doing")}}>
                                     <h4>{lang.tr("Doing")}</h4>
                                     {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("doing",index,e.target.value); e.target.value = "";}}}/>: <></>}
                                     <ul>
                                     {c.doing.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={ index + "-dg-task-" + idx}>
+                                             <li className="kb-task" key={ index + "-dg-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleKanbanDrop(index,idx,"doing")}}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","backlog")}}/>
@@ -543,13 +549,13 @@ function NoteEditor(props){
                                         })}
                                     </ul>
                                 </section>
-                                <section>
+                                <section onDragEnterCapture={()=>{setKanbanDragArea("done")}}>
                                     <h4>{lang.tr("Done")}</h4>
                                     {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("done",index,e.target.value); e.target.value = "";}}}/>: <></>}
                                     <ul>
                                         {c.done.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={ index + "-dn-task-" + idx}>
+                                             <li className="kb-task" key={ index + "-dn-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleKanbanDrop(index,idx,"done")}}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"done","doing")}} />
