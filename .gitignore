@@ -1,3 +1,4 @@
 .env
 .DS_Store
 .mjs
+/node_modules
