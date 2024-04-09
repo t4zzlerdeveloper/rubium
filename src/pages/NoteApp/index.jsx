@@ -61,11 +61,11 @@ function NoteApp() {
   useEffect(()=>{
     loadNotes();
     
-    //Shortcuts added CTRL-E (Edit Mode) and CTRL-V (Preview Note)
+    //Shortcuts added CTRL-E to toggle view modes (Edit Mode & Read Mode)
     document.onkeydown = function(e) {
       if(e.ctrlKey || e.metaKey){
         if (e.key.toLowerCase() === 'e') {
-          setEditable(true);
+          setEditable(!editable);
         }
       }
    
