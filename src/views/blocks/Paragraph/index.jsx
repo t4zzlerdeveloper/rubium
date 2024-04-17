@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef} from 'react';
 import './Paragraph.css'
 import LangTranslator from '../../../lib/context/language';
 import { useUser } from '../../../lib/context/user';
 
 function Paragraph(props) {
+
+    const textAreaRef = useRef(null);
 
     const user = useUser();
     //! Change translation to Paragraph
@@ -15,25 +17,20 @@ function Paragraph(props) {
     const [ff,setFF] = useState(0);
 
     useEffect(()=>{
-        if(props && props.content){ setContent(props.content); setFF(ff+1);}
+        if(props && props.content){ setContent(props.content); }
         if(props && props.editable) setEditable(props.editable);
+        if(props && props.index) setIndex(props.index)
+        setFF(ff+1);
     }
     ,[props]);
 
+    useEffect(()=>{
+        textAreaRef.current.parentNode.dataset.replicatedValue = textAreaRef.current.value;
+    },[textAreaRef.current]);
+
+
     function setCurrentBlockId(id){
         if(props && props.setCurrentBlockId) props.setCurrentBlockId(id);
-    }
-
-    function computeRows(){
-       try{
-
-        let height = document.getElementById("neid-" + index).scrollHeight;
-
-        return height / 22;
-       } 
-       catch{
-            return 1;
-       }
     }
 
     function propagateContent(newContent){
@@ -42,7 +39,7 @@ function Paragraph(props) {
         if(props && props.onContentChange) props.onContentChange(newContent);
     }
 
-    function updateContent(e,index){
+    function updateContent(e){
         let copy = content;
         copy.text = e.target.value;
         propagateContent(copy);
@@ -62,7 +59,9 @@ function Paragraph(props) {
 
     return (<>        
         {ff > -1 ? <> 
+        <div className='grow-wrap'>
             <textarea 
+                ref={textAreaRef}
                 className={content.type}
                 style={{textDecoration:content.underline ? "underline" : "",color:content.color || ""}} 
                 id={"neid-" + index} 
@@ -71,12 +70,13 @@ function Paragraph(props) {
                 onMouseDown={()=>{setCurrentBlockId(index)}}
                 onSelectCapture={()=>{handleMouseUp();}}
                 onKeyDown={(e)=>{handleKeyDown(e,index,content.type)}} 
-                onChange={(e)=>{updateContent(e,index)}}           
+                onChange={(e)=>{updateContent(e)}}           
                 value={content.text}
                 disabled={!editable}
                 onBlur={()=>{setCurrentBlockId(-1)}}
-                rows={content ? computeRows() : 1}
+                onInput={(e)=>{e.target.parentNode.dataset.replicatedValue = e.target.value;}}
             />
+        </div>
             </> : <></>}
         </>
 

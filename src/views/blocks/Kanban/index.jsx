@@ -13,13 +13,17 @@ function Kanban(props) {
 
     const [editable,setEditable] = useState(false);
     const [content,setContent] = useState({type:"kb",title:"",backlog:[],doing:[],done:[]});
+    const [index,setIndex] = useState(props.index);
 
     const [ff,setFF] = useState(0);
 
     useEffect(()=>{
-        if(props && props.content) setContent(props.content);
+        if(props && props.content){ setContent(props.content); }
         if(props && props.editable) setEditable(props.editable);
-    },[props]);
+        if(props && props.index) setIndex(props.index)
+        setFF(ff+1);
+    }
+    ,[props]);
 
 
     const[kanbanDragArea,setKanbanDragArea] = useState(null);
@@ -74,7 +78,7 @@ function Kanban(props) {
     return (
         <>
         {ff > -1 ? <>
-         <div className='kanban' editable={editable ? "true": "false"}>
+         <div key={"kb-" + index} className='kanban' editable={editable ? "true": "false"}>
                             <section><input  disabled={!editable } placeholder={editable ? lang.tr("Enter a title...") : ""} value={content.title} onChange={(e)=>{setTitle(e.target.value)}}/></section>
                             <section className="kb-lower">
                                 <section >

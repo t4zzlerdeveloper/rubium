@@ -103,6 +103,15 @@
   cursor:text;
 }
 
+.block > div{
+  border: none;
+  outline:none;
+  background-color: transparent;
+  color:white;
+  border-radius: 4px;
+  cursor:text;
+}
+
 .drop-spot{
   width: 100%;
   padding: 10px;
@@ -118,19 +127,6 @@
 
 [drop-enabled=true]{
   opacity: 1;
-}
-
-
-.h1{
-  font-size: 42px;
-  font-weight: 600;
-  font-family: inherit;
-}
-
-.h2{
-  font-size: 30px;
-  font-weight: 500;
-  font-family: inherit;
 }
 
 .img{

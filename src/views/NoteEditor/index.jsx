@@ -20,12 +20,11 @@ import LangTranslator from '../../lib/context/language'
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useUser } from '../../lib/context/user'
-import CodeBlock from '../blocks/Code/CodeMirror'
 import Kanban from '../blocks/Kanban'
 import Paragraph from '../blocks/Paragraph'
 import Code from '../blocks/Code'
+import Heading from '../blocks/Heading'
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
 
 
 
@@ -108,7 +107,11 @@ function NoteEditor(props){
         ];
         setContent(ctCopy);
         setFF(ff+1);
-        document.getElementById("neid-"+x).focus();
+        
+        try{
+            document.getElementById("neid-"+x).focus();   
+        }
+            catch{}
     }
 
     function moveBlockTo(x,newX){
@@ -277,6 +280,15 @@ function NoteEditor(props){
     }
 
 
+    function updateUrl(index,url,alt){
+        let copy = content;
+        copy[index].url = url;
+        copy[index].text = alt;
+        setContent(copy);
+        setFF(ff+1)
+    }
+
+
     function handleNewImageDrop(e,index){
         e.preventDefault();
         if(!props.editable)return;
@@ -298,31 +310,6 @@ function NoteEditor(props){
         let alt = new DOMParser().parseFromString(html, "text/html")
         .querySelector('img').alt;
         updateUrl(index,src,alt)
-    }
-
-
-   function getPlaceholder(type){
-    if(type == "p") return lang.tr("Write a new paragraph...");
-    else if(type == "img") return lang.tr("Enter an image caption...")
-    else if(type == "h1") return lang.tr("Enter Heading H1...")
-    else if(type == "h2") return lang.tr("Enter Heading H2...")
-   }
-
-
-
-    //Gen AI related
-    const [prompt,setPrompt] = useState("");
-    const [generated,setGenerated] = useState("");
-
-    async function generateContent(){
-        const prt = prompt;
-        setPrompt("");
-        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-
-        const result = await model.generateContent(prt);
-        const response = await result.response;
-        const text = response.text();
-        setGenerated(text);
     }
 
       
@@ -372,7 +359,7 @@ function NoteEditor(props){
                     <>
                         <div className="img" onDrop={(e)=>{handleImageDrop(e,index)}}>
                             <img  id={"neid-" + index} src={c.url} />
-                            <input placeholder={ props.editable ? getPlaceholder(c.type): ''}  disabled={!props.editable } value={c.text}  onChange={(e)=>{updateContent(e,index)}} />
+                            <input placeholder={ props.editable ? lang.tr("Enter an image caption..."): ''}  disabled={!props.editable } value={c.text}  onChange={(e)=>{updateContent(e,index)}} />
                         </div>
                     </>
                     : c.type == "sep" ?
@@ -392,15 +379,11 @@ function NoteEditor(props){
                     : c.type == "kb" ?
                     <>
                       <Kanban 
+                        index={index}
                         editable={props.editable}
                         content={c}
                         onContentChange={(newContent)=>updateBlock(newContent,index)}
                       />
-                    </>
-                    : c.type == "ai" ?
-                    <>
-                        <div>{generated}</div>
-                        <input value={prompt} onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e)=>{if(e.key === "Enter"){ generateContent()}}} placeholder={lang.tr("Enter Prompt")}/>
                     </>
                     : c.type == "p" ?
                     <>
@@ -411,24 +394,20 @@ function NoteEditor(props){
                             onContentChange={(newContent)=>updateBlock(newContent,index)}
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
                             onMouseUp={()=>{handleMouseUp()}}
-                            setCurrentBlockId={setCurrentBlockId}
+                            setCurrentBlockId={(id)=>{setCurrentBlockId(id)}}
                             />
                     </>
                     :
                     <>
-                            <input className={c.type}
-                            style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
-                            id={"neid-" + index} 
-                            placeholder={ props.editable ? getPlaceholder(c.type): ''}
-                            onFocus={()=>{setCurrentBlockId(index)}}
-                            onMouseDown={()=>{setCurrentBlockId(index)}}
-                            onSelectCapture={()=>{handleMouseUp();}}
+                           <Heading
+                            inded={index}
+                            editable={props.editable}
+                            content={c}
+                            onContentChange={(newContent)=>updateBlock(newContent,index)}
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
-                            onChange={(e)=>{updateContent(e,index);autoGrow(e)}}                
-                            value={c.text}
-                            disabled={!props.editable }
-                            onBlur={()=>{setCurrentBlockId(-1)}}
-                            />
+                            onMouseUp={()=>{handleMouseUp()}}
+                            setCurrentBlockId={(id)=>{setCurrentBlockId(id)}}
+                           />
                     </>
                 }
                  {content.length > 1 ? <img 

@@ -10,10 +10,56 @@
     font-weight: 400;
     height: auto;
     overflow: hidden; 
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+    padding: 0px !important;
   }
   
   .p > b{
     font-weight:900;
   }
+  
+
+  .p:hover,  .p:focus{
+    background-color: transparent
+  }
+
+
+
+.grow-wrap {
+  display: grid;
+  resize: none;
+    font-family: inherit;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    height: auto;
+    overflow: hidden; 
+    padding: 10px;
+    transition: 0.2s;
+}
+.grow-wrap::after {
+  content: attr(data-replicated-value) " ";
+  white-space: pre-wrap;
+  visibility: hidden;
+}
+.grow-wrap > textarea {
+  resize: none;
+  overflow: hidden;
+}
+.grow-wrap > textarea,
+.grow-wrap::after {
+  border: none;
+  font: inherit;
+
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+
+.grow-wrap:hover{
+  background-color: rgba(200,200,200,0.02)
+}
+
+.grow-wrap:focus{
+  background-color: rgba(200,200,200,0.05)
+}
