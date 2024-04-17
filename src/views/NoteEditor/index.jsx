@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import './NoteEditor.css'
 
-import rubiumLogo from '../../assets/rubium-logomark.svg'
 
 import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
@@ -12,10 +11,8 @@ import formatKanban from '../../assets/kanban.svg'
 import formatCode from '../../assets/code.svg'
 
 
-import copyIcon from '../../assets/content_copy.svg'
 import addInd from '../../assets/add.svg'
 import removeInd from '../../assets/delete.svg'
-import arrowRight from '../../assets/arrow-right.svg'
 import dragInd from '../../assets/drag_indicator.svg'
 
 import LangTranslator from '../../lib/context/language'
@@ -23,30 +20,13 @@ import LangTranslator from '../../lib/context/language'
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useUser } from '../../lib/context/user'
-import CodeBlock from '../blocks/CodeBlock'
+import CodeBlock from '../blocks/Code/CodeMirror'
 import Kanban from '../blocks/Kanban'
-import { json } from 'react-router-dom'
 import Paragraph from '../blocks/Paragraph'
+import Code from '../blocks/Code'
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
 
-
-const codeLangs = [
-    "JavaScript",
-    "TypeScript",
-    "HTML",
-    "CSS",
-    "Markdown",
-    "Java",
-    "Go",
-    "Python",
-    "Swift",
-    "C#",
-    "C++",
-    "C",
-    "PHP",
-    "SQL"
-]
 
 
 function NoteEditor(props){
@@ -84,14 +64,6 @@ function NoteEditor(props){
         return arr; // for testing
     };
 
-    function swapBlocks(x,y){
-        let ctCopy = content;
-        var b = ctCopy[x];
-        ctCopy[x] = ctCopy[y];
-        ctCopy[y] = b;
-        setContent(ctCopy);
-        setFF(ff+1);
-    }
 
     function insertBlockOn(x,type,url=undefined,alt=undefined){
         let ctCopy = content;
@@ -120,11 +92,12 @@ function NoteEditor(props){
             }
         }
 
+
         if(type == "cd"){
             initialContent = {
                 type:type,
                 text:"",
-                lang:codeLangs[0]          
+                lang:"JavaScript",       
             }
         }
 
@@ -211,27 +184,7 @@ function NoteEditor(props){
         setFF(ff+1)
     }
 
-    function updateCodeLang(e,index){
-        let copy = content;
-        copy[index].lang = e.target.value;
-        setContent(copy);
-        setFF(ff+1)
-    }
-
-    function invertCodeCL(index){
-        let copy = content;
-        copy[index].cl = !copy[index].cl;
-        setContent(copy);
-        setFF(ff+1)
-    }
-
-    function updateUrl(index,newUrl,newText){
-        let copy = content;
-        copy[index].url = newUrl;
-        copy[index].text = newText;
-        setContent(copy);
-        setFF(ff+1)
-    }
+    
 
 
     const [toolStyle,setToolStyle] = useState({display:"none"});
@@ -356,66 +309,6 @@ function NoteEditor(props){
    }
 
 
-   const[kanbanDragArea,setKanbanDragArea] = useState(null);
-
-   function handleKanbanDrop(index,idx,phase){
-        if(kanbanDragArea) moveKanban(index,idx,phase,kanbanDragArea);
-    }
-
-
-   function setKanbanTitle(index,newTitle){
-    let copy = content;
-    copy[index].title = newTitle;
-    setContent(copy);
-    setFF(ff+1)
-   }
-
-   function addKanban(phase,index,task){
-    let copy = content;
-    copy[index][phase].push(task);
-    setContent(copy);
-    setFF(ff+1)
-   }
-
-   function moveKanban(index,idx,currentPhase,newPhase){
-        let copy = content;
-        let task = copy[index][currentPhase].splice(idx,1);
-        copy[index][newPhase].push(task);
-        setContent(copy);
-        setFF(ff+1)
-   }
-
-   function removeKanban(phase,index,idx){
-    let copy = content;
-    copy[index][phase].splice(idx,1);
-    setContent(copy);
-    setFF(ff+1)
-   }
-
-   function handleCodeCopy(e,text){
-    const type = "text/plain";
-    const blob = new Blob([text], { type });
-    const data = [new ClipboardItem({ [type]: blob })];
-
-    const parent = e.target.parentNode;
-    const copyTR = lang.tr("Copy");
-    const copiedTR = lang.tr("Copied!");
-    const errorTR = lang.tr("Error copying...");
-
-    navigator.clipboard.write(data)
-    .then(()=>{
-        parent.innerHTML =  parent.innerHTML.replace(copyTR,copiedTR);
-        setTimeout(()=>{
-            parent.innerHTML =  parent.innerHTML.replace(copiedTR,copyTR);
-        },1500)
-    }).catch(()=>{
-        parent.innerHTML =  parent.innerHTML.replace(copyTR,errorTR);
-        setTimeout(()=>{
-            parent.innerHTML =  parent.innerHTML.replace(errorTR,copyTR);
-        },1500)
-    });
-   }
-
 
     //Gen AI related
     const [prompt,setPrompt] = useState("");
@@ -488,30 +381,12 @@ function NoteEditor(props){
                     </>
                      : c.type == "cd" ?
                      <>
-                         <div className='code'>
-                        
-                            <div className='cd-flex'>
-                            <div className="cd-copy" ><img  onClick={(e)=>{handleCodeCopy(e,c.text)}} src={copyIcon}/>{lang.tr("Copy")}                 
-                            {props.editable ? <>&nbsp;&nbsp;&nbsp;<img className={!c.cl ? 'cd-rot' : 'cd-collapse'} src={formatCode} onClick={()=>{invertCodeCL(index)}}/> {c.cl ? lang.tr("Expand") : lang.tr("Collapse")} </>: <></>}</div>
-                                
-                                <div>
-                                {lang.tr("Language")}&nbsp;&nbsp;&nbsp;<select value={c.lang} onChange={(e)=>{updateCodeLang(e,index)}} disabled={!props.editable}>
-                                    {codeLangs.map((l)=>{
-                                        return <option key={"b-cd-"+l} value={l}>{l}</option>
-                                    })}
-                                </select>
-                                </div>
-                            </div>
-                           
-                            <CodeBlock 
-                            editable={props.editable} 
-                            value={c.text}
-                            onChange={(e)=>{updateContent(e,index)}}
-                            collapsed={c.cl}
-                            language={c.lang}/>
-                            
-                            <div className='cd-logo'>POWERED BY C<img src={rubiumLogo} />DE MIRROR</div>
-                         </div>
+                         <Code
+                            index={index}
+                            editable={props.editable}
+                            content={c}
+                            onContentChange={(newContent)=>updateBlock(newContent,index)}
+                         />
                          
                      </>
                     : c.type == "kb" ?
