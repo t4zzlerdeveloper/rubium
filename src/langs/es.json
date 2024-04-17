@@ -114,6 +114,15 @@
         "Looks like you got lost. This page does not exist...": "Parece que te perdiste. Esta página no existe...",
         "Go to Home Page": "Ir a la página de inicio"
     },
+    "PricingPage":{
+        "Oops looks like": "Vaya, parece que el",
+        "Pricing":"Precio",
+        "is not available": "no está disponible",
+        "because": "porque el", 
+        "is free": "es gratis",
+        "Notes Should Only Cost Time.": "Las notas solo deberían costar tiempo.",
+        "Go to Home Page": "Ir a la página de inicio"
+    },
     "SettingsDialog":{
         "Settings": "Ajustes",
         "Save Changes": "Guardar cambios",

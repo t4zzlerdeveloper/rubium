@@ -114,6 +114,15 @@
         "Looks like you got lost. This page does not exist...": "看起来你迷路了。此页面不存在...",
         "Go to Home Page": "转到首页"
     },
+    "PricingPage":{
+        "Oops looks like": "哎呀，看起来",
+        "Pricing": "定价",
+        "is not available": "不可用",
+        "because": "因为", 
+        "is free": "是免费的",
+        "Notes Should Only Cost Time.": "笔记应该只花费时间。",
+        "Go to Home Page": "转到首页"
+    },
     "SettingsDialog":{
         "Settings": "设置",
         "Save Changes": "保存更改",

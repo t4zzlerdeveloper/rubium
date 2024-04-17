@@ -59,7 +59,7 @@
     justify-content: space-between;
     place-content: center;
     place-items: center;
-    gap:10px;
+    gap:6px;
     transition: 0.4s;
 }
 
@@ -77,6 +77,19 @@
     transition: 1s;
 }
 
+.star-git > b{
+    padding: 0px 4px;
+    border-radius: 5px;
+    margin:0;
+    margin-left:5px;
+    font-size: 14px;
+    background-color: white;
+    color: black;
+    font-weight: 300;
+    transition: 1s;
+    transform: scale(1.1);
+}
+
 
 .star-git:hover{
     border: 1px solid #F45B69;
@@ -91,6 +104,11 @@
 
 .star-git:hover > p{
     color: #F45B69;
+}
+
+.star-git:hover > b{
+    background-color: #F45B69;
+    transform: scale(1.18);
 }
 
 .launch-app{
