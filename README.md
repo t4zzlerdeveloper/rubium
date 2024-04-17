@@ -40,6 +40,7 @@ Rubium, currently in Alpha, is a powerful note-taking application designed to be
 - 💻 Kanban Integration with GitHub Commits
 - 🧮 Equations
 - 📺 Iframe Embeds
+- 📁 Note Folders System
 - (...)
 
 ## 😍 Usage

@@ -70,7 +70,7 @@ function Paragraph(props) {
                 onMouseDown={()=>{setCurrentBlockId(index)}}
                 onSelectCapture={()=>{handleMouseUp();}}
                 onKeyDown={(e)=>{handleKeyDown(e,index,content.type)}} 
-                onChange={(e)=>{updateContent(e)}}           
+                onChange={(e)=>{updateContent(e);}}           
                 value={content.text}
                 disabled={!editable}
                 onBlur={()=>{setCurrentBlockId(-1)}}

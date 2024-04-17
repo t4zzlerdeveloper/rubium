@@ -18,7 +18,6 @@ import dragInd from '../../assets/drag_indicator.svg'
 import LangTranslator from '../../lib/context/language'
 
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useUser } from '../../lib/context/user'
 import Kanban from '../blocks/Kanban'
 import Paragraph from '../blocks/Paragraph'
@@ -96,7 +95,7 @@ function NoteEditor(props){
             initialContent = {
                 type:type,
                 text:"",
-                lang:"JavaScript",       
+                lang:"JavaScript",
             }
         }
 
@@ -108,10 +107,7 @@ function NoteEditor(props){
         setContent(ctCopy);
         setFF(ff+1);
         
-        try{
-            document.getElementById("neid-"+x).focus();   
-        }
-            catch{}
+        document.getElementById("neid-"+x).focus();
     }
 
     function moveBlockTo(x,newX){
@@ -333,7 +329,7 @@ function NoteEditor(props){
                 id={"bleid-" + index}
                 className='block'
                 editable={props.editable ? "true" : "false"}
-                draggable={props.editable && currentBlockId != index  ? "true" : "false"}
+                draggable={props.editable  ? "true" : "false"}
                 onDragStart={(e)=>{handleDragStart(index);}}
                 onDragEnd={(e)=>{handleDragEnd(e,index)}}
                 >
@@ -400,7 +396,7 @@ function NoteEditor(props){
                     :
                     <>
                            <Heading
-                            inded={index}
+                            index={index}
                             editable={props.editable}
                             content={c}
                             onContentChange={(newContent)=>updateBlock(newContent,index)}
