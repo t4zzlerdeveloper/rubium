@@ -24,6 +24,8 @@ import LangTranslator from '../../lib/context/language'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useUser } from '../../lib/context/user'
 import CodeBlock from '../blocks/CodeBlock'
+import Kanban from '../blocks/Kanban'
+import { json } from 'react-router-dom'
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
 
@@ -198,7 +200,13 @@ function NoteEditor(props){
 
         copy[index].text = e.target.value;
         setContent(copy);
-        //console.log(content)
+        setFF(ff+1)
+    }
+
+    function updateBlock(newContent,index){
+        let copy = content;
+        copy[index] = newContent;
+        setContent(copy);
         setFF(ff+1)
     }
 
@@ -507,68 +515,11 @@ function NoteEditor(props){
                      </>
                     : c.type == "kb" ?
                     <>
-                        <div className='kanban' editable={props.editable ? "true": "false"}>
-                            <section><input  disabled={!props.editable } placeholder={props.editable ? lang.tr("Enter a title...") : ""} value={c.title} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
-                            <section className="kb-lower">
-                                <section >
-                                    <h4>{lang.tr("Backlog")}</h4>
-                                    {props.editable ? <input disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("backlog",index,e.target.value); e.target.value = "";}}}/> : <></>}
-                                    <ul onDragEnterCapture={()=>{setKanbanDragArea("backlog")}}>
-                                        {c.backlog.map((task,idx)=>{
-                                            return <>
-                                             <li className="kb-task" key={ index + "-td-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleKanbanDrop(index,idx,"backlog")}}>
-                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
-                                               
-                                                {props.editable ? 
-                                                <div>
-                                                    {/* <img className="kb-rm rt180" src={arrowRight} /> */}
-                                                    <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"backlog","doing")}}/>
-                                                    <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("backlog",index,idx)}}/>
-                                                </div> :<></> }       
-                                            </li>
-                                            
-                                            </>
-                                        })}
-                                    </ul>
-                                </section>
-                                <section >
-                                    <h4>{lang.tr("Doing")}</h4>
-                                    {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("doing",index,e.target.value); e.target.value = "";}}}/>: <></>}
-                                    <ul onDragEnterCapture={()=>{setKanbanDragArea("doing")}}>
-                                    {c.doing.map((task,idx)=>{
-                                            return <>
-                                             <li className="kb-task" key={ index + "-dg-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleKanbanDrop(index,idx,"doing")}}>
-                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
-                                                {props.editable ? <div>
-                                                    <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","backlog")}}/>
-                                                    <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","done")}} />
-                                                    <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("doing",index,idx)}}/>
-                                                </div>:<></> }                                         
-                                            </li>
-                                            </>
-                                        })}
-                                    </ul>
-                                </section>
-                                <section >
-                                    <h4>{lang.tr("Done")}</h4>
-                                    {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("done",index,e.target.value); e.target.value = "";}}}/>: <></>}
-                                    <ul onDragEnterCapture={()=>{setKanbanDragArea("done")}}>
-                                        {c.done.map((task,idx)=>{
-                                            return <>
-                                             <li className="kb-task" key={ index + "-dn-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleKanbanDrop(index,idx,"done")}}>
-                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
-                                                {props.editable ? <div>
-                                                    <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"done","doing")}} />
-                                                    {/* <img className="kb-rm" src={arrowRight} /> */}
-                                                    <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("done",index,idx)}}/>
-                                                </div>   :<></> }                                          
-                                            </li>
-                                            </>
-                                        })}
-                                    </ul>
-                                </section>
-                            </section>
-                        </div>
+                      <Kanban 
+                        editable={props.editable}
+                        content={c}
+                        onContentChange={(newContent)=>updateBlock(newContent,index)}
+                      />
                     </>
                     : c.type == "ai" ?
                     <>
