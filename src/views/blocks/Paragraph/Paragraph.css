@@ -1,0 +1,19 @@
+.p{
+    resize: none;
+    font-family: inherit;
+    color:rgb(200, 200, 200) !important;
+    border: none;
+    outline: none;
+    background-color: inherit;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    height: auto;
+    overflow: hidden; 
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+  
+  .p > b{
+    font-weight:900;
+  }

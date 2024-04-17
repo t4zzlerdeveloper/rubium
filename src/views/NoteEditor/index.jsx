@@ -26,6 +26,7 @@ import { useUser } from '../../lib/context/user'
 import CodeBlock from '../blocks/CodeBlock'
 import Kanban from '../blocks/Kanban'
 import { json } from 'react-router-dom'
+import Paragraph from '../blocks/Paragraph'
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
 
@@ -528,19 +529,14 @@ function NoteEditor(props){
                     </>
                     : c.type == "p" ?
                     <>
-                            <textarea className={c.type}
-                            style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
-                            id={"neid-" + index} 
-                            placeholder={ props.editable ? getPlaceholder(c.type): ''}
-                            onFocus={()=>{setCurrentBlockId(index)}}
-                            onMouseDown={()=>{setCurrentBlockId(index)}}
-                            onSelectCapture={()=>{handleMouseUp();}}
-                            onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
-                            onChange={(e)=>{updateContent(e,index)}}           
-                            value={c.text}
-                            disabled={!props.editable }
-                            onBlur={()=>{setCurrentBlockId(-1)}}
-                            rows={document.getElementById("neid-"+index) ? (document.getElementById("neid-"+index).scrollHeight / 22) : 1}
+                            <Paragraph
+                            index={index}
+                            editable={props.editable}
+                            content={c}
+                            onContentChange={(newContent)=>updateBlock(newContent,index)}
+                            onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
+                            onMouseUp={()=>{handleMouseUp()}}
+                            setCurrentBlockId={setCurrentBlockId}
                             />
                     </>
                     :
