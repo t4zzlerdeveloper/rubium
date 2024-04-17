@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import './NoteEditor.css'
 
-import rubiumLogo from '../../assets/rubium-logomark.svg'
 
 import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
@@ -12,38 +11,20 @@ import formatKanban from '../../assets/kanban.svg'
 import formatCode from '../../assets/code.svg'
 
 
-import copyIcon from '../../assets/content_copy.svg'
 import addInd from '../../assets/add.svg'
 import removeInd from '../../assets/delete.svg'
-import arrowRight from '../../assets/arrow-right.svg'
 import dragInd from '../../assets/drag_indicator.svg'
 
 import LangTranslator from '../../lib/context/language'
 
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useUser } from '../../lib/context/user'
-import CodeBlock from '../blocks/CodeBlock'
+import Kanban from '../blocks/Kanban'
+import Paragraph from '../blocks/Paragraph'
+import Code from '../blocks/Code'
+import Heading from '../blocks/Heading'
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_APP_GOOGLE_API_KEY);
 
-
-const codeLangs = [
-    "JavaScript",
-    "TypeScript",
-    "HTML",
-    "CSS",
-    "Markdown",
-    "Java",
-    "Go",
-    "Python",
-    "Swift",
-    "C#",
-    "C++",
-    "C",
-    "PHP",
-    "SQL"
-]
 
 
 function NoteEditor(props){
@@ -81,14 +62,6 @@ function NoteEditor(props){
         return arr; // for testing
     };
 
-    function swapBlocks(x,y){
-        let ctCopy = content;
-        var b = ctCopy[x];
-        ctCopy[x] = ctCopy[y];
-        ctCopy[y] = b;
-        setContent(ctCopy);
-        setFF(ff+1);
-    }
 
     function insertBlockOn(x,type,url=undefined,alt=undefined){
         let ctCopy = content;
@@ -117,11 +90,12 @@ function NoteEditor(props){
             }
         }
 
+
         if(type == "cd"){
             initialContent = {
                 type:type,
                 text:"",
-                lang:codeLangs[0]          
+                lang:"JavaScript",
             }
         }
 
@@ -132,6 +106,7 @@ function NoteEditor(props){
         ];
         setContent(ctCopy);
         setFF(ff+1);
+        
         document.getElementById("neid-"+x).focus();
     }
 
@@ -198,31 +173,17 @@ function NoteEditor(props){
 
         copy[index].text = e.target.value;
         setContent(copy);
-        //console.log(content)
         setFF(ff+1)
     }
 
-    function updateCodeLang(e,index){
+    function updateBlock(newContent,index){
         let copy = content;
-        copy[index].lang = e.target.value;
+        copy[index] = newContent;
         setContent(copy);
         setFF(ff+1)
     }
 
-    function invertCodeCL(index){
-        let copy = content;
-        copy[index].cl = !copy[index].cl;
-        setContent(copy);
-        setFF(ff+1)
-    }
-
-    function updateUrl(index,newUrl,newText){
-        let copy = content;
-        copy[index].url = newUrl;
-        copy[index].text = newText;
-        setContent(copy);
-        setFF(ff+1)
-    }
+    
 
 
     const [toolStyle,setToolStyle] = useState({display:"none"});
@@ -315,6 +276,15 @@ function NoteEditor(props){
     }
 
 
+    function updateUrl(index,url,alt){
+        let copy = content;
+        copy[index].url = url;
+        copy[index].text = alt;
+        setContent(copy);
+        setFF(ff+1)
+    }
+
+
     function handleNewImageDrop(e,index){
         e.preventDefault();
         if(!props.editable)return;
@@ -338,84 +308,6 @@ function NoteEditor(props){
         updateUrl(index,src,alt)
     }
 
-
-   function getPlaceholder(type){
-    if(type == "p") return lang.tr("Write a new paragraph...");
-    else if(type == "img") return lang.tr("Enter an image caption...")
-    else if(type == "h1") return lang.tr("Enter Heading H1...")
-    else if(type == "h2") return lang.tr("Enter Heading H2...")
-   }
-
-
-   function setKanbanTitle(index,newTitle){
-    let copy = content;
-    copy[index].title = newTitle;
-    setContent(copy);
-    setFF(ff+1)
-   }
-
-   function addKanban(phase,index,task){
-    let copy = content;
-    copy[index][phase].push(task);
-    setContent(copy);
-    setFF(ff+1)
-   }
-
-   function moveKanban(index,idx,currentPhase,newPhase){
-        let copy = content;
-        let task = copy[index][currentPhase].splice(idx,1);
-        copy[index][newPhase].push(task);
-        setContent(copy);
-        setFF(ff+1)
-   }
-
-   function removeKanban(phase,index,idx){
-    let copy = content;
-    copy[index][phase].splice(idx,1);
-    setContent(copy);
-    setFF(ff+1)
-   }
-
-   function handleCodeCopy(e,text){
-    const type = "text/plain";
-    const blob = new Blob([text], { type });
-    const data = [new ClipboardItem({ [type]: blob })];
-
-    const parent = e.target.parentNode;
-    const copyTR = lang.tr("Copy");
-    const copiedTR = lang.tr("Copied!");
-    const errorTR = lang.tr("Error copying...");
-
-    navigator.clipboard.write(data)
-    .then(()=>{
-        parent.innerHTML =  parent.innerHTML.replace(copyTR,copiedTR);
-        setTimeout(()=>{
-            parent.innerHTML =  parent.innerHTML.replace(copiedTR,copyTR);
-        },1500)
-    }).catch(()=>{
-        parent.innerHTML =  parent.innerHTML.replace(copyTR,errorTR);
-        setTimeout(()=>{
-            parent.innerHTML =  parent.innerHTML.replace(errorTR,copyTR);
-        },1500)
-    });
-   }
-
-
-    //Gen AI related
-    const [prompt,setPrompt] = useState("");
-    const [generated,setGenerated] = useState("");
-
-    async function generateContent(){
-        const prt = prompt;
-        setPrompt("");
-        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-
-        const result = await model.generateContent(prt);
-        const response = await result.response;
-        const text = response.text();
-        setGenerated(text);
-    }
-
       
     return (<div className='note-editor'>
            <section 
@@ -437,7 +329,7 @@ function NoteEditor(props){
                 id={"bleid-" + index}
                 className='block'
                 editable={props.editable ? "true" : "false"}
-                draggable={props.editable && currentBlockId != index  ? "true" : "false"}
+                draggable={props.editable  ? "true" : "false"}
                 onDragStart={(e)=>{handleDragStart(index);}}
                 onDragEnd={(e)=>{handleDragEnd(e,index)}}
                 >
@@ -463,7 +355,7 @@ function NoteEditor(props){
                     <>
                         <div className="img" onDrop={(e)=>{handleImageDrop(e,index)}}>
                             <img  id={"neid-" + index} src={c.url} />
-                            <input placeholder={ props.editable ? getPlaceholder(c.type): ''}  disabled={!props.editable } value={c.text}  onChange={(e)=>{updateContent(e,index)}} />
+                            <input placeholder={ props.editable ? lang.tr("Enter an image caption..."): ''}  disabled={!props.editable } value={c.text}  onChange={(e)=>{updateContent(e,index)}} />
                         </div>
                     </>
                     : c.type == "sep" ?
@@ -472,135 +364,46 @@ function NoteEditor(props){
                     </>
                      : c.type == "cd" ?
                      <>
-                         <div className='code'>
-                        
-                            <div className='cd-flex'>
-                            <div className="cd-copy" ><img  onClick={(e)=>{handleCodeCopy(e,c.text)}} src={copyIcon}/>{lang.tr("Copy")}                 
-                            {props.editable ? <>&nbsp;&nbsp;&nbsp;<img className={!c.cl ? 'cd-rot' : 'cd-collapse'} src={formatCode} onClick={()=>{invertCodeCL(index)}}/> {c.cl ? lang.tr("Expand") : lang.tr("Collapse")} </>: <></>}</div>
-                                
-                                <div>
-                                {lang.tr("Language")}&nbsp;&nbsp;&nbsp;<select value={c.lang} onChange={(e)=>{updateCodeLang(e,index)}} disabled={!props.editable}>
-                                    {codeLangs.map((l)=>{
-                                        return <option key={"b-cd-"+l} value={l}>{l}</option>
-                                    })}
-                                </select>
-                                </div>
-                            </div>
-                           
-                            <CodeBlock 
-                            editable={props.editable} 
-                            value={c.text}
-                            onChange={(e)=>{updateContent(e,index)}}
-                            collapsed={c.cl}
-                            language={c.lang}/>
-                            
-                            <div className='cd-logo'>POWERED BY C<img src={rubiumLogo} />DE MIRROR</div>
-                         </div>
+                         <Code
+                            index={index}
+                            editable={props.editable}
+                            content={c}
+                            onContentChange={(newContent)=>updateBlock(newContent,index)}
+                         />
                          
                      </>
                     : c.type == "kb" ?
                     <>
-                        <div className='kanban' editable={props.editable ? "true": "false"}>
-                            <section><input  disabled={!props.editable } placeholder={props.editable ? lang.tr("Enter a title...") : ""} value={c.title} onChange={(e)=>{setKanbanTitle(index,e.target.value)}}/></section>
-                            <section className="kb-lower">
-                                <section>
-                                    <h4>{lang.tr("Backlog")}</h4>
-                                    {props.editable ? <input disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("backlog",index,e.target.value); e.target.value = "";}}}/> : <></>}
-                                    <ul>
-                                        {c.backlog.map((task,idx)=>{
-                                            return <>
-                                             <li className="kb-task" key={ index + "-td-task-" + idx}>
-                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
-                                               
-                                                {props.editable ? 
-                                                <div>
-                                                    {/* <img className="kb-rm rt180" src={arrowRight} /> */}
-                                                    <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"backlog","doing")}}/>
-                                                    <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("backlog",index,idx)}}/>
-                                                </div> :<></> }       
-                                                             
-                                            </li>
-                                            
-                                            </>
-                                        })}
-                                    </ul>
-                                </section>
-                                <section>
-                                    <h4>{lang.tr("Doing")}</h4>
-                                    {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("doing",index,e.target.value); e.target.value = "";}}}/>: <></>}
-                                    <ul>
-                                    {c.doing.map((task,idx)=>{
-                                            return <>
-                                             <li className="kb-task" key={ index + "-dg-task-" + idx}>
-                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
-                                                {props.editable ? <div>
-                                                    <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","backlog")}}/>
-                                                    <img className="kb-rm" src={arrowRight} onClick={()=>{moveKanban(index,idx,"doing","done")}} />
-                                                    <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("doing",index,idx)}}/>
-                                                </div>:<></> }                                         
-                                            </li>
-                                            </>
-                                        })}
-                                    </ul>
-                                </section>
-                                <section>
-                                    <h4>{lang.tr("Done")}</h4>
-                                    {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{if(e.key == "Enter" && e.target.value !== ""){ addKanban("done",index,e.target.value); e.target.value = "";}}}/>: <></>}
-                                    <ul>
-                                        {c.done.map((task,idx)=>{
-                                            return <>
-                                             <li className="kb-task" key={ index + "-dn-task-" + idx}>
-                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
-                                                {props.editable ? <div>
-                                                    <img className="kb-rm rt180" src={arrowRight} onClick={()=>{moveKanban(index,idx,"done","doing")}} />
-                                                    {/* <img className="kb-rm" src={arrowRight} /> */}
-                                                    <img className="kb-rm" src={removeInd} onClick={()=>{removeKanban("done",index,idx)}}/>
-                                                </div>   :<></> }                                          
-                                            </li>
-                                            </>
-                                        })}
-                                    </ul>
-                                </section>
-                            </section>
-                        </div>
-                    </>
-                    : c.type == "ai" ?
-                    <>
-                        <div>{generated}</div>
-                        <input value={prompt} onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e)=>{if(e.key === "Enter"){ generateContent()}}} placeholder={lang.tr("Enter Prompt")}/>
+                      <Kanban 
+                        index={index}
+                        editable={props.editable}
+                        content={c}
+                        onContentChange={(newContent)=>updateBlock(newContent,index)}
+                      />
                     </>
                     : c.type == "p" ?
                     <>
-                            <textarea className={c.type}
-                            style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
-                            id={"neid-" + index} 
-                            placeholder={ props.editable ? getPlaceholder(c.type): ''}
-                            onFocus={()=>{setCurrentBlockId(index)}}
-                            onMouseDown={()=>{setCurrentBlockId(index)}}
-                            onSelectCapture={()=>{handleMouseUp();}}
-                            onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}} 
-                            onChange={(e)=>{updateContent(e,index)}}           
-                            value={c.text}
-                            disabled={!props.editable }
-                            onBlur={()=>{setCurrentBlockId(-1)}}
-                            rows={document.getElementById("neid-"+index) ? (document.getElementById("neid-"+index).scrollHeight / 22) : 1}
+                            <Paragraph
+                            index={index}
+                            editable={props.editable}
+                            content={c}
+                            onContentChange={(newContent)=>updateBlock(newContent,index)}
+                            onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
+                            onMouseUp={()=>{handleMouseUp()}}
+                            setCurrentBlockId={(id)=>{setCurrentBlockId(id)}}
                             />
                     </>
                     :
                     <>
-                            <input className={c.type}
-                            style={{textDecoration:c.underline ? "underline" : "",color:c.color || ""}} 
-                            id={"neid-" + index} 
-                            placeholder={ props.editable ? getPlaceholder(c.type): ''}
-                            onFocus={()=>{setCurrentBlockId(index)}}
-                            onMouseDown={()=>{setCurrentBlockId(index)}}
-                            onSelectCapture={()=>{handleMouseUp();}}
+                           <Heading
+                            index={index}
+                            editable={props.editable}
+                            content={c}
+                            onContentChange={(newContent)=>updateBlock(newContent,index)}
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
-                            onChange={(e)=>{updateContent(e,index);autoGrow(e)}}                
-                            value={c.text}
-                            disabled={!props.editable }
-                            onBlur={()=>{setCurrentBlockId(-1)}}
-                            />
+                            onMouseUp={()=>{handleMouseUp()}}
+                            setCurrentBlockId={(id)=>{setCurrentBlockId(id)}}
+                           />
                     </>
                 }
                  {content.length > 1 ? <img 

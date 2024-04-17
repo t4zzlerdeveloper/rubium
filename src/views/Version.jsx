@@ -11,6 +11,8 @@ function Version(){
     const[status,setStatus] = useState(0);
 
     useEffect(()=>{
+        if(window.location.host == "localhost:5173") return;
+        
         axios.get("https://api.github.com/repos/t4zzlerdeveloper/rubium/commits?per_page=1")
         .then((res)=>{
 
