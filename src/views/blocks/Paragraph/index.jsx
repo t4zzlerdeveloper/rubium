@@ -12,13 +12,11 @@ function Paragraph(props) {
     const lang = new LangTranslator("NoteEditor",user);
 
     const [content,setContent] = useState({type:"p",text:"",underline:false,color:""});
-    const [editable,setEditable] = useState(false);
     const [index,setIndex] = useState(props.index);
     const [ff,setFF] = useState(0);
 
     useEffect(()=>{
         if(props && props.content){ setContent(props.content); }
-        if(props && props.editable) setEditable(props.editable);
         if(props && props.index) setIndex(props.index)
         setFF(ff+1);
     }
@@ -65,14 +63,14 @@ function Paragraph(props) {
                 className={content.type}
                 style={{textDecoration:content.underline ? "underline" : "",color:content.color || ""}} 
                 id={"neid-" + index} 
-                placeholder={ editable ? lang.tr("Write a new paragraph...") : ''}
+                placeholder={ props.editable ? lang.tr("Write a new paragraph...") : ''}
                 onFocus={()=>{setCurrentBlockId(index)}}
                 onMouseDown={()=>{setCurrentBlockId(index)}}
                 onSelectCapture={()=>{handleMouseUp();}}
                 onKeyDown={(e)=>{handleKeyDown(e,index,content.type)}} 
                 onChange={(e)=>{updateContent(e);}}           
                 value={content.text}
-                disabled={!editable}
+                disabled={!props.editable}
                 onBlur={()=>{setCurrentBlockId(-1)}}
                 onInput={(e)=>{e.target.parentNode.dataset.replicatedValue = e.target.value;}}
             />

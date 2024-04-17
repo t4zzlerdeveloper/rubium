@@ -11,7 +11,6 @@ function Kanban(props) {
     //! Change translation to Kanban
     const lang = new LangTranslator("NoteEditor",user);
 
-    const [editable,setEditable] = useState(false);
     const [content,setContent] = useState({type:"kb",title:"",backlog:[],doing:[],done:[]});
     const [index,setIndex] = useState(props.index);
 
@@ -19,7 +18,6 @@ function Kanban(props) {
 
     useEffect(()=>{
         if(props && props.content){ setContent(props.content); }
-        if(props && props.editable) setEditable(props.editable);
         if(props && props.index) setIndex(props.index)
         setFF(ff+1);
     }
@@ -78,19 +76,19 @@ function Kanban(props) {
     return (
         <>
         {ff > -1 ? <>
-         <div key={"kb-" + index} className='kanban' editable={editable ? "true": "false"}>
-                            <section><input  disabled={!editable } placeholder={editable ? lang.tr("Enter a title...") : ""} value={content.title} onChange={(e)=>{setTitle(e.target.value)}}/></section>
+         <div key={"kb-" + index} className='kanban' editable={props.editable ? "true": "false"}>
+                            <section><input  disabled={!props.editable } placeholder={props.editable ? lang.tr("Enter a title...") : ""} value={content.title} onChange={(e)=>{setTitle(e.target.value)}}/></section>
                             <section className="kb-lower">
                                 <section >
                                     <h4>{lang.tr("Backlog")}</h4>
-                                    {editable ? <input disabled={!editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{handleTaskInputDown(e,"backlog")}}/> : <></>}
+                                    {props.editable ? <input disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{handleTaskInputDown(e,"backlog")}}/> : <></>}
                                     <ul onDragEnterCapture={()=>{setKanbanDragArea("backlog")}}>
                                         {content.backlog.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={"td-task-" + idx} draggable={editable} onDragEnd={()=>{handleDrop(idx,"backlog")}}>
+                                             <li className="kb-task" key={"td-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"backlog")}}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                
-                                                {editable ? 
+                                                {props.editable ? 
                                                 <div>
                                                     {/* <img className="kb-rm rt180" src={arrowRight} /> */}
                                                     {/* <img className="kb-rm" src={arrowRight} onClick={()=>{move(idx,"backlog","doing")}}/> */}
@@ -104,13 +102,13 @@ function Kanban(props) {
                                 </section>
                                 <section >
                                     <h4>{lang.tr("Doing")}</h4>
-                                    {editable ? <input  disabled={!editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{handleTaskInputDown(e,"doing")}}/>: <></>}
+                                    {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{handleTaskInputDown(e,"doing")}}/>: <></>}
                                     <ul onDragEnterCapture={()=>{setKanbanDragArea("doing")}}>
                                     {content.doing.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={"dg-task-" + idx} draggable={editable} onDragEnd={()=>{handleDrop(idx,"doing")}}>
+                                             <li className="kb-task" key={"dg-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"doing")}}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
-                                                {editable ? <div>
+                                                {props.editable ? <div>
                                                     {/* <img className="kb-rm rt180" src={arrowRight} onClick={()=>{move(idx,"doing","backlog")}}/> */}
                                                     {/* <img className="kb-rm" src={arrowRight} onClick={()=>{move(idx,"doing","done")}} /> */}
                                                     <img className="kb-rm" src={removeInd} onClick={()=>{remove("doing",idx)}}/>
@@ -122,13 +120,13 @@ function Kanban(props) {
                                 </section>
                                 <section >
                                     <h4>{lang.tr("Done")}</h4>
-                                    {editable ? <input  disabled={!editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{handleTaskInputDown(e,"done")}}/>: <></>}
+                                    {props.editable ? <input  disabled={!props.editable } placeholder={lang.tr("New Task...")} onKeyDown={(e)=>{handleTaskInputDown(e,"done")}}/>: <></>}
                                     <ul onDragEnterCapture={()=>{setKanbanDragArea("done")}}>
                                         {content.done.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={"dn-task-" + idx} draggable={editable} onDragEnd={()=>{handleDrop(idx,"done")}}>
+                                             <li className="kb-task" key={"dn-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"done")}}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
-                                                {editable ? <div>
+                                                {props.editable ? <div>
                                                     {/* <img className="kb-rm rt180" src={arrowRight} onClick={()=>{move(idx,"done","doing")}} /> */}
                                                     {/* <img className="kb-rm" src={arrowRight} /> */}
                                                     <img className="kb-rm" src={removeInd} onClick={()=>{remove("done",idx)}}/>

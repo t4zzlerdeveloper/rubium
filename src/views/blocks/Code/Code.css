@@ -4,13 +4,15 @@
     padding:16px 24px;
     padding-bottom: 8px;
     padding-top:8px;
-    background-color: rgba(6, 8, 6, 0.6);
-    border-radius: 8px;
+    background-color: rgba(6, 8, 6, 0.6) !important;
+    border-radius: 8px !important;
     width: 100%;
   
-    border: 1px solid rgba(128, 128, 128, 0.1);
+    border: 1px solid rgba(128, 128, 128, 0.1) !important;
     transition: 0.4s;
   }
+
+
   
   .code > *> *{cursor:text;}
   

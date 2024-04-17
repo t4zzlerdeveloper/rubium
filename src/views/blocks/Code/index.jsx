@@ -33,13 +33,12 @@ function Code(props){
     const lang = new LangTranslator("NoteEditor",user);
 
     const[content,setContent] = useState({text:"",lang:"JavaScript",cl:false});
-    const[editable,setEditable] = useState(false);
     const[index,setIndex] = useState(props.index);
     const[ff,setFF] = useState(0);
 
     useEffect(()=>{
-        if(props && props.content){ setContent(props.content); setFF(ff+1);}
-        if(props && props.editable) setEditable(props.editable);
+        if(props && props.content) setContent(props.content);
+        setFF(ff+1);
     }
     ,[props]);
 
@@ -100,10 +99,10 @@ function Code(props){
                         
                             <div className='cd-flex'>
                             <div className="cd-copy" ><img  onClick={(e)=>{handleCodeCopy(e,content.text)}} src={copyIcon}/>{lang.tr("Copy")}                 
-                            {editable ? <>&nbsp;&nbsp;&nbsp;<img className={!content.cl ? 'cd-rot' : 'cd-collapse'} src={formatCode} onClick={()=>{invertCodeCL()}}/> {content.cl ? lang.tr("Expand") : lang.tr("Collapse")} </>: <></>}</div>
+                            {props.editable ? <>&nbsp;&nbsp;&nbsp;<img className={!content.cl ? 'cd-rot' : 'cd-collapse'} src={formatCode} onClick={()=>{invertCodeCL()}}/> {content.cl ? lang.tr("Expand") : lang.tr("Collapse")} </>: <></>}</div>
                                 
                                 <div>
-                                {lang.tr("Language")}&nbsp;&nbsp;&nbsp;<select value={content.lang} onChange={(e)=>{updateCodeLang(e)}} disabled={!editable}>
+                                {lang.tr("Language")}&nbsp;&nbsp;&nbsp;<select value={content.lang} onChange={(e)=>{updateCodeLang(e)}} disabled={!props.editable}>
                                     {codeLangs.map((l)=>{
                                         return <option key={"b-cd-"+l} value={l}>{l}</option>
                                     })}
@@ -112,7 +111,7 @@ function Code(props){
                             </div>
                            
                             <CodeMirror
-                            editable={editable} 
+                            editable={props.editable} 
                             value={content.text}
                             onChange={(e)=>{updateContent(e)}}
                             collapsed={content.cl}

@@ -10,13 +10,11 @@ function Heading(props){
     const lang = new LangTranslator("NoteEditor",user);
 
     const [content,setContent] = useState({type:"h1",text:"",underline:false,color:""});
-    const [editable,setEditable] = useState(false);
     const [index,setIndex] = useState(props.index);
     const [ff,setFF] = useState(0);
 
     useEffect(()=>{
         if(props && props.content){ setContent(props.content); }
-        if(props && props.editable) setEditable(props.editable);
         if(props && props.index) setIndex(props.index)
         setFF(ff+1);
     }
@@ -61,14 +59,14 @@ function Heading(props){
             <input className={content.type}
                     style={{textDecoration:content.underline ? "underline" : "",color:content.color || ""}} 
                     id={"neid-" + index} 
-                    placeholder={ editable ? getPlaceholder(content.type): ''}
+                    placeholder={ props.editable ? getPlaceholder(content.type): ''}
                     onFocus={()=>{setCurrentBlockId(index)}}
                     onMouseDown={()=>{setCurrentBlockId(index)}}
                     onSelectCapture={()=>{handleMouseUp();}}
                     onKeyDown={(e)=>{handleKeyDown(e,index,content.type)}}
                     onChange={(e)=>{updateContent(e);}}                
                     value={content.text}
-                    disabled={!editable }
+                    disabled={!props.editable }
                     onBlur={()=>{setCurrentBlockId(-1)}}
                 />
 
