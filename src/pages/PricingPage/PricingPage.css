@@ -1,0 +1,89 @@
+.pricing-page{
+    display: flex;
+    flex-direction: row;
+    gap:50px;
+    place-content: center;
+    place-items: center;
+    filter:drop-shadow(0 0 26px rgba(255, 97, 97, 0.2))
+}
+
+.pricing-page > div{
+    padding:12px 2px;
+    background-color: white;
+    border-radius: 80px;
+}
+
+.pricing-page > h1{
+    color:white;
+    font-size: 50px;
+    margin-top: 10vh;
+    line-height: 1.3;
+}
+
+.pricing-page > h1 > a{
+    color:#f45b68;
+    font-weight: 800;
+
+}
+
+.pricing-page > h1 > b{
+    background-color: #f45b681a;
+    border-radius: 8px;
+    padding:1px 10px;
+    font-weight: 400;
+}
+
+.pricing-page > h1 > img{
+    height: 50px;
+    width: 50px;
+}
+
+
+.pricing-back{
+    width: 100vw;
+    height: 100vh;
+    background-size:cover;
+    position: absolute;
+    opacity:1;
+    top:0;
+    left:0;
+    z-index: -1;
+}
+
+
+.price-page{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    place-items: center;
+    place-content: center;
+}
+
+.price-con{
+    position: absolute;
+    bottom:5vh;
+}
+
+.price-con > h1{
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.price-con > button{
+    color:#f45b68;
+    outline: none;
+    border: none;
+    background-color: white;
+    border-radius: 12px;
+    transition: 0.4s;
+    border: 1px solid transparent;
+    opacity: 0.8;
+}
+
+.price-con > button:hover{
+    outline: none;
+    border: none;
+    color:white;
+    background-color: transparent;
+    border: 1px solid #f45b68;
+}

@@ -15,6 +15,7 @@ import RegisterPage from "./pages/RegisterPage";
 import VerifyPage from "./pages/VerifyPage";
 import Version from "./views/Version";
 import OAuth2 from "./pages/OAuth2";
+import PricingPage from "./pages/PricingPage";
 
 
 
@@ -42,6 +43,7 @@ function App() {
                   <Route path="note" element={<PublishedNote/>}>
                     <Route path="*" element={<PublishedNote/>}/>
                   </Route>
+                  <Route path="pricing" element={<PricingPage />} />
                   <Route path="*" element={<NoPage />} />
                 </Route>
             </Routes>

@@ -14,9 +14,11 @@ import screenshotApp from '../../assets/screenshots/login-page.webp'
 import screenshotNote from '../../assets/screenshots/note-page.webp'
 import './LandingPage.css'
 
-import { useEffect} from 'react'
+import { useEffect, useState} from 'react'
 import LangTranslator from '../../lib/context/language'
 import { useUser } from '../../lib/context/user'
+
+import axios from 'axios'
 
 
 const DEV_GITHUB = "https://github.com/t4zzlerdeveloper";
@@ -27,6 +29,7 @@ const APPWRITE_URL = "https://builtwith.appwrite.io/projects/65d4ad25a374f89996e
 const DISCORD_URL = "https://discord.com/invite/twnjGqHZQn"; 
 
 
+const API_GIT_REPO = "https://api.github.com/repos/t4zzlerdeveloper/rubium";
 
 
 function LandingPage(){
@@ -34,14 +37,29 @@ function LandingPage(){
     const user = useUser();
     const lang = new LangTranslator("LandingPage",user);
 
+    const[stargazers,setStargazers] = useState(null);
+
     useEffect(()=>{
         window.scrollTo(0,0);
+        fetchStars();
     },[])
 
     useEffect(()=>{
         window.document.title = "Rubium - " + lang.tr("Notes") + " " +  lang.tr("Should Only") + " " + lang.tr("Cost Time")
     },[user])
 
+    function fetchStars(){
+        axios.get(API_GIT_REPO)
+        .then((res)=>{
+            const rawStars = res.data.stargazers_count;
+            if(rawStars >= 1000){
+                setStargazers((rawStars/1000).toFixed(0) + "K");
+                return;
+            }
+
+            setStargazers(rawStars);
+        })
+    }
 
 
     const navigate = useNavigate();
@@ -54,13 +72,14 @@ function LandingPage(){
         <div className='nav-left'>
             <img className='nav-logo' src={rubiumLogo} onClick={()=>{document.location.reload()}}/>
             <a>{lang.tr("Our Story")}</a>
-            <a>{lang.tr("Pricing")}</a>
+            <a onClick={()=>{navigate("/pricing")}} >{lang.tr("Pricing")}</a>
             <a onClick={()=>{window.open(SUGGESTIONS_URL)}}>{lang.tr("Suggestions")}</a>
         </div>
         <div className='nav-right'>
             <button className='star-git' onClick={()=>{window.open(RUBIUM_GITHUB)}}>
                 <img src={star}/>
-                <p>{lang.tr("Star on GitHub")}</p>
+                <p>{lang.tr("Star on GitHub")} </p>
+                <b>{stargazers}</b>
             </button>
             <button className='launch-app' onClick={()=>{navigate("/app")}}>{lang.tr("Launch App")}</button>
         </div>
