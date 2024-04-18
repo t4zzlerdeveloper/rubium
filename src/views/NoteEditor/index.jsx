@@ -167,13 +167,6 @@ function NoteEditor(props){
         setFF(ff+1)
     }
 
-    function updateContent(e,index){
-        let copy = content;
-
-        copy[index].text = e.target.value;
-        setContent(copy);
-        setFF(ff+1)
-    }
 
     function updateBlock(newContent,index){
         let copy = content;
@@ -189,21 +182,21 @@ function NoteEditor(props){
     const [currentBlockId,setCurrentBlockId] = useState(null);
 
     function handleMouseUp(){
-
-        let a = document.getElementById("neid-"+currentBlockId)
-        let left = a.selectionStart;
-        let width = a.selectionEnd-a.selectionStart;
-        console.log(left,width)
+    //TODO: fix tool position
+    //     let a = document.getElementById("neid-"+currentBlockId)
+    //     let left = a.selectionStart;
+    //     let width = a.selectionEnd-a.selectionStart;
+    //     console.log(left,width)
     
-        let selection = window.getSelection(),
-        selectionRect = a.getBoundingClientRect();
+    //     let selection = window.getSelection(),
+    //     selectionRect = a.getBoundingClientRect();
          
-        if(width == 0 || !props.editable) {setToolStyle({display:"none"}); return;}
+    //     if(width == 0 || !props.editable) {setToolStyle({display:"none"}); return;}
     
-       setToolStyle({
-          top: selectionRect.top - 42 + 'px',
-          left: ( selectionRect.left + (left * 7) +  (width * 3.5)) + 'px'
-        });
+    //    setToolStyle({
+    //       top: selectionRect.top - 42 + 'px',
+    //       left: ( selectionRect.left + (left * 7) +  (width * 3.5)) + 'px'
+    //     });
     }
 
     const[blockDragging,setBlockDragging] = useState(-1);
@@ -294,17 +287,6 @@ function NoteEditor(props){
         .querySelector('img').alt;
         insertBlockOn(index,"img",src,alt);
         setEnabledDrop(-1)
-    }
-
-    function handleImageDrop(e,index){
-        e.preventDefault();
-        if(!props.editable)return;
-        let html = e.dataTransfer.getData('text/html');
-        let src = new DOMParser().parseFromString(html, "text/html")
-        .querySelector('img').src;
-        let alt = new DOMParser().parseFromString(html, "text/html")
-        .querySelector('img').alt;
-        updateUrl(index,src,alt)
     }
 
       
