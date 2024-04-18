@@ -82,14 +82,15 @@
         "Heading H1": "Título H1",
         "Heading H2": "Título H2",
         "Paragraph": "Parágrafo",
-        "Random Image": "Imagem aleatória",
+        "Image": "Imagem",
         "Separator": "Separador",
         "New Task...": "Nova tarefa...",
         "Enter a title...":"Insira um título...",
         "Backlog": "Pendente",
         "Doing":"Fazendo",
         "Done": "Concluído",
-        "No deadline": "Sem prazo"
+        "No deadline": "Sem prazo",
+        "Click to choose an image from computer": "Clique para escolher uma imagem do computador"
     },
     "ConfirmationDialog":{
         "Confirmation": "Confirmação",

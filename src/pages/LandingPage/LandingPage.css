@@ -82,10 +82,11 @@
     border-radius: 5px;
     margin:0;
     margin-left:5px;
-    font-size: 14px;
+    font-size: 12px;
+    padding: 2px 6px;
     background-color: white;
     color: black;
-    font-weight: 300;
+    font-weight: 400;
     transition: 1s;
     transform: scale(1.1);
 }

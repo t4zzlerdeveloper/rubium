@@ -23,6 +23,7 @@ import Kanban from '../blocks/Kanban'
 import Paragraph from '../blocks/Paragraph'
 import Code from '../blocks/Code'
 import Heading from '../blocks/Heading'
+import Image from '../blocks/Image'
 
 
 
@@ -81,12 +82,10 @@ function NoteEditor(props){
         }
 
         if(type =="img"){
-            const x = Math.round(Math.random() * 300) + 200;
-            const y = Math.round(Math.random() * 300) + 200;
             initialContent = {
                 type:type,
-                text : alt ? alt :"",
-                url : url ? url : `//unsplash.it/${x}/${y}`
+                text : "",
+                url : ""
             }
         }
 
@@ -353,10 +352,12 @@ function NoteEditor(props){
                     {
                     c.type == "img" ?
                     <>
-                        <div className="img" onDrop={(e)=>{handleImageDrop(e,index)}}>
-                            <img  id={"neid-" + index} src={c.url} />
-                            <input placeholder={ props.editable ? lang.tr("Enter an image caption..."): ''}  disabled={!props.editable } value={c.text}  onChange={(e)=>{updateContent(e,index)}} />
-                        </div>
+                       <Image
+                        index={index}
+                        editable={props.editable}
+                        content={c}
+                        onContentChange={(newContent)=>updateBlock(newContent,index)}
+                       />
                     </>
                     : c.type == "sep" ?
                     <>
@@ -453,7 +454,7 @@ function NoteEditor(props){
             </div>
             <div onClick={()=>{addBlock("img")}}>
                 <img src={formatImg}/>
-                <p>{lang.tr("Random Image")}</p>
+                <p>{lang.tr("Image")}</p>
             </div>
             <div onClick={()=>{addBlock("sep")}}>
                 <img src={formatSep}/>

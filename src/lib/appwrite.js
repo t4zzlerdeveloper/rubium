@@ -1,4 +1,4 @@
-import { Client, Account, Databases, Functions,Avatars,Locale} from 'appwrite';
+import { Client, Account, Databases, Functions,Avatars,Locale,Storage} from 'appwrite';
 
 export const client = new Client();
 
@@ -11,4 +11,5 @@ export const account = new Account(client);
 export const databases = new Databases(client);
 export const functions = new Functions(client);
 export const avatars = new Avatars(client);
+export const storage = new Storage(client);
 export { ID } from 'appwrite';
