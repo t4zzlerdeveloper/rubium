@@ -46,6 +46,8 @@
 .grow-wrap > textarea {
   resize: none;
   overflow: hidden;
+  cursor: text;
+
 }
 .grow-wrap > textarea,
 .grow-wrap::after {

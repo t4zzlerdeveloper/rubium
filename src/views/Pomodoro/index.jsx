@@ -49,6 +49,17 @@ function Pomodoro(){
     const [timeLeft,setTimeLeft] = useState("00:00");
     let timerInterval;
 
+
+    useEffect(()=>{
+        const lastPomo = localStorage.getItem("pomo");
+        if(lastPomo){
+            const pomo = JSON.parse(lastPomo);
+            setTime(pomo.time);
+            setPhase(pomo.phase);
+            setOpen(true);
+        }
+    },[])
+
     useEffect(()=>{
         if (open) {
             timerInterval = setInterval(updateTimeLeft, 250);
@@ -78,6 +89,13 @@ function Pomodoro(){
 
         minutes = parseLeadingZeros(minutes);
         seconds = parseLeadingZeros(seconds);
+
+        if(open){
+            localStorage.setItem("pomo",JSON.stringify({
+                "time": time,
+                "phase": phase
+            }));
+        }
         
         setTimeLeft(minutes + ":" + seconds);
     }
@@ -97,6 +115,10 @@ function Pomodoro(){
     function handleOpen(){
         if(!open){
             initPomodoro();
+        }
+        else{
+            localStorage.removeItem("pomo");
+
         }
         setOpen(!open);
     }

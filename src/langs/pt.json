@@ -85,7 +85,7 @@
             "Heading H1": "Título H1",
             "Heading H2": "Título H2",
             "Paragraph": "Parágrafo",
-            "Random Image": "Imagem Aleatória",
+            "Image": "Imagem",
             "Separator": "Separador",
             "New Task...": "Nova Tarefa...",
             "Enter a title...":"Introduz um Título...",
@@ -98,7 +98,8 @@
             "Copied!":"Copiado!",
             "Error Copying...":"Erro a copiar...",
             "Collapse": "Minimizar",
-            "Expand": "Expandir"
+            "Expand": "Expandir",
+            "Click to choose an image from computer": "Clica para escolher uma imagem do computador"
         },
         "ConfirmationDialog":{
             "Confirmation": "Confirmação",

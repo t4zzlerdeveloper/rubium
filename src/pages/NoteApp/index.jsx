@@ -388,7 +388,7 @@ useEffect(()=>{
             </p>
             {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/> : <></>}
             </div>
-        }): <div className="side-item" >{searchQuery.length > 0 ? lang.tr("No results found") : lang.tr("Nothing to see here.")}</div>}
+        }): <div className="side-item no-items" >{searchQuery.length > 0 ? lang.tr("No results found") : lang.tr("Nothing to see here.")}</div>}
         </div>
 
         <div className='side-btns'>

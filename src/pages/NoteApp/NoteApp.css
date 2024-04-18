@@ -132,6 +132,16 @@ mask: var(--mask);
 .side-item > p > .shared{color:rgba(83, 91, 242, 0.9)}
 
 
+.no-items{
+  display: block;
+  text-align: center;
+  line-height: 24px;
+  cursor: default;
+}
+
+.no-items:hover{
+  background: transparent !important;
+}
 
 
 .side-item > img{

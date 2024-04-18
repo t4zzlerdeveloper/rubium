@@ -129,63 +129,6 @@
   opacity: 1;
 }
 
-.img{
-  cursor: pointer;
-  padding:18px 12px;
-  display: flex;
-  flex-direction: column;
-  place-content: center;
-  place-items: center;
-  gap:10px
-}
-
-.img > input{
-  background-color: transparent;
-  outline: none;
-  width: 90%;
-  border: none;
-  text-align: center;
-  color:rgb(81, 81, 81);
-  font-size: 14px;
-  padding: 2px 0;
-  margin:0;
-  border-radius:  4px;
-}
-
-.img > input:focus{
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.img > img{
-  max-width: 90%;
-  max-height: 300px;
-  border-radius: 4px;
-  object-fit: contain;
-  transition: 0.8s;
-  cursor: pointer;
-} 
-
-.img > img:hover{
-  filter:grayscale();
-}
-
-.img[fullscreen=true]{
-  position: absolute;
-  top:0;
-  left: 0;
-  background-color: black;
-  width: 100vw;
-  height: 100vh;
-  z-index:9999;
-  padding:0;
-}
-
-.img[fullscreen=true] > img{
-  width: 100vw !important;
-  height: 100vh !important;
-}
-
-
 .separator{
   width: 90%;
   border-radius: 10px;

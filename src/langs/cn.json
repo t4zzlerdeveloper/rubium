@@ -82,14 +82,15 @@
         "Heading H1": "标题 H1",
         "Heading H2": "标题 H2",
         "Paragraph": "段落",
-        "Random Image": "随机图片",
+        "Image": "图片",
         "Separator": "分隔符",
         "New Task...": "新任务...",
         "Enter a title...":"输入标题...",
         "Backlog": "待办事项",
         "Doing":"进行中",
         "Done": "已完成",
-        "No deadline": "无截止日期"
+        "No deadline": "无截止日期",
+        "Click to choose an image from computer": "点击从电脑选择图片"
     },
     "ConfirmationDialog":{
         "Confirmation": "确认",
