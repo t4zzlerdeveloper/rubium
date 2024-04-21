@@ -2,3 +2,6 @@
 .DS_Store
 .mjs
 /node_modules
+./node_modules
+/dist
+./dist
