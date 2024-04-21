@@ -129,10 +129,11 @@
   opacity: 1;
 }
 
+
 .separator{
   width: 90%;
-  border-radius: 10px;
-  border-top: 1.5px solid  rgba(244, 91, 104, 0.25)
+  border-radius: 10px ;
+  border-top: 1.5px solid  rgba(244, 91, 104, 0.25) !important
 }
 
 
