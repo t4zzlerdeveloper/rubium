@@ -53,7 +53,7 @@ function Kanban(props) {
     }
 
    function move(idx,currentPhase,newPhase){
-        let task = content[currentPhase].splice(idx,1);
+        let task = content[currentPhase].splice(idx,1)[0];
         let copy = content;
         copy[newPhase].push(task);
         propagateContent(copy);
