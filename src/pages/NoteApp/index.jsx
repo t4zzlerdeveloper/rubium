@@ -414,9 +414,11 @@ useEffect(()=>{
           
             <div className={'sv-to-cloud ' + (synced ? "" : "gray")}>
                 <p>{computeTokensLeft() == 0 ? lang.tr("Token Limit reached :(") : synced ? lang.tr("Saved to the Cloud") : lang.tr("Saving...")}</p>
-                {computeTokensLeft() > 0 && <img 
-                className={synced ? "" :  "sync-rotate"}
-                src={synced ? syncedIcon : syncingIcon} />}
+                {computeTokensLeft() > 0 && <><img 
+                className={synced ? "" :  "sync-rotate"} style={synced ? {display: "none"} : null}
+                src={syncedIcon} /><img 
+                className={synced ? "" :  "sync-rotate"} style={synced ? null : {display: "none"}}
+                src={syncingIcon}/></>}
             </div>
 
             {editable && <div className='rem-tokens'>
@@ -424,20 +426,22 @@ useEffect(()=>{
                 <progress value={computePercentageTokens()} full={ computePercentageTokens() >= 1 ? "true": "false"} ></progress>
             </div>}
             
-            {checkUpdate(note) ?
+            
               <div className='edit-icon' onClick={()=>{
-                if(editable){saveCurrentNote()};setEditable(!editable);setOpenEmoji(false)}}>
+                if(editable){saveCurrentNote()};setEditable(!editable);setOpenEmoji(false)}} style={checkUpdate(note) ? null : {display: "none"}}>
                 <img 
-                src={editable ? viewIcon : editIcon} />
+                src={viewIcon} style={editable ? null : {display: "none"}} />
+                <img 
+                src={editIcon} style={editable ? {display: "none"} : null}/>
                 <p>{editable ?  lang.tr("Preview") : lang.tr("Edit") }</p>
               </div>
-            : <></>}
-            {checkDelete(note) ? 
-            <div  className="share-icon" onClick={()=>{setSharing(true)}}>
+          
+            
+            <div  className="share-icon" onClick={()=>{setSharing(true)}} style={checkDelete(note) ? null : {display: "none"}}>
               <img src={shareIcon}/>
               <p>{lang.tr("Share")}</p>
             </div>
-            : <></>}
+            
           </>}
         </div>
         {!loadingNotes && notes.length == 0 && searchQuery.length == 0 ?
