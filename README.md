@@ -68,7 +68,10 @@ We welcome contributions from the community!
 
 
 ## ❤️ Sponsors
-<img alt="Nux404" height="50px" src="https://avatars.githubusercontent.com/u/127152848?v=4"/>
+
+| Picture | Username | Profile | 
+|-----|--------|--------|
+|   <img alt="Nux404" height="50px" src="https://avatars.githubusercontent.com/u/127152848?v=4"/>  |    Nux404    |    https://github.com/nux404    | 
 
 This place is reserved as a way of thanking our sponsors for supporting Rubium. We will re-invest all the funds back into the project to continue providing our service and make improvements to it.
 
