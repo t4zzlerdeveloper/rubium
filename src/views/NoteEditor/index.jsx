@@ -4,6 +4,7 @@ import './NoteEditor.css'
 
 import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
+import formatH3 from '../../assets/format_h3.svg'
 import formatP from '../../assets/format_p.svg'
 import formatImg from '../../assets/image.svg'
 import formatSep from '../../assets/separator.svg'
@@ -24,9 +25,6 @@ import Paragraph from '../blocks/Paragraph'
 import Code from '../blocks/Code'
 import Heading from '../blocks/Heading'
 import Image from '../blocks/Image'
-
-
-
 
 function NoteEditor(props){
 
@@ -239,11 +237,13 @@ function NoteEditor(props){
         let addButton = document.getElementById("addeid-"+index);
         const rect = addButton.getBoundingClientRect();
 
-        if(rect.top > window.innerHeight -268){
+        const offset = 282;
+
+        if(rect.top > window.innerHeight -offset){
             //!fix size to dynamic
             setCrtBlockStyle(
                 {
-                    top:rect.top - 248,
+                    top:rect.top - offset,
                     left:rect.left -15 ,
                     paddingBottom: "35px"
                 }
@@ -432,6 +432,10 @@ function NoteEditor(props){
             <div onClick={()=>{addBlock("h2")}}>
                 <img src={formatH2}/>
                 <p>{lang.tr("Heading H2")}</p>
+            </div>
+            <div onClick={()=>{addBlock("h3")}}>
+                <img src={formatH3}/>
+                <p>{lang.tr("Heading H3")}</p>
             </div>
             <div onClick={()=>{addBlock("p")}}>
                 <img src={formatP}/>

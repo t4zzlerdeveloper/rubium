@@ -386,7 +386,7 @@ useEffect(()=>{
               <a className={checkDelete(nt) ? checkNewNote(nt) ? "new" : "private" : "shared"}>&nbsp;
                {checkDelete(nt) ? parseDateTime(nt.$updatedAt) : lang.tr("Shared with me")} </a>
             </p>
-            {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/> : <></>}
+            {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(nt);}} src={deleteIcon}/> : <></>}
             </div>
         }): <div className="side-item no-items" >{searchQuery.length > 0 ? lang.tr("No results found") : lang.tr("Nothing to see here.")}</div>}
         </div>
