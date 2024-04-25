@@ -66,6 +66,13 @@ We welcome contributions from the community!
 
 * **Code Contributions:** Reach us out on [our discord](https://discord.gg/twnjGqHZQn) to be assigned to the process of development of new features and improvements to our platform.
 
+
+## ❤️ Sponsors
+<img alt="Nux404" height="50px" src="https://avatars.githubusercontent.com/u/127152848?v=4"/>
+
+This place is reserved as a way of thanking our sponsors for supporting Rubium. We will re-invest all the funds back into the project to continue providing our service and make improvements to it.
+
+
 ## 📄 License
 
 Rubium is distributed under the [MIT license](https://github.com/t4zzlerdeveloper/rubium/blob/main/LICENSE). This means you can freely use, modify, and distribute the code for any purpose, commercial or non-commercial while mantaining the copyright notice.
@@ -81,7 +88,5 @@ Hosting provided by [Vercel](https://vercel.com/)
   <img width="30" alt="Appwrite" src="https://appwrite.io/assets/logomark/logo.svg"/>
   <img width="30" src="https://github.com/devicons/devicon/raw/master/icons/vercel/vercel-original.svg"/>
 </div>
-
-
 
 
