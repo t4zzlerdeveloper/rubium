@@ -6,7 +6,7 @@ import './Heading.css'
 function Heading(props){
 
     const user = useUser();
-    //! Change translation to Paragraph
+    //! Change translation to Heading
     const lang = new LangTranslator("NoteEditor",user);
 
     const [content,setContent] = useState({type:"h1",text:"",underline:false,color:""});
@@ -47,6 +47,7 @@ function Heading(props){
     function getPlaceholder(type){
         if(type == "h1") return lang.tr("Enter Heading H1...")
         else if(type == "h2") return lang.tr("Enter Heading H2...")
+        else if(type == "h3") return lang.tr("Enter Heading H3...")
        }
 
     function setCurrentBlockId(id){
