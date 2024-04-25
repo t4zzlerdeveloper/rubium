@@ -31,7 +31,7 @@
   height: 20px;
   transition: 0.2s;
   border-radius: 20px;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 
 }
 
@@ -138,7 +138,10 @@
 }
 
 
+.nullblock-creator {
+  display: none;
 
+}
 
 
 .block-creator{
@@ -193,7 +196,9 @@
 }
 
 
-
+.nulltoolbar {
+  display: none;
+}
 
 .toolbar {
     position: absolute;

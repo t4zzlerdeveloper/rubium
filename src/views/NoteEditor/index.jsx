@@ -309,6 +309,7 @@ function NoteEditor(props){
                 key={"bleid-" + index}
                 id={"bleid-" + index}
                 className='block'
+                style={props.editable ? null : {cursor: "default"}}
                 editable={props.editable ? "true" : "false"}
                 draggable={props.editable  ? "true" : "false"}
                 onDragStart={(e)=>{handleDragStart(index);}}
@@ -318,6 +319,7 @@ function NoteEditor(props){
                     <img 
                         id={"addeid-"+(index+1)}  
                         className='b-add'
+                        style={props.editable ? null : {cursor: "default"}}
                         src={addInd} 
                         draggable="false" 
                         enabled={creatingBlock == index+1 ? "true" : "false"}
@@ -328,6 +330,7 @@ function NoteEditor(props){
                     <img 
                         className='b-dragger' 
                         src={dragInd} 
+                        style={props.editable ? null : {cursor: "default"}}
                         draggable="false" 
                         enabled={creatingBlock == index+1 ? "true" : "false"}
                         onMouseEnter={()=>{setCreatingBlock(-1)}}/>
@@ -409,17 +412,17 @@ function NoteEditor(props){
 
         
         })}
-       {props.editable ? <> 
-       <div style={toolStyle} className="toolbar">
-            <img src={formatH1} onClick={()=>{boldSelected()}}/>
-            <img src={formatH2}/>
-            <img src={formatP}/>
-            <img src={formatImg}/>
+       <> 
+       <div style={props.editable ? toolStyle : null} className={props.editable ? "toolbar" :"nulltoolbar"}>
+            <img src={props.editable ? formatH1 : null} onClick={()=>{boldSelected()}}/>
+            <img src={props.editable ? formatH2 : null}/>
+            <img src={props.editable ? formatP : null}/>
+            <img src={props.editable ? formatImg : null}/>
         </div>
-        { creatingBlock == -1 ? <></> : 
+        
         <div 
-            className="block-creator" 
-            style={crtBlockStyle}             
+            className={props.editable ? "block-creator" :"nullblock-creator"} 
+            style={creatingBlock == -1 ? {display: "none"} : crtBlockStyle}             
             onMouseLeave={()=>{setCreatingBlock(-1)}}>
 
             <div onClick={()=>{addBlock("h1")}}>
@@ -450,9 +453,9 @@ function NoteEditor(props){
                 <img src={formatCode}/>
                 <p>Embed Code</p>
             </div>
-        </div>}
+        </div>
          <div>
-        </div> </>: <></>}
+        </div> </>
     </div>)
 }
 
