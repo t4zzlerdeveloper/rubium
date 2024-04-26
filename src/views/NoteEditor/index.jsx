@@ -38,12 +38,6 @@ function NoteEditor(props){
 
     const [content,setContent] = useState(initialContent)
 
-
-    useEffect(()=>{
-        try{document.getElementById("neid-"+(content.length-1)).focus();}
-        catch{}
-    },[content])
-
     useEffect(()=>{
         props.setContent(JSON.stringify(content))
     },[ff])
@@ -265,6 +259,7 @@ function NoteEditor(props){
     function addBlock(type){
         insertBlockOn(creatingBlock,type);
         setCreatingBlock(-1);
+        //window.location.hash = "#neid-"+creatingBlock;
     }
 
 
