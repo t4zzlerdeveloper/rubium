@@ -16,6 +16,10 @@
   .kanban:hover{
     background-color: rgba(255,255,255,0.01);
   }
+
+  .kanban > section{
+    width: 100%;
+  }
   
   
   .kanban > section > input{
@@ -30,6 +34,8 @@
   
     padding:8px 16px;
     margin-bottom: 10px;
+    width: 100%;
+    cursor: text !important;
   }
   
   .kb-lower{

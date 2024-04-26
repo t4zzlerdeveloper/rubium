@@ -92,9 +92,7 @@ function NoteApp() {
    
     databases.getDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,id)
     .then((res)=>{
-      setNote(res)
-
-      setTimeout(()=>{setLoadingCurrentNote(false);},400)
+      setNote(res).then(()=>{setLoadingCurrentNote(false);})
     })
     .catch((err)=>{
       if(err.toString().includes("requested ID could not be found.")){
@@ -235,6 +233,8 @@ function NoteApp() {
   }
 
   function setNoteTitle(newTitle){
+    if(newTitle.length > 32) return;
+    
     const oldTitle = note.title;
     setNote({...note,title:newTitle})
     let targetObject = notes.filter(n => n.$id === note.$id)
