@@ -130,6 +130,10 @@
   opacity: 1;
 }
 
+.block:has(.separator){
+  place-items: center;
+}
+
 
 .separator{
   width: 90%;
