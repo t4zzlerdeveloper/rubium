@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  place-items: center;
+  place-items: start;
   place-content: center;
   cursor:grab;
   gap:2.5px;
@@ -31,6 +31,7 @@
   height: 20px;
   transition: 0.2s;
   border-radius: 20px;
+  margin-top: 0.25rem;
 
 }
 
@@ -129,6 +130,9 @@
   opacity: 1;
 }
 
+.block:has(.separator){
+  place-items: center;
+}
 
 .separator{
   width: 90%;
@@ -137,7 +141,10 @@
 }
 
 
+.nullblock-creator {
+  display: none;
 
+}
 
 
 .block-creator{
@@ -192,7 +199,9 @@
 }
 
 
-
+.nulltoolbar {
+  display: none;
+}
 
 .toolbar {
     position: absolute;

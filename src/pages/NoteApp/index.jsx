@@ -92,9 +92,7 @@ function NoteApp() {
    
     databases.getDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,id)
     .then((res)=>{
-      setNote(res)
-
-      setTimeout(()=>{setLoadingCurrentNote(false);},400)
+      setNote(res).then(()=>{setLoadingCurrentNote(false);})
     })
     .catch((err)=>{
       if(err.toString().includes("requested ID could not be found.")){
@@ -235,6 +233,8 @@ function NoteApp() {
   }
 
   function setNoteTitle(newTitle){
+    if(newTitle.length > 32) return;
+    
     const oldTitle = note.title;
     setNote({...note,title:newTitle})
     let targetObject = notes.filter(n => n.$id === note.$id)
@@ -386,7 +386,7 @@ useEffect(()=>{
               <a className={checkDelete(nt) ? checkNewNote(nt) ? "new" : "private" : "shared"}>&nbsp;
                {checkDelete(nt) ? parseDateTime(nt.$updatedAt) : lang.tr("Shared with me")} </a>
             </p>
-            {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(note);}} src={deleteIcon}/> : <></>}
+            {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(nt);}} src={deleteIcon}/> : <></>}
             </div>
         }): <div className="side-item no-items" >{searchQuery.length > 0 ? lang.tr("No results found") : lang.tr("Nothing to see here.")}</div>}
         </div>
@@ -414,9 +414,11 @@ useEffect(()=>{
           
             <div className={'sv-to-cloud ' + (synced ? "" : "gray")}>
                 <p>{computeTokensLeft() == 0 ? lang.tr("Token Limit reached :(") : synced ? lang.tr("Saved to the Cloud") : lang.tr("Saving...")}</p>
-                {computeTokensLeft() > 0 && <img 
-                className={synced ? "" :  "sync-rotate"}
-                src={synced ? syncedIcon : syncingIcon} />}
+                {computeTokensLeft() > 0 && <><img 
+                className={synced ? "" :  "sync-rotate"} style={synced ? {display: "none"} : null}
+                src={syncedIcon} /><img 
+                className={synced ? "" :  "sync-rotate"} style={synced ? null : {display: "none"}}
+                src={syncingIcon}/></>}
             </div>
 
             {editable && <div className='rem-tokens'>
@@ -424,20 +426,22 @@ useEffect(()=>{
                 <progress value={computePercentageTokens()} full={ computePercentageTokens() >= 1 ? "true": "false"} ></progress>
             </div>}
             
-            {checkUpdate(note) ?
+            
               <div className='edit-icon' onClick={()=>{
-                if(editable){saveCurrentNote()};setEditable(!editable);setOpenEmoji(false)}}>
+                if(editable){saveCurrentNote()};setEditable(!editable);setOpenEmoji(false)}} style={checkUpdate(note) ? null : {display: "none"}}>
                 <img 
-                src={editable ? viewIcon : editIcon} />
+                src={viewIcon} style={editable ? null : {display: "none"}} />
+                <img 
+                src={editIcon} style={editable ? {display: "none"} : null}/>
                 <p>{editable ?  lang.tr("Preview") : lang.tr("Edit") }</p>
               </div>
-            : <></>}
-            {checkDelete(note) ? 
-            <div  className="share-icon" onClick={()=>{setSharing(true)}}>
+          
+            
+            <div  className="share-icon" onClick={()=>{setSharing(true)}} style={checkDelete(note) ? null : {display: "none"}}>
               <img src={shareIcon}/>
               <p>{lang.tr("Share")}</p>
             </div>
-            : <></>}
+            
           </>}
         </div>
         {!loadingNotes && notes.length == 0 && searchQuery.length == 0 ?

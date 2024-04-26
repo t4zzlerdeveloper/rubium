@@ -4,6 +4,7 @@ import './NoteEditor.css'
 
 import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
+import formatH3 from '../../assets/format_h3.svg'
 import formatP from '../../assets/format_p.svg'
 import formatImg from '../../assets/image.svg'
 import formatSep from '../../assets/separator.svg'
@@ -25,9 +26,6 @@ import Code from '../blocks/Code'
 import Heading from '../blocks/Heading'
 import Image from '../blocks/Image'
 
-
-
-
 function NoteEditor(props){
 
 
@@ -39,12 +37,6 @@ function NoteEditor(props){
     const initialContent = props.content ? JSON.parse(props.content) : [{type:"p",text:""}];
 
     const [content,setContent] = useState(initialContent)
-
-
-    useEffect(()=>{
-        try{document.getElementById("neid-"+(content.length-1)).focus();}
-        catch{}
-    },[content])
 
     useEffect(()=>{
         props.setContent(JSON.stringify(content))
@@ -239,11 +231,13 @@ function NoteEditor(props){
         let addButton = document.getElementById("addeid-"+index);
         const rect = addButton.getBoundingClientRect();
 
-        if(rect.top > window.innerHeight -268){
+        const offset = 282;
+
+        if(rect.top > window.innerHeight -offset){
             //!fix size to dynamic
             setCrtBlockStyle(
                 {
-                    top:rect.top - 248,
+                    top:rect.top - offset,
                     left:rect.left -15 ,
                     paddingBottom: "35px"
                 }
@@ -265,6 +259,7 @@ function NoteEditor(props){
     function addBlock(type){
         insertBlockOn(creatingBlock,type);
         setCreatingBlock(-1);
+        //window.location.hash = "#neid-"+creatingBlock;
     }
 
 
@@ -309,6 +304,7 @@ function NoteEditor(props){
                 key={"bleid-" + index}
                 id={"bleid-" + index}
                 className='block'
+                style={props.editable ? null : {cursor: "default"}}
                 editable={props.editable ? "true" : "false"}
                 draggable={props.editable  ? "true" : "false"}
                 onDragStart={(e)=>{handleDragStart(index);}}
@@ -318,6 +314,7 @@ function NoteEditor(props){
                     <img 
                         id={"addeid-"+(index+1)}  
                         className='b-add'
+                        style={props.editable ? null : {cursor: "default"}}
                         src={addInd} 
                         draggable="false" 
                         enabled={creatingBlock == index+1 ? "true" : "false"}
@@ -328,6 +325,7 @@ function NoteEditor(props){
                     <img 
                         className='b-dragger' 
                         src={dragInd} 
+                        style={props.editable ? null : {cursor: "default"}}
                         draggable="false" 
                         enabled={creatingBlock == index+1 ? "true" : "false"}
                         onMouseEnter={()=>{setCreatingBlock(-1)}}/>
@@ -409,17 +407,17 @@ function NoteEditor(props){
 
         
         })}
-       {props.editable ? <> 
-       <div style={toolStyle} className="toolbar">
-            <img src={formatH1} onClick={()=>{boldSelected()}}/>
-            <img src={formatH2}/>
-            <img src={formatP}/>
-            <img src={formatImg}/>
+       <> 
+       <div style={props.editable ? toolStyle : null} className={props.editable ? "toolbar" :"nulltoolbar"}>
+            <img src={props.editable ? formatH1 : null} onClick={()=>{boldSelected()}}/>
+            <img src={props.editable ? formatH2 : null}/>
+            <img src={props.editable ? formatP : null}/>
+            <img src={props.editable ? formatImg : null}/>
         </div>
-        { creatingBlock == -1 ? <></> : 
+        
         <div 
-            className="block-creator" 
-            style={crtBlockStyle}             
+            className={props.editable ? "block-creator" :"nullblock-creator"} 
+            style={creatingBlock == -1 ? {display: "none"} : crtBlockStyle}             
             onMouseLeave={()=>{setCreatingBlock(-1)}}>
 
             <div onClick={()=>{addBlock("h1")}}>
@@ -429,6 +427,10 @@ function NoteEditor(props){
             <div onClick={()=>{addBlock("h2")}}>
                 <img src={formatH2}/>
                 <p>{lang.tr("Heading H2")}</p>
+            </div>
+            <div onClick={()=>{addBlock("h3")}}>
+                <img src={formatH3}/>
+                <p>{lang.tr("Heading H3")}</p>
             </div>
             <div onClick={()=>{addBlock("p")}}>
                 <img src={formatP}/>
@@ -450,9 +452,9 @@ function NoteEditor(props){
                 <img src={formatCode}/>
                 <p>Embed Code</p>
             </div>
-        </div>}
+        </div>
          <div>
-        </div> </>: <></>}
+        </div> </>
     </div>)
 }
 
