@@ -165,7 +165,7 @@ function NoteApp() {
       const role = Role.user(user.current.$id);
       const permissions = [Permission.read(role),Permission.update(role),Permission.delete(role)];
       
-      const data = {emoji:"",title:title ? title : lang.tr("New Note"),content:JSON.stringify([{type:"p",text:""}])};
+      const data = {emoji:"",title:title ? title : "",content:JSON.stringify([{type:"p",text:""}])};
 
       setLoadingNotes(true);
       databases.createDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,ID.unique(),data,permissions)
@@ -337,7 +337,7 @@ useEffect(()=>{
        />
 
       <ConfirmationDialog display={noteToDelete !== null} 
-      text={`${lang.tr("Are you sure you want to delete the note named")}\n "${noteToDelete && noteToDelete.title}"?`} 
+      text={`${lang.tr("Are you sure you want to delete the note named")}\n "${noteToDelete && noteToDelete.title ? noteToDelete.title : lang.tr("Untitled")}"?`} 
       handleCancelation={()=>{setNoteToDelete(null);}} 
       handleConfirmation={()=>{deleteNote(noteToDelete);setNoteToDelete(null);}} />
 
@@ -382,7 +382,7 @@ useEffect(()=>{
          : notes.length !== 0 ? notes.map((nt)=>{
           return <div key={nt.$id} className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
             <p>
-            <Emoji name={nt.emoji} textOnly={true}/>&nbsp;{nt.title}
+            <Emoji name={nt.emoji} textOnly={true}/>{ nt.title ? <>&nbsp;{nt.title}</> : <b className='untitled-note'>{lang.tr("Untitled")}</b>}
               <a className={checkDelete(nt) ? checkNewNote(nt) ? "new" : "private" : "shared"}>&nbsp;
                {checkDelete(nt) ? parseDateTime(nt.$updatedAt) : lang.tr("Shared with me")} </a>
             </p>
@@ -450,7 +450,7 @@ useEffect(()=>{
 
           <div className='emoji-title'>
             {!note.emoji && !editable ? <></> : <div className='emoji-con' onClick={()=>{if(editable){setOpenEmoji(!openEmoji)}}}>{note.emoji ? <Emoji size={"36px"} name={note.emoji}/> : editable ? <p>+</p> : <p></p>}</div>}
-            <input className='note-title' disabled={!editable} type="text" value={note.title} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
+            <input id="nt-title" className='note-title' disabled={!editable} type="text" value={note.title} placeholder={lang.tr("Untitled")} onChange={(e)=>{setNoteTitle(e.target.value)}}/>
           </div>
 
           {openEmoji ? <EmojiSelector onSelect={(emj)=>{setNoteEmoji(emj);setOpenEmoji(false)}}/> : <></>}

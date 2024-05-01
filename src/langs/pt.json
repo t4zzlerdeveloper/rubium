@@ -74,7 +74,8 @@
             "New Note": "Nova Nota",
             "_invertName": true,
             "of": "de",
-            "We are sorry but our app is still under development for smaller screens...": "Pedimos desculpa mas a nossa app para ecrãs mais pequenos ainda se encontra em desenvolvimento..."
+            "We are sorry but our app is still under development for smaller screens...": "Pedimos desculpa mas a nossa app para ecrãs mais pequenos ainda se encontra em desenvolvimento...",
+            "Untitled": "Sem título"
         },
         "NoteEditor":{
             "Enter an image caption...":"Escreve uma legenda...",

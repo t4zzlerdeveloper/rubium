@@ -573,3 +573,9 @@ hr.rounded {
 .emoji-con:hover > p{
   color: rgb(100, 100, 100);
 }
+
+.untitled-note{
+padding: 0;
+margin: 0;
+opacity: 0.6;
+}
