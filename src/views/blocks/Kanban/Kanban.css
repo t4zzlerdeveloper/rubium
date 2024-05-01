@@ -92,6 +92,7 @@
     overflow-y: scroll;
     justify-content: flex-start;
     place-items: flex-start;
+    cursor: default;
   }
   
   .kb-task{
@@ -115,6 +116,10 @@
     flex-direction: row;
     gap:4px;
   }
+
+  .kb-view {
+    cursor:text;
+  } 
   
   .rt180{
     transform: rotate(180deg);

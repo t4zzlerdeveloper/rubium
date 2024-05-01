@@ -86,7 +86,7 @@ function Kanban(props) {
                                     <ul onDragEnterCapture={()=>{setKanbanDragArea("backlog")}}>
                                         {content.backlog.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={"td-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"backlog")}}>
+                                             <li className={"kb-task" + (props.editable ? "" : " kb-view") } key={"td-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"backlog")}}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                
                                                 {props.editable ? 
@@ -107,7 +107,7 @@ function Kanban(props) {
                                     <ul onDragEnterCapture={()=>{setKanbanDragArea("doing")}}>
                                     {content.doing.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={"dg-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"doing")}}>
+                                             <li className={"kb-task" + (props.editable ? "" : " kb-view") } key={"dg-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"doing")}}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     {/* <img className="kb-rm rt180" src={arrowRight} onClick={()=>{move(idx,"doing","backlog")}}/> */}
@@ -125,7 +125,7 @@ function Kanban(props) {
                                     <ul onDragEnterCapture={()=>{setKanbanDragArea("done")}}>
                                         {content.done.map((task,idx)=>{
                                             return <>
-                                             <li className="kb-task" key={"dn-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"done")}}>
+                                             <li className={"kb-task" + (props.editable ? "" : " kb-view") } key={"dn-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"done")}}>
                                              <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
                                                 {props.editable ? <div>
                                                     {/* <img className="kb-rm rt180" src={arrowRight} onClick={()=>{move(idx,"done","doing")}} /> */}
