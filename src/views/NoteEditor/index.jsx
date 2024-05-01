@@ -98,7 +98,19 @@ function NoteEditor(props){
         setContent(ctCopy);
         setFF(ff+1);
         
-        document.getElementById("neid-"+x).focus();
+        setTimeout(()=>{
+            if(type == "kb"){ 
+                document.getElementById("kb-title-"+x).focus();
+            }
+            else if(type == "img"){
+                document.getElementById("imgid-"+x).focus();
+                document.getElementById("imgid-"+x).click();
+            }
+            else{
+                document.getElementById("neid-"+x).focus();
+            }
+         
+        },100);
     }
 
     function moveBlockTo(x,newX){

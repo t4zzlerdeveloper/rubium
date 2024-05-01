@@ -81,7 +81,7 @@ function Kanban(props) {
         <>
         {ff > -1 ? <>
          <div key={"kb-" + index} className='kanban' editable={props.editable ? "true": "false"}>
-                            <section ><input disabled={!props.editable } placeholder={props.editable ? lang.tr("Enter a title...") : ""} value={content.title} onChange={(e)=>{setTitle(e.target.value)}}/></section>
+                            <section ><input id={"kb-title-" + index} disabled={!props.editable } placeholder={props.editable ? lang.tr("Enter a title...") : ""} value={content.title} onChange={(e)=>{setTitle(e.target.value)}}/></section>
                             <section className="kb-lower">
                                 <section >
                                     <h4>{lang.tr("Backlog")}</h4>
