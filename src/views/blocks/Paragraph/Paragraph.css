@@ -4,7 +4,7 @@
     color:rgb(200, 200, 200) !important;
     border: none;
     outline: none;
-    background-color: inherit;
+    background-color: transparent;
     width: 100%;
     font-size: 18px;
     font-weight: 400;
@@ -18,9 +18,6 @@
   }
   
 
-  .p:hover,  .p:focus{
-    background-color: transparent
-  }
 
 
 
@@ -55,13 +52,4 @@
   font: inherit;
 
   grid-area: 1 / 1 / 2 / 2;
-}
-
-
-.grow-wrap:hover{
-  background-color: rgba(200,200,200,0.02)
-}
-
-.grow-wrap:focus{
-  background-color: rgba(200,200,200,0.05)
 }

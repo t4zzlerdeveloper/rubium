@@ -74,8 +74,8 @@
 
 
 
-.block:hover > input,.block > input:hover,.img:hover,.block:hover > textarea,.block > textarea:hover{
-  background-color: rgba(255,255,255,0.02);
+.block:hover > input,.block > input:hover,.img:hover,.block:hover > div{
+  background-color: rgb(20,20,20);
 }
 
 .block[editable=false] > input:hover,
@@ -86,8 +86,8 @@
   cursor: text;
 }
 
-.block > input:focus,.img:focus,.block > textarea:focus{
-    background-color: rgba(255,255,255,0.05);
+.block > input:focus,.img:focus, .block > div:has(>textarea:focus){
+    background-color: rgb(26,26,26);
 }
 
 

@@ -54,6 +54,7 @@
     border-radius: 10px;
     width: 100%;
     padding:0;
+    background-color: rgba(0, 0, 0,0.4);
   }
   
   .kb-lower > section > h4{
@@ -92,6 +93,7 @@
     overflow-y: scroll;
     justify-content: flex-start;
     place-items: flex-start;
+    cursor: default;
   }
   
   .kb-task{
@@ -115,6 +117,10 @@
     flex-direction: row;
     gap:4px;
   }
+
+  .kb-view {
+    cursor:text;
+  } 
   
   .rt180{
     transform: rotate(180deg);
