@@ -54,6 +54,8 @@ function Kanban(props) {
     }
 
    function move(idx,currentPhase,newPhase){
+        if(currentPhase == newPhase) return;
+
         let task = content[currentPhase].splice(idx,1)[0];
         let copy = content;
         copy[newPhase].push(task);
@@ -74,6 +76,7 @@ function Kanban(props) {
         }
     }
 
+
     return (
         <>
         {ff > -1 ? <>
@@ -87,7 +90,7 @@ function Kanban(props) {
                                         {content.backlog.map((task,idx)=>{
                                             return <>
                                              <li className={"kb-task" + (props.editable ? "" : " kb-view") } key={"td-task-" + idx} draggable={props.editable} onDragEnd={()=>{handleDrop(idx,"backlog")}}>
-                                             <p className="kb-name"><a className='kb-due'>{lang.tr("No deadline")}</a><br/>{task}</p>
+                                             <p className="kb-name"><a className='kb-due' >{lang.tr("No deadline")}</a><br/>{task}</p>
                                                
                                                 {props.editable ? 
                                                 <div>
