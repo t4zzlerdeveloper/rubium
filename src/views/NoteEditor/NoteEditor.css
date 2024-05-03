@@ -235,3 +235,35 @@
 
 
 
+
+  .prompt-ai-section{
+    display: flex;
+    flex-direction: row;
+    padding: 4px;
+    border-radius: 8px;
+    background: transparent;
+    margin: 10px;
+  }
+  
+  
+  .prompt-ai-btn{
+    background: transparent;
+    position: relative;
+    display: flex;
+    gap:8px;
+    flex-direction: row;
+    place-content: center;
+    place-items: center;
+    color:black;
+    padding: 4px 12px;
+    border-radius: 8px;
+    height: 30px;
+    background-color: white;
+    font-size: 14px;
+  }
+  
+  .prompt-ai-btn > img{
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+  }

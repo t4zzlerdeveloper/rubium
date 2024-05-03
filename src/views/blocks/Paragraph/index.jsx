@@ -3,6 +3,12 @@ import './Paragraph.css'
 import LangTranslator from '../../../lib/context/language';
 import { useUser } from '../../../lib/context/user';
 
+import promptIcon from '../../../assets/prompt_suggestion.svg';
+import paragraphIcon from '../../../assets/format_p.svg';
+import Loader from '../../Loader';
+
+import axios from 'axios';
+
 function Paragraph(props) {
 
     const textAreaRef = useRef(null);
@@ -40,6 +46,7 @@ function Paragraph(props) {
     function updateContent(e){
         let copy = content;
         copy.text = e.target.value;
+        textAreaRef.current.parentNode.dataset.replicatedValue = e.target.value;
         propagateContent(copy);
     }
 
@@ -53,6 +60,54 @@ function Paragraph(props) {
         if(props && props.onMouseUp) props.onMouseUp();
     }
 
+    const[aiWorking,setAIWorking] = useState(false);
+
+    function completeText(i = 0){
+
+        setAIWorking(true);
+        
+        axios.post("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2",
+        {inputs: content.text},    
+        {
+            headers: { Authorization: "Bearer " + import.meta.env.VITE_APP_HUGGING_FACE_API_KEY },
+        }
+        ).then((res)=>{
+            const lastText = content.text;
+            const generatedText = res.data[0].generated_text;
+
+            updateContent({target:{value:generatedText}});
+
+            if(lastText.length < generatedText.length && i < 4){
+                completeText(i+1);
+            }
+            else{
+                textAreaRef.current.focus();
+                setAIWorking(false);
+            }
+
+        }).catch((err)=>{
+            setAIWorking(false);
+        })
+        
+}
+
+
+    function summarizeText(){
+        setAIWorking(true);
+        axios.post("https://api-inference.huggingface.co/models/facebook/bart-large-cnn",
+            {inputs: content.text},    
+            {
+                headers: { Authorization: "Bearer " + import.meta.env.VITE_APP_HUGGING_FACE_API_KEY },
+            }
+            ).then((res)=>{
+                setAIWorking(false);
+                const summaryText = res.data[0].summary_text;
+                updateContent({target:{value:summaryText}});        
+                textAreaRef.current.focus();
+            }).catch((err)=>{
+                setAIWorking(false);
+            });   
+    }
 
 
     return (<>        
@@ -74,6 +129,25 @@ function Paragraph(props) {
                 onBlur={()=>{setCurrentBlockId(-1)}}
                 onInput={(e)=>{e.target.parentNode.dataset.replicatedValue = e.target.value;}}
             />
+            {   props.editable && textAreaRef 
+            // && (document.activeElement == textAreaRef.current) 
+            ? aiWorking ? <Loader/> : <>
+            <section className='p-ai-section'>
+
+                <button className='p-ai-btn' onClick={()=>{completeText()}}>
+                    <img src={promptIcon} />
+                    <p>{lang.tr("Ask Mistral AI")}</p>
+                </button>
+
+                {content.text.length > 240 ?
+                <button className='p-ai-btn' onClick={()=>{summarizeText()}}>
+                     <img src={paragraphIcon} />
+                    <p>{lang.tr("Summarize text")}</p>
+                </button> : <></>}
+
+              
+            </section>
+            </> : <></>}
         </div>
             </> : <></>}
         </>
