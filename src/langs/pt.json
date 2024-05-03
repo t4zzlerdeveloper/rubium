@@ -102,7 +102,9 @@
             "Error Copying...":"Erro a copiar...",
             "Collapse": "Minimizar",
             "Expand": "Expandir",
-            "Click to choose an image from computer": "Clica para escolher uma imagem do computador"
+            "Click to choose an image from computer": "Clica para escolher uma imagem do computador",
+            "Ask Mistral AI": "Perguntar a Mistral AI",
+            "Summarize text": "Resumir texto"
         },
         "ConfirmationDialog":{
             "Confirmation": "Confirmação",

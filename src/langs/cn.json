@@ -93,7 +93,9 @@
         "Doing":"进行中",
         "Done": "已完成",
         "No deadline": "无截止日期",
-        "Click to choose an image from computer": "点击从电脑选择图片"
+        "Click to choose an image from computer": "点击从电脑选择图片",
+        "Ask Mistral AI": "询问 Mistral AI",
+        "Summarize text": "总结文本"
     },
     "ConfirmationDialog":{
         "Confirmation": "确认",

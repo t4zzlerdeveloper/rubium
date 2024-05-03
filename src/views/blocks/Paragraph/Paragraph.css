@@ -16,9 +16,6 @@
   .p > b{
     font-weight:900;
   }
-  
-
-
 
 
 .grow-wrap {
@@ -52,4 +49,58 @@
   font: inherit;
 
   grid-area: 1 / 1 / 2 / 2;
+}
+
+
+.p-ai-section{
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  padding: 4px;
+  border-radius: 8px;
+  background: transparent;
+  margin: 6px 4px;
+  margin-bottom: 0px;
+  opacity: 0;
+  transition: 0.2s;
+  transform: scaleY(0);
+}
+
+
+.p-ai-btn{
+  background: transparent;
+  position: relative;
+  display: flex;
+  gap:8px;
+  flex-direction: row;
+  place-content: center;
+  place-items: center;
+  color:black;
+  padding: 4px 12px;
+  border-radius: 8px;
+  height: 30px;
+  background-color: white;
+  font-size: 14px;
+  opacity: 0.5;
+  transition: 0.4s;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.p-ai-btn:hover{
+  opacity: 1;
+  cursor: pointer;
+}
+
+.p-ai-btn > img{
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+}
+
+.grow-wrap:hover > .p-ai-section,
+.grow-wrap:focus-within > .p-ai-section{
+  opacity: 1;
+  transform: scaleY(1);
 }

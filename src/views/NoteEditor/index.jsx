@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import './NoteEditor.css'
 
+import axios from 'axios'
+
 
 import formatH1 from '../../assets/format_h1.svg'
 import formatH2 from '../../assets/format_h2.svg'
@@ -41,7 +43,6 @@ function NoteEditor(props){
     useEffect(()=>{
         props.setContent(JSON.stringify(content))
     },[ff])
-
 
 
     function array_move(arr, old_index, new_index) {

@@ -93,7 +93,9 @@
         "Doing":"Haciendo",
         "Done": "Hecho",
         "No deadline": "Sin fecha límite",
-        "Click to choose an image from computer": "Haz clic para elegir una imagen de la computadora"
+        "Click to choose an image from computer": "Haz clic para elegir una imagen de la computadora",
+        "Ask Mistral AI": "Preguntar a Mistral AI",
+        "Summarize text": "Resumir texto"
     },
     "ConfirmationDialog":{
         "Confirmation": "Confirmación",
