@@ -14,8 +14,7 @@ function Paragraph(props) {
     const textAreaRef = useRef(null);
 
     const user = useUser();
-    //! Change translation to Paragraph
-    const lang = new LangTranslator("NoteEditor",user);
+    const lang = new LangTranslator("Paragraph",user);
 
     const [content,setContent] = useState({type:"p",text:"",underline:false,color:""});
     const [index,setIndex] = useState(props.index);
