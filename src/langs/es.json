@@ -75,27 +75,42 @@
         "Untitled": "Sin título"
     },
     "NoteEditor":{
-        "Enter an image caption...":"Introduce una leyenda de imagen...",
-        "Write a new paragraph...": "Escribe un nuevo párrafo...",
-        "Enter Heading H1...": "Introduce un Título H1...",
-        "Enter Heading H2...": "Introduce un Título H2...",
-        "Enter Heading H3...": "Introduce un Título H3...",
-        "Enter Prompt": "Introduce un indicio",
         "Heading H1": "Título H1",
         "Heading H2": "Título H2",
         "Heading H3": "Título H3",
         "Paragraph": "Párrafo",
         "Image": "Imagen",
-        "Separator": "Separador",
+        "Separator": "Separador"
+    },
+    "Image":{
+        "Enter an image caption...":"Introduce una leyenda de imagen...",
+        "Click to choose an image from computer": "Haz clic para elegir una imagen de la computadora"
+    },
+    "Code":{
+        "Language": "Lenguaje",
+        "Copy":"Copiar",
+        "Copied!": "¡Copiado!",
+        "Error Copying...": "Error al copiar...",
+        "Collapse": "Colapsar",
+        "Expand": "Expandir"
+    },
+    "Heading":{
+        "Enter Heading H1...": "Introduce un Título H1...",
+        "Enter Heading H2...": "Introduce un Título H2...",
+        "Enter Heading H3...": "Introduce un Título H3..."
+    },
+    "Paragraph":{
+        "Write a new paragraph...": "Escribe un nuevo párrafo...",
+        "Ask Mistral AI": "Preguntar a Mistral AI",
+        "Summarize text": "Resumir texto"
+    },
+    "Kanban":{
         "New Task...": "Nueva tarea...",
         "Enter a title...":"Introduce un título...",
         "Backlog": "Pendiente",
         "Doing":"Haciendo",
         "Done": "Hecho",
-        "No deadline": "Sin fecha límite",
-        "Click to choose an image from computer": "Haz clic para elegir una imagen de la computadora",
-        "Ask Mistral AI": "Preguntar a Mistral AI",
-        "Summarize text": "Resumir texto"
+        "No deadline": "Sin fecha límite"
     },
     "ConfirmationDialog":{
         "Confirmation": "Confirmación",

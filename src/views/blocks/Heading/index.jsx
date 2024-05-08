@@ -6,8 +6,7 @@ import './Heading.css'
 function Heading(props){
 
     const user = useUser();
-    //! Change translation to Heading
-    const lang = new LangTranslator("NoteEditor",user);
+    const lang = new LangTranslator("Heading",user);
 
     const [content,setContent] = useState({type:"h1",text:"",underline:false,color:""});
     const [index,setIndex] = useState(props.index);

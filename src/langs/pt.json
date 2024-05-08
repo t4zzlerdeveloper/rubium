@@ -78,33 +78,42 @@
             "Untitled": "Sem título"
         },
         "NoteEditor":{
-            "Enter an image caption...":"Escreve uma legenda...",
-            "Write a new paragraph...": "Escreve um novo parágrafo...",
-            "Enter Heading H1...": "Introduz um Título H1...",
-            "Enter Heading H2...": "Introduz um Título H2...",
-            "Enter Heading H3...": "Introduz um Título H3...",
-            "Enter Prompt": "Escreve um prompt",
             "Heading H1": "Título H1",
             "Heading H2": "Título H2",
             "Heading H3": "Título H3",
             "Paragraph": "Parágrafo",
             "Image": "Imagem",
-            "Separator": "Separador",
-            "New Task...": "Nova Tarefa...",
-            "Enter a title...":"Introduz um Título...",
-            "Backlog": "Ainda por fazer",
-            "Doing":"Em andamento",
-            "Done": "Concluído",
-            "No deadline": "Sem prazo",
+            "Separator": "Separador"
+        },
+        "Image":{
+            "Enter an image caption...":"Escreve uma legenda...",
+            "Click to choose an image from computer": "Clica para escolher uma imagem do computador"
+        },
+        "Code":{
             "Language": "Linguagem",
             "Copy":"Copiar",
             "Copied!":"Copiado!",
             "Error Copying...":"Erro a copiar...",
             "Collapse": "Minimizar",
-            "Expand": "Expandir",
-            "Click to choose an image from computer": "Clica para escolher uma imagem do computador",
+            "Expand": "Expandir"
+        },
+        "Heading":{
+            "Enter Heading H1...": "Introduz um Título H1...",
+            "Enter Heading H2...": "Introduz um Título H2...",
+            "Enter Heading H3...": "Introduz um Título H3..."
+        },
+        "Paragraph":{
+            "Write a new paragraph...": "Escreve um novo parágrafo...",
             "Ask Mistral AI": "Perguntar a Mistral AI",
             "Summarize text": "Resumir texto"
+        },
+        "Kanban":{
+            "New Task...": "Nova Tarefa...",
+            "Enter a title...":"Introduz um Título...",
+            "Backlog": "Ainda por fazer",
+            "Doing":"Em andamento",
+            "Done": "Concluído",
+            "No deadline": "Sem prazo"
         },
         "ConfirmationDialog":{
             "Confirmation": "Confirmação",

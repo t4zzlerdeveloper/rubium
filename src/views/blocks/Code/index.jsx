@@ -30,8 +30,7 @@ const codeLangs = [
 function Code(props){
 
     const user = useUser();
-    //! Change translation to Kanban
-    const lang = new LangTranslator("NoteEditor",user);
+    const lang = new LangTranslator("Code",user);
 
     const[content,setContent] = useState({text:"",lang:"JavaScript",cl:false});
     const[index,setIndex] = useState(props.index);

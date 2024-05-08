@@ -75,27 +75,42 @@
         "Untitled": "无标题"
     },
     "NoteEditor":{
-        "Enter an image caption...":"输入图片标题...",
-        "Write a new paragraph...": "写一个新段落...",
-        "Enter Heading H1...": "输入标题 H1...",
-        "Enter Heading H2...": "输入标题 H2...",
-        "Enter Heading H3...": "输入标题 H3...",
-        "Enter Prompt": "输入提示",
         "Heading H1": "标题 H1",
         "Heading H2": "标题 H2",
         "Heading H3": "标题 H3",
         "Paragraph": "段落",
         "Image": "图片",
-        "Separator": "分隔符",
+        "Separator": "分隔符"
+    },
+    "Image":{
+        "Enter an image caption...":"输入图片标题...",
+        "Click to choose an image from computer": "点击从电脑选择图片"
+    },
+    "Code":{
+        "Language": "语言",
+        "Copy":"复制",
+        "Copied!": "已复制！",
+        "Error Copying...": "复制时出错...",
+        "Collapse": "折叠",
+        "Expand": "展开"
+    },
+    "Heading":{
+        "Enter Heading H1...": "输入标题 H1...",
+        "Enter Heading H2...": "输入标题 H2...",
+        "Enter Heading H3...": "输入标题 H3..."
+    },
+    "Paragraph":{
+        "Write a new paragraph...": "写一个新段落...",
+        "Ask Mistral AI": "询问 Mistral AI",
+        "Summarize text": "总结文本"
+    },
+    "Kanban":{
         "New Task...": "新任务...",
         "Enter a title...":"输入标题...",
         "Backlog": "待办事项",
         "Doing":"进行中",
         "Done": "已完成",
-        "No deadline": "无截止日期",
-        "Click to choose an image from computer": "点击从电脑选择图片",
-        "Ask Mistral AI": "询问 Mistral AI",
-        "Summarize text": "总结文本"
+        "No deadline": "无截止日期"
     },
     "ConfirmationDialog":{
         "Confirmation": "确认",

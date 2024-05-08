@@ -75,27 +75,42 @@
         "Untitled": "Sem título"
     },
     "NoteEditor":{
-        "Enter an image caption...":"Insira uma legenda para a imagem...",
-        "Write a new paragraph...": "Escreva um novo parágrafo...",
-        "Enter Heading H1...": "Insira um Título H1...",
-        "Enter Heading H2...": "Insira um Título H2...",
-        "Enter Heading H3...": "Insira um Título H3...",
-        "Enter Prompt": "Insira um prompt",
         "Heading H1": "Título H1",
         "Heading H2": "Título H2",
         "Heading H3": "Título H3",
         "Paragraph": "Parágrafo",
         "Image": "Imagem",
-        "Separator": "Separador",
+        "Separator": "Separador"
+    },
+    "Image":{
+        "Enter an image caption...":"Insira uma legenda para a imagem...",
+        "Click to choose an image from computer": "Clique para escolher uma imagem do computador"
+    },
+    "Code":{
+        "Language": "Linguagem",
+        "Copy":"Copiar",
+        "Copied!":"Copiado!",
+        "Error Copying...":"Erro a copiar...",
+        "Collapse": "Recolher",
+        "Expand": "Expandir"
+    },
+    "Heading":{
+        "Enter Heading H1...": "Insira um Título H1...",
+        "Enter Heading H2...": "Insira um Título H2...",
+        "Enter Heading H3...": "Insira um Título H3..."
+    },
+    "Paragraph":{
+        "Write a new paragraph...": "Escreva um novo parágrafo...",
+        "Ask Mistral AI": "Pergunte a Mistral AI",
+        "Summarize text": "Resumir texto"
+    },
+    "Kanban":{
         "New Task...": "Nova tarefa...",
         "Enter a title...":"Insira um título...",
         "Backlog": "Pendente",
         "Doing":"Fazendo",
         "Done": "Concluído",
-        "No deadline": "Sem prazo",
-        "Click to choose an image from computer": "Clique para escolher uma imagem do computador",
-        "Ask Mistral AI": "Pergunte a Mistral AI",
-        "Summarize text": "Resumir texto"
+        "No deadline": "Sem prazo"
     },
     "ConfirmationDialog":{
         "Confirmation": "Confirmação",

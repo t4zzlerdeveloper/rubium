@@ -8,8 +8,7 @@ import { useUser } from '../../../lib/context/user';
 function Kanban(props) {
 
     const user = useUser();
-    //! Change translation to Kanban
-    const lang = new LangTranslator("NoteEditor",user);
+    const lang = new LangTranslator("Kanban",user);
 
     const [content,setContent] = useState({type:"kb",title:"",backlog:[],doing:[],done:[]});
     const [index,setIndex] = useState(props.index);

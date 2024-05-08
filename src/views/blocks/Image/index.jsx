@@ -10,8 +10,7 @@ import Loader from '../../Loader';
 function Image(props) {
 
     const user = useUser();
-    //! Change translation to Image
-    const lang = new LangTranslator("NoteEditor",user);
+    const lang = new LangTranslator("Image",user);
 
     const [content,setContent] = useState({type:"img",url:"",text:""});
     const [index,setIndex] = useState(props.index);
