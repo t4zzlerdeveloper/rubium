@@ -43,6 +43,7 @@ loadLanguage("html");
 loadLanguage("css");
 loadLanguage("markdown");
 loadLanguage("java");
+loadLanguage("kotlin");
 loadLanguage("python");
 loadLanguage("swift");
 loadLanguage("csharp");
@@ -68,6 +69,8 @@ function getLangByName(name){
             return langs.markdown();   
         case "java":
             return langs.java();  
+        case "kotlin":
+            return langs.kotlin();
         case "go":
             return langs.go();    
         case "python":

@@ -16,6 +16,7 @@ const codeLangs = [
     "CSS",
     "Markdown",
     "Java",
+    "Kotlin",
     "Go",
     "Python",
     "Swift",
