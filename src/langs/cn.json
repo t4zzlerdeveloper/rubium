@@ -72,7 +72,9 @@
         "_invertName": true,
         "of": "的",
         "We are sorry but our app is still under development for smaller screens...": "很抱歉，但我们的应用还在为较小的屏幕开发中...",
-        "Untitled": "无标题"
+        "Untitled": "无标题",
+        "Private": "私人",
+        "Shared": "共享"
     },
     "NoteEditor":{
         "Heading H1": "标题 H1",

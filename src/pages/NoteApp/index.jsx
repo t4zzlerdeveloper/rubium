@@ -8,6 +8,8 @@ import saveIcon from '../../assets/save.svg'
 import logoutIcon from '../../assets/logout.svg'
 import settingsIcon from '../../assets/settings.svg'
 import deleteIcon from '../../assets/delete.svg'
+import pinnedIcon from '../../assets/pinned.svg'
+import unpinnedIcon from '../../assets/unpinned.svg'
 
 
 import { useEffect, useRef, useState } from 'react'
@@ -28,6 +30,7 @@ import GetStarted from '../../views/GetStarted'
 import EmojiSelector from '../../views/EmojiSelector'
 import Emoji from '../../views/Emoji'
 import { useNavigate, useParams,} from 'react-router-dom'
+
 
 const MAX_TOKENS = 10000;
 
@@ -109,7 +112,7 @@ function NoteApp() {
   function loadNotes(last = false){
     setLoadingNotes(true);
 
-    const queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions","emoji"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","$permissions","emoji"]),Query.orderDesc("$updatedAt")]
+    var queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions","emoji","pin"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","$permissions","emoji","pin"]),Query.orderDesc("$updatedAt")]
     databases.listDocuments(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID, queries)
     .then((res)=>{
       setNotes(res.documents);
@@ -243,6 +246,8 @@ function NoteApp() {
     if(oldTitle !== newTitle) triggerNoteChange("title",newTitle);
   }
 
+    
+
   function setNoteContent(newContent){
 
     const oldContent = note.content;    
@@ -288,6 +293,31 @@ function checkDelete(note){
   return user.current && note.$permissions && note.$permissions.includes(Permission.delete(Role.user(user.current.$id)))
 }
 
+function checkPinned(note){
+  return note.pin != null;
+}
+
+function togglePinned(note){
+  if(!checkUpdate(note)) return;
+
+  setLoadingNotes(true);
+  
+  var newPinned = null;
+  if (note.pin == null){
+    newPinned = new Date(Date.now());
+  }
+
+  databases.updateDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id,{pin:newPinned})
+  .then((res)=>{
+
+    loadNotes(false);
+  })
+  .catch(()=>{
+    showToast(lang.tr("Error pinning note..."),"error")
+  })
+}
+
+
 function computeTokensLeft(customContent = note.content){
   if(!customContent) return 0;
   return Math.max(MAX_TOKENS - JSON.stringify(customContent).length,0); 
@@ -315,6 +345,15 @@ const [sharing,setSharing] = useState(false);
 const [settings,setSettings] = useState(false);
 const [userVerified,setUserVerified] = useState(true); 
 const [emailResent,setEmailResent] = useState(false);
+
+
+
+const[showPrivateNotes,setShowPrivateNotes] = useState(true);
+
+function changeNotesTab(privateNotes){
+  setShowPrivateNotes(privateNotes)
+  loadNotes();
+}
 
 useEffect(()=>{
   if(user.current && !user.current.emailVerification) setUserVerified(false)
@@ -372,21 +411,41 @@ useEffect(()=>{
           
         </div>
 
+        <div className='side-tabs'>
+          <button onClick={()=>{changeNotesTab(true)}} className={ showPrivateNotes ? 'active': ''}>{lang.tr("Private")}</button>
+          <button onClick={()=>{changeNotesTab(false)}} className={ !showPrivateNotes ? 'active': ''} >{lang.tr("Shared")}</button>
+        </div>
+
         <div className='note-create'>
           <button onClick={()=>{createNewNote()}}>+</button>
           <input type="text" placeholder={lang.tr("Search notes...")} className='side-search' value={searchQuery} onChange={handleSearch}/>
         </div>
-        
+
+      
         <div className='notes-area'>
         {loadingNotes ? <Loader/>
-         : notes.length !== 0 ? notes.map((nt)=>{
+       
+         : notes.length !== 0 ? notes.sort((a,b)=>{
+            //show pinned notes first
+            if(a.pin && !b.pin) return -1;
+            if(a.pin && b.pin) return a.pin < b.pin ? -1 : 1;
+         })
+         .filter((nt)=>{
+            return checkDelete(nt) == showPrivateNotes ? nt : null;
+         })
+         .map((nt)=>{
           return <div key={nt.$id} className={`side-item ${note.$id == nt.$id ? "side-item-selected" : ""}`} onClick={()=>{switchToNote(nt)}}>
             <p>
             <Emoji name={nt.emoji} textOnly={true}/>{ nt.title ? <>&nbsp;{nt.title}</> : <b className='untitled-note'>{lang.tr("Untitled")}</b>}
               <a className={checkDelete(nt) ? checkNewNote(nt) ? "new" : "private" : "shared"}>&nbsp;
                {checkDelete(nt) ? parseDateTime(nt.$updatedAt) : lang.tr("Shared with me")} </a>
             </p>
-            {checkDelete(nt) ? <img onClick={()=>{ setNoteToDelete(nt);}} src={deleteIcon}/> : <></>}
+
+            {checkDelete(nt) ? <div className='side-icons'>
+              <img onClick={()=>{ togglePinned(nt); }} src={ checkPinned(nt) ? pinnedIcon : unpinnedIcon}/>
+               <img onClick={()=>{ setNoteToDelete(nt);}} src={deleteIcon}/>
+            </div>:<></>}
+
             </div>
         }): <div className="side-item no-items" >{searchQuery.length > 0 ? lang.tr("No results found") : lang.tr("Nothing to see here.")}</div>}
         </div>
