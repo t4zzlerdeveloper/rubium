@@ -72,7 +72,9 @@
         "_invertName": true,
         "of": "de",
         "We are sorry but our app is still under development for smaller screens...": "Lo sentimos, pero nuestra aplicación aún está en desarrollo para pantallas más pequeñas...",
-        "Untitled": "Sin título"
+        "Untitled": "Sin título",
+        "Private": "Privado",
+        "Shared": "Compartido"
     },
     "NoteEditor":{
         "Heading H1": "Título H1",
