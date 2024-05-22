@@ -1,5 +1,5 @@
 from appwrite.client import Client
-from appwrite.databases import Databases
+from appwrite.services.databases import Databases
 import os
 
 def main(context):
