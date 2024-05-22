@@ -190,13 +190,11 @@ def main(context):
 
     perms = result["$permissions"]
 
-    is_owner = False
-    permissionToEnter = Permission.delete(Role.user(owner_id))
-    for perm in perms:
-        if(permissionToEnter == perm):
-            is_owner = True
-            break
+    is_owner = (Permission.delete(Role.user(owner_id)) in perms)
     is_authed = validate_session(users,owner_id,session_id)
+
+    context.log(is_owner)
+    context.log(is_authed)
 
     if((not is_owner) or (not is_authed)):
         return context.res.send("Unauthorized Access!", 401)
