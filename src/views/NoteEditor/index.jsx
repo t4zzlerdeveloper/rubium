@@ -45,6 +45,7 @@ function NoteEditor(props){
     },[ff])
 
 
+
     function array_move(arr, old_index, new_index) {
         if (new_index >= arr.length) {
             var k = new_index - arr.length + 1;
@@ -239,6 +240,7 @@ function NoteEditor(props){
     const[crtBlockStyle,setCrtBlockStyle] = useState({top:"0",left:"0"});
 
     function handleBlockCreationOpen(e,index){
+        if(!props || !props.editable) return;
         setCreatingBlock(index);
         //let blockCreator = document.getElementById("crt-blk");
         let addButton = document.getElementById("addeid-"+index);
