@@ -154,6 +154,8 @@ def main(context):
 
     context.log(json.dumps(context.req.query))
 
+    return content.res.send("Hello World!")
+
     databases = Databases(client)
 
     result = databases.get_document(
