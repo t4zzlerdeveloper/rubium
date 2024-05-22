@@ -149,7 +149,7 @@ def main(context):
         .set_key(os.environ["APPWRITE_API_KEY"])
     )
 
-    doc_id = context.req.query_string.replace("docId=","")
+    doc_id = context.req.query.docId
     context.log(doc_id)
 
 
