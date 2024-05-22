@@ -126,13 +126,43 @@
     transition: 0.4s;
     outline: 1px solid #F45B69;
     opacity: 0.7;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    gap:10px;
+    min-width: fit-content;
+    cursor: pointer;
 }
 
 .share-can-btn:hover{
     color:white;
     background-color:  #F45B69;
     opacity: 1;
+    outline: none;
 }
+
+
+
+
+.share-can-btn:hover > img{
+    filter: brightness(500%) opacity(0.9);
+}
+
+.share-can-btn:disabled,.share-can-btn:disabled:hover,.share-can-btn:disabled > img{
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color:transparent;
+    color:  #F45B69;
+    filter:none;
+    outline: 1px solid #F45B69;
+}
+
+.share-can-btn > img{
+    transition: 0.4s;
+    border: none;
+    outline: none !important;
+}
+
 
 .sh-profile{
     height: 25px;
@@ -180,4 +210,29 @@
 
 .sh-top > img:hover{
     opacity: 1;
+}
+
+
+.sh-down-div{
+    display: flex;
+    flex-direction: row;
+    place-content: center;
+    place-items: center;
+    gap: 20px;
+    color: gray;
+}
+
+.sh-down-anim{
+    animation: sh-down 0.5s infinite alternate;
+}
+
+@keyframes sh-down {
+    0%{
+        transform: translateX(-10px) rotate(270deg);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0px) rotate(270deg);
+        opacity: 1;
+    }
 }

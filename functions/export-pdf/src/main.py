@@ -163,12 +163,12 @@ def main(context):
         .set_key(os.environ["APPWRITE_API_KEY"])
     )
 
-    doc_id = context.req.query['docId']
+    note_id = context.req.query['noteId']
     owner_id = context.req.query['ownerId']
     session_id = context.req.query['sessionId']
 
 
-    if((not doc_id) or (not owner_id) or (not session_id)):
+    if((not note_id) or (not owner_id) or (not session_id)):
         return context.res.send("Invalid Request", 400)
 
 
@@ -178,7 +178,7 @@ def main(context):
     result = databases.get_document(
         database_id = os.environ["VITE_DATABASE_ID"],
         collection_id = os.environ["VITE_NOTES_COLLECTION_ID"],
-        document_id = doc_id
+        document_id = note_id
     )
 
     if(not result):
@@ -194,7 +194,7 @@ def main(context):
         return context.res.send("Unauthorized Access!", 401)
 
 
-    filename = doc_id + '.pdf'
+    filename = note_id + '.pdf'
     generate_pdf(result, filename)
 
     try:

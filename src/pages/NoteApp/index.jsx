@@ -494,7 +494,6 @@ useEffect(()=>{
                 src={editIcon} style={editable ? {display: "none"} : null}/>
                 <p>{editable ?  lang.tr("Preview") : lang.tr("Edit") }</p>
               </div>
-          
             
             <div  className="share-icon" onClick={()=>{setSharing(true)}} style={checkDelete(note) ? null : {display: "none"}}>
               <img src={shareIcon}/>
