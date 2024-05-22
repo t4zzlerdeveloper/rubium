@@ -150,6 +150,9 @@ def main(context):
     )
 
     doc_id = context.req.query_string.replace("id=","")
+    content.log(doc_id)
+
+    context.log(json.dumps(context.req.query))
 
     databases = Databases(client)
 
