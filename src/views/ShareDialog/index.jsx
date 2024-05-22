@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import './ShareDialog.css'
 
+import axios from 'axios';
+
 import { avatars,databases,functions } from '../../lib/appwrite'
 import { useUser } from '../../lib/context/user';
 
@@ -187,32 +189,57 @@ function ShareDialog(props){
 
         const query = `?ownerId=${user.current.$id}&sessionId=${user.current.sessionId}&noteId=${note.$id}`
 
-        functions.createExecution(
-          '664dfd51000609ec99ec',
-          '',
-          false,
-          '/'+query,
-          'GET'
-          ).then((res)=>{
+        window.open("https://664dfd51e4a386f7c001.appwrite.global"+query,"_blank");
 
-            if(res.responseBody == null || res.statusCode != 200){
-              setGeneratingPDF(false);
-              return;
-            }
+        setGeneratingPDF(false);
 
-            const blob = new Blob([res.responseBody], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = note.title + ".pdf";
-            a.click();
-            window.URL.revokeObjectURL(url);
+        // axios.get(
+        //   "https://664dfd51e4a386f7c001.appwrite.global"+query,
+        //   {headers: headers}
+        // )
+        // .then((res)=>{
+        //   const blob = new Blob([res.data], { type: 'application/pdf' });
+        //   const url = window.URL.createObjectURL(blob);
+        //   const a = document.createElement('a');
 
-            setGeneratingPDF(false);
-          })
-          .catch(()=>{
-            setGeneratingPDF(false);
-          })
+        //         a.href = url;
+        //         a.download = note.title + ".pdf";
+        //         a.click();
+        //         window.URL.revokeObjectURL(url);
+    
+        //         setGeneratingPDF(false);
+        // })
+        // .catch(()=>{
+        //   setGeneratingPDF(false);
+        // })
+
+
+        // functions.createExecution(
+        //   '664dfd51000609ec99ec',
+        //   '',
+        //   false,
+        //   '/'+query,
+        //   'GET'
+        //   ).then((res)=>{
+
+        //     if(res.responseBody == null || res.responseStatusCode != 200){
+        //       setGeneratingPDF(false);
+        //       return;
+        //     }
+
+        //     const blob = new Blob([res.responseBody], { type: 'application/pdf' });
+        //     const url = window.URL.createObjectURL(blob);
+        //     const a = document.createElement('a');
+        //     a.href = url;
+        //     a.download = note.title + ".pdf";
+        //     a.click();
+        //     window.URL.revokeObjectURL(url);
+
+        //     setGeneratingPDF(false);
+        //   })
+        //   .catch(()=>{
+        //     setGeneratingPDF(false);
+        //   })
       }
 
     return(<>

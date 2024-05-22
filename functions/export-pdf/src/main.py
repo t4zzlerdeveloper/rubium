@@ -195,7 +195,7 @@ def main(context):
     #     return context.res.send("Unauthorized Access!", 401)
 
 
-    filename = note_id + '.pdf'
+    filename = result['title'].replace(" ","_") + '.pdf'
     generate_pdf(result, filename)
 
     try:
