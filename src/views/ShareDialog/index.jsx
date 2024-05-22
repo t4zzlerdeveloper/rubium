@@ -251,7 +251,7 @@ function ShareDialog(props){
                     </div>
              
                     <br></br>
-                    <br></br>
+               
                     <div className='sh-down-div'>
                       <button className='share-can-btn' onClick={()=>{if(!generatingPDF){downloadPDF()}}} disabled={generatingPDF}>
                         <img src={downloadIcon} className={generatingPDF ? 'sh-down-anim' : ''}/>
