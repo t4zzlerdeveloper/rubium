@@ -1,5 +1,8 @@
 from appwrite.client import Client
 from appwrite.services.databases import Databases
+from appwrite.services.users import Users
+from appwrite.permission import Permission
+from appwrite.role import Role
 import os
 
 import json
@@ -108,9 +111,9 @@ def generate_pdf(json_data,pdf_file):
 
     document = SimpleDocTemplate(pdf_file, pagesize=letter)
     styles = getSampleStyleSheet()
-    story = []
+    story = [Paragraph('<b>' + data['title'] + '</b>', styles['Title']), Spacer(1, 0.5 * inch)]
 
-    for item in data:
+    for item in data['content']:
         elements = []  # Collect elements for this section
         if item['type'] == 'h1':
             elements.append(Paragraph(item['text'], styles['Title']))
@@ -140,6 +143,17 @@ def generate_pdf(json_data,pdf_file):
     document.build(story)
 
 
+def validate_session(users,user_id,session_id):
+    authed = False
+    try:
+        result = users.list_sessions(user_id)
+        for session in result:
+            if session['$id'] == session_id:
+                authed = True
+        return authed
+    except:
+        return False
+
 def main(context):
 
     client = (
@@ -150,14 +164,16 @@ def main(context):
     )
 
     doc_id = context.req.query['docId']
-    context.log(doc_id)
+    owner_id = context.req.query['ownerId']
+    session_id = context.req.query['sessionId']
 
 
-    if(not doc_id):
+    if((not doc_id) or (not owner_id) or (not session_id)):
         return context.res.send("Invalid Request", 400)
 
 
     databases = Databases(client)
+    users = Users(client)
 
     result = databases.get_document(
         database_id = os.environ["VITE_DATABASE_ID"],
@@ -168,9 +184,18 @@ def main(context):
     if(not result):
         return context.res.send("Invalid ID provided!", 400)
 
-    filename = doc_id + '.pdf'
 
-    generate_pdf(result['content'], filename)
+    perms = result["$permissions"]
+
+    is_owner = (Permission.delete(Role.user(owner_id)) in perms)
+    is_authed = validate_session(users,owner_id,session_id)
+
+    if(not is_owner or not is_authed):
+        return context.res.send("Unauthorized Access!", 401)
+
+
+    filename = doc_id + '.pdf'
+    generate_pdf(result, filename)
 
     try:
         with open(filename, 'rb') as pdf_file:
