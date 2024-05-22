@@ -161,10 +161,24 @@ def main(context):
 
     generate_pdf(result['content'], filename)
 
-    #open pdf file an return binary
-    return context.res.send(
-                filename, 200, {
-                    "content-type": "application/pdf",
-                    "content-disposition": f"attachment; filename={filename}",     
-            });
+    try:
+        with open(filename, 'rb') as pdf_file:
+            pdf_data = pdf_file.read()
+        
+        return context.res.send(
+            pdf_data, 
+            200, 
+            {
+                "content-type": "application/pdf",
+                "content-disposition": f"attachment; filename={filename}"
+            }
+        )
+    except Exception as e:
+        return context.res.send(f"Error generating PDF: {str(e)}", 500)
+
+    # Optionally, clean up the file after sending
+    finally:
+        if os.path.exists(filename):
+            os.remove(filename)
+
 
