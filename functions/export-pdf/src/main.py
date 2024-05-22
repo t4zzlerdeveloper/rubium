@@ -147,13 +147,12 @@ def generate_pdf(json_data,pdf_file):
 
 
 def validate_session(users,user_id,session_id):
-    authed = False
     try:
-        result = users.list_sessions(user_id)
-        for session in result:
+        result = users.list_sessions(user_id=user_id)
+        for session in result['sessions']:
             if session['$id'] == session_id:
-                authed = True
-        return authed
+                return True
+        return False
     except:
         return False
 
