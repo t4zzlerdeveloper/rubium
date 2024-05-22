@@ -149,6 +149,7 @@ function NoteApp() {
 
   function deleteNote(note){
     setLoadingNotes(true);
+    setLoadingCurrentNote(true);
 
       databases.deleteDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id)
       .then((res)=>{
@@ -158,6 +159,8 @@ function NoteApp() {
       .catch(()=>{
         showToast(lang.tr("Error deleting note..."),"error")
         setLoadingNotes(false);
+        setLoadingCurrentNote(false);
+
       })
    
   }
@@ -504,7 +507,7 @@ useEffect(()=>{
         </div>
         {!loadingNotes && notes.length == 0 && searchQuery.length == 0 ?
         <GetStarted onStart={(t)=>{createNewNote(t)}}/>
-        :loadingCurrentNote ? <Loader/> : <div className='main-div-inner'>
+        :loadingCurrentNote ? <Loader/> : note && <div className='main-div-inner'>
 
           <div className='emoji-title'>
             {!note.emoji && !editable ? <></> : <div className='emoji-con' onClick={()=>{if(editable){setOpenEmoji(!openEmoji)}}}>{note.emoji ? <Emoji size={"36px"} name={note.emoji}/> : editable ? <p>+</p> : <p></p>}</div>}
