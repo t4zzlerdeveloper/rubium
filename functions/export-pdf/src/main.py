@@ -157,9 +157,14 @@ def main(context):
         document_id = '662f739d89b5571e1d82'
     )
 
-    generate_pdf(result['content'], 'test.pdf')
+    filename = '662f739d89b5571e1d82.pdf'
+
+    generate_pdf(result['content'], filename)
 
     #open pdf file an return binary
-
-    return context.res.send_file('test.pdf')
+    return res.send(
+                filename, 200, {
+                    "content-type": "application/pdf",
+                    "content-disposition": f"attachment; filename={filename}",     
+            });
 
