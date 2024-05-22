@@ -18,7 +18,7 @@ def main(context):
         document_id = '662f739d89b5571e1d82'
     )
 
-     return context.res.json(
+    return context.res.json(
         {
             "test": "Hello, World!",
             "result": str(result),
