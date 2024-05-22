@@ -190,7 +190,12 @@ def main(context):
 
     perms = result["$permissions"]
 
-    is_owner = (Permission.delete(Role.user(owner_id)) in perms)
+    is_owner = False
+    permissionToEnter = Permission.delete(Role.user(owner_id))
+    for perm in perms:
+        if(permissionToEnter == perm):
+            is_owner = True
+            break
     is_authed = validate_session(users,owner_id,session_id)
 
     if((not is_owner) or (not is_authed)):
