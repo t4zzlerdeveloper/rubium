@@ -14,7 +14,7 @@ def main(context):
     databases = Databases(client)
 
     result = databases.get_document(
-        database_id = os.environ["VITE_NOTES_DATABASE_ID"],
+        database_id = os.environ["VITE_DATABASE_ID"],
         collection_id = os.environ["VITE_NOTES_COLLECTION_ID"],
         document_id = '662f739d89b5571e1d82'
     )
