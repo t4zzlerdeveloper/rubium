@@ -184,7 +184,7 @@ function ShareDialog(props){
         setGeneratingPDF(true);
 
         const headers= {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         };
 
         const query = `?ownerId=${user.current.$id}&sessionId=${user.current.sessionId}&noteId=${note.$id}`
@@ -192,26 +192,6 @@ function ShareDialog(props){
         window.open("https://664dfd51e4a386f7c001.appwrite.global"+query,"_blank");
 
         setGeneratingPDF(false);
-
-        // axios.get(
-        //   "https://664dfd51e4a386f7c001.appwrite.global"+query,
-        //   {headers: headers}
-        // )
-        // .then((res)=>{
-        //   const blob = new Blob([res.data], { type: 'application/pdf' });
-        //   const url = window.URL.createObjectURL(blob);
-        //   const a = document.createElement('a');
-
-        //         a.href = url;
-        //         a.download = note.title + ".pdf";
-        //         a.click();
-        //         window.URL.revokeObjectURL(url);
-    
-        //         setGeneratingPDF(false);
-        // })
-        // .catch(()=>{
-        //   setGeneratingPDF(false);
-        // })
 
 
         // functions.createExecution(
