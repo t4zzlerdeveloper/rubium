@@ -149,7 +149,7 @@ def main(context):
         .set_key(os.environ["APPWRITE_API_KEY"])
     )
 
-    doc_id = context.req.query['id']
+    doc_id = json.dumps(context.req.query)['id']
 
     databases = Databases(client)
 
