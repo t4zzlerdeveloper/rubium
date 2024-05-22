@@ -107,13 +107,14 @@ def generate_pdf(json_data,pdf_file):
         spaceAfter=6
     )
     
-    data = json.loads(json_data)
+    title = json_data['title']
+    data = json.loads(json_data['content'])
 
     document = SimpleDocTemplate(pdf_file, pagesize=letter)
     styles = getSampleStyleSheet()
-    story = [Paragraph('<b>' + data['title'] + '</b>', styles['Title']), Spacer(1, 0.5 * inch)]
+    story = [Paragraph('<b>' + title + '</b>', styles['Title']), Spacer(1, 0.5 * inch)]
 
-    for item in data['content']:
+    for item in data:
         elements = []  # Collect elements for this section
         if item['type'] == 'h1':
             elements.append(Paragraph(item['text'], styles['Title']))
