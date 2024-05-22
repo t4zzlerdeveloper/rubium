@@ -194,6 +194,12 @@ function ShareDialog(props){
           '/'+query,
           'GET'
           ).then((res)=>{
+
+            if(res.responseBody == null || res.statusCode != 200){
+              setGeneratingPDF(false);
+              return;
+            }
+
             const blob = new Blob([res.responseBody], { type: 'application/pdf' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');

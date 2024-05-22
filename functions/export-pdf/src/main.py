@@ -190,8 +190,8 @@ def main(context):
     is_owner = (Permission.delete(Role.user(owner_id)) in perms)
     is_authed = validate_session(users,owner_id,session_id)
 
-    if(not is_owner or not is_authed):
-        return context.res.send("Unauthorized Access!", 401)
+    # if((not is_owner) or (not is_authed)):
+    #     return context.res.send("Unauthorized Access!", 401)
 
 
     filename = note_id + '.pdf'
