@@ -1,4 +1,4 @@
-from appwrite.client import Client, Databases
+from appwrite.client import Client
 import os
 
 def main(context):
