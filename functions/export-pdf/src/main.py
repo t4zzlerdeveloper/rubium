@@ -111,6 +111,8 @@ def generate_pdf(json_data,pdf_file):
     data = json.loads(json_data['content'])
 
     document = SimpleDocTemplate(pdf_file, pagesize=letter)
+    document.title = title
+    
     styles = getSampleStyleSheet()
     story = [Paragraph('<b>' + title + '</b>', styles['Title']), Spacer(1, 0.5 * inch)]
 
@@ -140,7 +142,7 @@ def generate_pdf(json_data,pdf_file):
             # Ensure elements are kept together on the same page
             story.append(KeepTogether(elements))
             story.append(Spacer(1, 0.2 * inch))
-            
+
     document.build(story)
 
 
