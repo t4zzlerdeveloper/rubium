@@ -149,10 +149,13 @@ def main(context):
         .set_key(os.environ["APPWRITE_API_KEY"])
     )
 
-    doc_id = context.req.query_string.replace("id=","")
+    doc_id = context.req.query_string.replace("docId=","")
     context.log(doc_id)
 
-    context.log(json.dumps(context.req.query))
+
+    if(not doc_id):
+        return context.res.send("Invalid Request", 400)
+
 
     databases = Databases(client)
 
