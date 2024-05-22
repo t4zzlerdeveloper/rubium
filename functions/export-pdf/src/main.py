@@ -149,15 +149,17 @@ def main(context):
         .set_key(os.environ["APPWRITE_API_KEY"])
     )
 
+    doc_id = context.req['query']['id']
+
     databases = Databases(client)
 
     result = databases.get_document(
         database_id = os.environ["VITE_DATABASE_ID"],
         collection_id = os.environ["VITE_NOTES_COLLECTION_ID"],
-        document_id = '662f739d89b5571e1d82'
+        document_id = doc_id
     )
 
-    filename = '662f739d89b5571e1d82.pdf'
+    filename = doc_id + '.pdf'
 
     generate_pdf(result['content'], filename)
 
