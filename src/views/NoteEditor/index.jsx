@@ -384,6 +384,7 @@ function NoteEditor(props){
                             onContentChange={(newContent)=>updateBlock(newContent,index)}
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
                             onMouseUp={()=>{handleMouseUp()}}
+                            onEmptyBackspace={(index)=>{removeBlock(index)}}
                             setCurrentBlockId={(id)=>{setCurrentBlockId(id)}}
                             />
                     </>
@@ -396,6 +397,7 @@ function NoteEditor(props){
                             onContentChange={(newContent)=>updateBlock(newContent,index)}
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
                             onMouseUp={()=>{handleMouseUp()}}
+                            onEmptyBackspace={(index)=>{removeBlock(index)}}
                             setCurrentBlockId={(id)=>{setCurrentBlockId(id)}}
                            />
                     </>
