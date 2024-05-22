@@ -165,6 +165,9 @@ def main(context):
         document_id = doc_id
     )
 
+    if(not result):
+        return context.res.send("Invalid ID provided!", 400)
+
     filename = doc_id + '.pdf'
 
     generate_pdf(result['content'], filename)
