@@ -162,7 +162,7 @@ def main(context):
     generate_pdf(result['content'], filename)
 
     #open pdf file an return binary
-    return res.send(
+    return context.res.send(
                 filename, 200, {
                     "content-type": "application/pdf",
                     "content-disposition": f"attachment; filename={filename}",     
