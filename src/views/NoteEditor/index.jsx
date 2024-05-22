@@ -321,7 +321,7 @@ function NoteEditor(props){
                 className='block'
                 style={props.editable ? null : {cursor: "default"}}
                 editable={props.editable ? "true" : "false"}
-                draggable={props.editable  ? "true" : "false"}
+                draggable={props.editable && blockDragging == index  ? "true" : "false"}
                 onDragStart={(e)=>{handleDragStart(index);}}
                 onDragEnd={(e)=>{handleDragEnd(e,index)}}
                 >
@@ -343,6 +343,7 @@ function NoteEditor(props){
                         style={props.editable ? null : {cursor: "default"}}
                         draggable="false" 
                         enabled={creatingBlock == index+1 ? "true" : "false"}
+                        onMouseDown={()=>{setBlockDragging(index)}}
                         onMouseEnter={()=>{setCreatingBlock(-1)}}/>
                     {
                     c.type == "img" ?
