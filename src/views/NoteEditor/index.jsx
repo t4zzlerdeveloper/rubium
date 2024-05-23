@@ -45,6 +45,7 @@ function NoteEditor(props){
     },[ff])
 
 
+
     function array_move(arr, old_index, new_index) {
         if (new_index >= arr.length) {
             var k = new_index - arr.length + 1;
@@ -239,6 +240,7 @@ function NoteEditor(props){
     const[crtBlockStyle,setCrtBlockStyle] = useState({top:"0",left:"0"});
 
     function handleBlockCreationOpen(e,index){
+        if(!props || !props.editable) return;
         setCreatingBlock(index);
         //let blockCreator = document.getElementById("crt-blk");
         let addButton = document.getElementById("addeid-"+index);
@@ -319,7 +321,7 @@ function NoteEditor(props){
                 className='block'
                 style={props.editable ? null : {cursor: "default"}}
                 editable={props.editable ? "true" : "false"}
-                draggable={props.editable  ? "true" : "false"}
+                draggable={props.editable && blockDragging == index  ? "true" : "false"}
                 onDragStart={(e)=>{handleDragStart(index);}}
                 onDragEnd={(e)=>{handleDragEnd(e,index)}}
                 >
@@ -341,6 +343,7 @@ function NoteEditor(props){
                         style={props.editable ? null : {cursor: "default"}}
                         draggable="false" 
                         enabled={creatingBlock == index+1 ? "true" : "false"}
+                        onMouseDown={()=>{setBlockDragging(index)}}
                         onMouseEnter={()=>{setCreatingBlock(-1)}}/>
                     {
                     c.type == "img" ?
@@ -384,6 +387,7 @@ function NoteEditor(props){
                             onContentChange={(newContent)=>updateBlock(newContent,index)}
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
                             onMouseUp={()=>{handleMouseUp()}}
+                            onEmptyBackspace={(index)=>{removeBlock(index)}}
                             setCurrentBlockId={(id)=>{setCurrentBlockId(id)}}
                             />
                     </>
@@ -396,6 +400,7 @@ function NoteEditor(props){
                             onContentChange={(newContent)=>updateBlock(newContent,index)}
                             onKeyDown={(e)=>{handleKeyDown(e,index,c.type)}}
                             onMouseUp={()=>{handleMouseUp()}}
+                            onEmptyBackspace={(index)=>{removeBlock(index)}}
                             setCurrentBlockId={(id)=>{setCurrentBlockId(id)}}
                            />
                     </>

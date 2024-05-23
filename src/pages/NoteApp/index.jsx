@@ -138,6 +138,10 @@ function NoteApp() {
         content: type == "content" ? ctt : note.content,
       })
       .then((res)=>{
+        //update modified time on the sidebar
+        let targetObject = notes.filter(n => n.$id === note.$id)
+        targetObject[0].$updatedAt = res.$updatedAt;
+
         if(!ctt) loadNotes();
         setSynced(true);
       })
@@ -149,6 +153,7 @@ function NoteApp() {
 
   function deleteNote(note){
     setLoadingNotes(true);
+    setLoadingCurrentNote(true);
 
       databases.deleteDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,note.$id)
       .then((res)=>{
@@ -158,12 +163,16 @@ function NoteApp() {
       .catch(()=>{
         showToast(lang.tr("Error deleting note..."),"error")
         setLoadingNotes(false);
+        setLoadingCurrentNote(false);
+
       })
    
   }
 
 
   function createNewNote(title = undefined){
+
+      setLoadingCurrentNote(true);
 
       const role = Role.user(user.current.$id);
       const permissions = [Permission.read(role),Permission.update(role),Permission.delete(role)];
@@ -176,10 +185,12 @@ function NoteApp() {
         loadNotes();
         showToast(lang.tr("Created a new note!"),"info")
         switchToNote({...data,$id:res.$id},true)
+        setLoadingCurrentNote(false);
       })
       .catch(()=>{
         setLoadingNotes(false);
         showToast(lang.tr("Error creating new note..."),"error")
+        setLoadingCurrentNote(false);
       })
  
   }
@@ -417,7 +428,7 @@ useEffect(()=>{
         </div>
 
         <div className='note-create'>
-          <button onClick={()=>{createNewNote()}}>+</button>
+          <button onClick={()=>{setShowPrivateNotes(true);createNewNote()}}>+</button>
           <input type="text" placeholder={lang.tr("Search notes...")} className='side-search' value={searchQuery} onChange={handleSearch}/>
         </div>
 
@@ -494,7 +505,6 @@ useEffect(()=>{
                 src={editIcon} style={editable ? {display: "none"} : null}/>
                 <p>{editable ?  lang.tr("Preview") : lang.tr("Edit") }</p>
               </div>
-          
             
             <div  className="share-icon" onClick={()=>{setSharing(true)}} style={checkDelete(note) ? null : {display: "none"}}>
               <img src={shareIcon}/>
@@ -505,7 +515,7 @@ useEffect(()=>{
         </div>
         {!loadingNotes && notes.length == 0 && searchQuery.length == 0 ?
         <GetStarted onStart={(t)=>{createNewNote(t)}}/>
-        :loadingCurrentNote ? <Loader/> : <div className='main-div-inner'>
+        :loadingCurrentNote ? <div className='center-screen'><Loader/></div> : note && <div className='main-div-inner'>
 
           <div className='emoji-title'>
             {!note.emoji && !editable ? <></> : <div className='emoji-con' onClick={()=>{if(editable){setOpenEmoji(!openEmoji)}}}>{note.emoji ? <Emoji size={"36px"} name={note.emoji}/> : editable ? <p>+</p> : <p></p>}</div>}

@@ -53,6 +53,13 @@ function Paragraph(props) {
         if(e.key === "Enter"){
             if(props && props.onEnter) props.onEnter(index,type);
         }
+        else if( e.key === "Backspace" && content.text.length === 0){
+            if(props && props.onEmptyBackspace) props.onEmptyBackspace(index);
+        }
+        else if(e.key === "Tab"){
+            e.preventDefault();
+        }
+    
     }
 
     function handleMouseUp(){

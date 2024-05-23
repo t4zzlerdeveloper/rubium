@@ -128,7 +128,9 @@
         "You haven´t shared this note with anyone yet.":"您还没有与任何人分享此笔记。",
         "You can also publish it on the web, creating a share-able link": "您还可以将其发布到网络上，创建一个可共享的链接",
         "Publish": "发布",
-        "Un-Publish": "取消发布"
+        "Un-Publish": "取消发布",
+        "Download PDF":"下载 PDF",
+        "This feature allows you to download your note as a PDF to share, print, or simply enjoy on paper.": "此功能允许您将笔记下载为 PDF 以便分享、打印或仅在纸上欣赏。"
     },
     "Toast":{
         "We're sorry but an error occured!": "对不起，出现了一个错误！"

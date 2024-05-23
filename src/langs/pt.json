@@ -131,7 +131,9 @@
             "You haven´t shared this note with anyone yet.":"Ainda não partilhaste esta nota com ninguém.",
             "You can also publish it on the web, creating a share-able link": "Também podes publicar esta nota na internet, criando um link partilhável",
             "Publish": "Publicar",
-            "Un-Publish": "Des-Publicar"
+            "Un-Publish": "Des-Publicar",
+            "Download PDF":"Transferir PDF",
+            "This feature allows you to download your note as a PDF to share, print, or simply enjoy on paper.": "Esta funcionalidade permite-te transferir a tua nota como PDF para partilhar, imprimir ou simplesmente desfrutar em papel."
         },
         "Toast":{
             "We're sorry but an error occured!": "Pedimos desculpa mas ocorreu um erro!"
