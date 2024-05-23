@@ -138,6 +138,10 @@ function NoteApp() {
         content: type == "content" ? ctt : note.content,
       })
       .then((res)=>{
+        //update modified time on the sidebar
+        let targetObject = notes.filter(n => n.$id === note.$id)
+        targetObject[0].$updatedAt = res.$updatedAt;
+
         if(!ctt) loadNotes();
         setSynced(true);
       })
