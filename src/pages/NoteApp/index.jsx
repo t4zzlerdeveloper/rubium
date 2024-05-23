@@ -168,6 +168,8 @@ function NoteApp() {
 
   function createNewNote(title = undefined){
 
+      setLoadingCurrentNote(true);
+
       const role = Role.user(user.current.$id);
       const permissions = [Permission.read(role),Permission.update(role),Permission.delete(role)];
       
@@ -179,10 +181,12 @@ function NoteApp() {
         loadNotes();
         showToast(lang.tr("Created a new note!"),"info")
         switchToNote({...data,$id:res.$id},true)
+        setLoadingCurrentNote(false);
       })
       .catch(()=>{
         setLoadingNotes(false);
         showToast(lang.tr("Error creating new note..."),"error")
+        setLoadingCurrentNote(false);
       })
  
   }
