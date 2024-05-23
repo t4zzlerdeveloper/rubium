@@ -424,7 +424,7 @@ useEffect(()=>{
         </div>
 
         <div className='note-create'>
-          <button onClick={()=>{createNewNote()}}>+</button>
+          <button onClick={()=>{setShowPrivateNotes(true);createNewNote()}}>+</button>
           <input type="text" placeholder={lang.tr("Search notes...")} className='side-search' value={searchQuery} onChange={handleSearch}/>
         </div>
 
