@@ -515,7 +515,7 @@ useEffect(()=>{
         </div>
         {!loadingNotes && notes.length == 0 && searchQuery.length == 0 ?
         <GetStarted onStart={(t)=>{createNewNote(t)}}/>
-        :loadingCurrentNote ? <Loader/> : note && <div className='main-div-inner'>
+        :loadingCurrentNote ? <div className='center-screen'><Loader/></div> : note && <div className='main-div-inner'>
 
           <div className='emoji-title'>
             {!note.emoji && !editable ? <></> : <div className='emoji-con' onClick={()=>{if(editable){setOpenEmoji(!openEmoji)}}}>{note.emoji ? <Emoji size={"36px"} name={note.emoji}/> : editable ? <p>+</p> : <p></p>}</div>}

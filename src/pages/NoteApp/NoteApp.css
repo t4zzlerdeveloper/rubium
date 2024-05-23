@@ -630,3 +630,12 @@ padding: 0;
 margin: 0;
 opacity: 0.6;
 }
+
+.center-screen{
+  display: flex;
+  place-content: center;
+  place-items: center;
+  height: 80%;
+  width: 100%;
+  background-color: rgb(6, 8, 6);
+}
