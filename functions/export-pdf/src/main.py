@@ -4,6 +4,7 @@ from appwrite.services.users import Users
 from appwrite.permission import Permission
 from appwrite.role import Role
 import os
+import html
 
 import json
 import textwrap
@@ -50,7 +51,7 @@ def parse_kanban_block(kb_data,document,styles):
     elements = []
 
     # Add title
-    elements.append(Paragraph('Kanban: <b>' +(kb_title) + '</b>', styles['Heading3']))
+    elements.append(Paragraph('Kanban: <b>' +(html.escape(kb_title)) + '</b>', styles['Heading3']))
     elements.append(Spacer(1, 0.2 * inch))
 
     # Transpose the data to arrange it properly for the table
@@ -72,7 +73,7 @@ def parse_kanban_block(kb_data,document,styles):
         for cell in row:
             if cell:  # Check if cell is not empty
                 wrapped_text = '\n'.join(textwrap.wrap(cell, width=20))
-                wrapped_row.append(wrapped_text)
+                wrapped_row.append(html.escape(wrapped_text))
             else:
                 wrapped_row.append('')
         wrapped_table_data.append(wrapped_row)
@@ -119,15 +120,15 @@ def generate_pdf(json_data,pdf_file):
     for item in data:
         elements = []  # Collect elements for this section
         if item['type'] == 'h1':
-            elements.append(Paragraph(item['text'], styles['Title']))
+            elements.append(Paragraph(html.escape(item['text']), styles['Title']))
         elif item['type'] == 'h2':
-            elements.append(Paragraph(item['text'], styles['Heading2']))
+            elements.append(Paragraph(html.escape(item['text']), styles['Heading2']))
         elif item['type'] == 'h3':
-            elements.append(Paragraph(item['text'], styles['Heading3']))
+            elements.append(Paragraph(html.escape(item['text']), styles['Heading3']))
         elif item['type'] == 'p':
-            elements.append(Paragraph(item['text'].replace("\n", "<br />"), styles['BodyText']))
+            elements.append(Paragraph(html.escape(item['text']).replace("\n", "<br />"), styles['BodyText']))
         elif item['type'] == 'cd':
-            elements.append(Preformatted(item['text'], code_style))
+            elements.append(Preformatted(html.escape(item['text']), code_style))
         elif item['type'] == 'img' and 'url' in item:
             img = fetch_image(item['url'],document)
             if img:
