@@ -3,8 +3,7 @@ import shareIcon from '../../assets/share.svg'
 import editIcon from '../../assets/edit_note.svg'
 import syncingIcon from '../../assets/sync.svg'
 import syncedIcon from '../../assets/cloud_upload.svg'
-import viewIcon from '../../assets/visibility.svg'
-import saveIcon from '../../assets/save.svg'
+import lockIcon from '../../assets/lock.svg'
 import logoutIcon from '../../assets/logout.svg'
 import settingsIcon from '../../assets/settings.svg'
 import deleteIcon from '../../assets/delete.svg'
@@ -12,11 +11,11 @@ import pinnedIcon from '../../assets/pinned.svg'
 import unpinnedIcon from '../../assets/unpinned.svg'
 
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './NoteApp.css'
-import { avatars, client, databases } from '../../lib/appwrite'
+import { avatars, databases,functions } from '../../lib/appwrite'
 import { useUser } from '../../lib/context/user'
-import { Functions, ID, Permission, Query, Role } from 'appwrite'
+import {  ID, Permission, Query, Role } from 'appwrite'
 import Loader from '../../views/Loader'
 import Toast from '../../views/Toast'
 import Pomodoro from '../../views/Pomodoro'
@@ -361,14 +360,47 @@ const [emailResent,setEmailResent] = useState(false);
 
 const[showPrivateNotes,setShowPrivateNotes] = useState(true);
 
-function changeNotesTab(privateNotes){
-  setShowPrivateNotes(privateNotes)
-  loadNotes();
-}
+  function changeNotesTab(privateNotes){
+    setShowPrivateNotes(privateNotes)
+    loadNotes();
+  }
+
+  const[sharedUsers,setSharedUsers] = useState([]);
+  const[loadingUsers,setLoadingUsers] = useState(false);
+
+  function reloadSharedUsers(noteId){
+
+      if(!user.current) return;
+
+      setLoadingUsers(true);
+
+      const query = `?ownerId=${user.current.$id}&sessionId=${user.current.sessionId}&noteId=${noteId}`
+
+      functions.createExecution(
+        '65a6f370b6b21d9a78d2',
+        '',
+        false,
+        '/'+query,
+        'GET'
+        ).then((res)=>{
+            setSharedUsers(JSON.parse(res.responseBody).sort((a,b)=>{return a.name < b.name ? -1 : 1}));
+            setLoadingUsers(false);
+        })
+        .catch(()=>{
+          setSharedUsers([]);
+          setLoadingUsers(false);
+        })
+
+  }
+
 
 useEffect(()=>{
   if(user.current && !user.current.emailVerification) setUserVerified(false)
 },[user])
+
+useEffect(()=>{
+  if(note && user.current)reloadSharedUsers(note.$id);
+},[note,user])
 
   return (
     <div className='app'>
@@ -379,6 +411,9 @@ useEffect(()=>{
 
       <ShareDialog display={sharing}
        noteId={note.$id}
+       loadingUsers={loadingUsers}
+       sharedUsers={sharedUsers}
+       reloadUsers={()=>{reloadSharedUsers(note.$id)}}
        onClose={()=>{setSharing(false)}}
        />
 
@@ -500,16 +535,30 @@ useEffect(()=>{
               <div className='edit-icon' onClick={()=>{
                 if(editable){saveCurrentNote()};setEditable(!editable);setOpenEmoji(false)}} style={checkUpdate(note) ? null : {display: "none"}}>
                 <img 
-                src={viewIcon} style={editable ? null : {display: "none"}} />
+                src={lockIcon} style={editable ? null : {display: "none"}} />
                 <img 
                 src={editIcon} style={editable ? {display: "none"} : null}/>
-                <p>{editable ?  lang.tr("Preview") : lang.tr("Edit") }</p>
+                <p>{editable ?  lang.tr("Lock") : lang.tr("Edit") }</p>
               </div>
+
+      
             
             <div  className="share-icon" onClick={()=>{setSharing(true)}} style={checkDelete(note) ? null : {display: "none"}}>
               <img src={shareIcon}/>
               <p>{lang.tr("Share")}</p>
             </div>
+            
+            {!loadingUsers ? sharedUsers.length == 0 ?<></> : <><div className='shared-users'>
+               <div className='shared-users-sm' style={{width:(sharedUsers.length * 16) + "px"}}>
+                  {sharedUsers.map((usr,index)=>{
+                    if(index > 2) return;
+                    return <img className='shared-user' src={avatars.getInitials(usr.name)} title={usr.name}/>
+                  })}
+                </div>
+                <p>{sharedUsers.length > 2 ? <p>+{sharedUsers.length - 2}</p> : <></>}</p>
+                
+              </div>
+              </> : <></>}
             
           </>}
         </div>
@@ -527,6 +576,9 @@ useEffect(()=>{
           <NoteEditor 
           editable={editable}
           content={note.content} 
+          sharedUsers={sharedUsers}
+          loadingUsers={loadingUsers}
+          reloadUsers={()=>{reloadSharedUsers(note.$id)}}
           setContent={(newContent)=>{setNoteContent(newContent)}} >
           </NoteEditor>
          

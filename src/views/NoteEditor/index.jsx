@@ -375,6 +375,9 @@ function NoteEditor(props){
                         index={index}
                         editable={props.editable}
                         content={c}
+                        sharedUsers={props.sharedUsers}
+                        loadingUsers={props.loadingUsers}
+                        reloadUsers={props.reloadUsers}
                         onContentChange={(newContent)=>updateBlock(newContent,index)}
                       />
                     </>

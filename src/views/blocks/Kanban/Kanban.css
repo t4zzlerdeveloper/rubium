@@ -97,7 +97,7 @@
   }
   
   .kb-task{
-    cursor:grab;
+    cursor: pointer;
     display: flex;
     place-content: center;
     place-items: center;
@@ -110,12 +110,22 @@
     border-radius: 8px;
     justify-content: space-between;
     padding-left: 16px;
+    transition: 0.3s;
   }
+
+  .kb-task:hover{
+    background-color: rgba(255,255,255,0.1);
+    cursor: pointer !important;
+  } 
+
   
   .kb-task > div{
     display: flex;
     flex-direction: row;
     gap:4px;
+    padding: 4px;
+    place-content: center;
+    place-items: center;
   }
 
   .kb-view {
@@ -143,11 +153,13 @@
     margin: 0;
     border-radius: 10px;
     transition: 0.4s;
+    cursor: pointer;
   }
   
   
   .kb-due:hover{
     color: #f77f89;
+    cursor: pointer;
   }
   
   .kb-rm{
@@ -187,4 +199,11 @@
   .kb-lower >section:nth-child(4)>h4{
     border: 0.5px solid rgb(147, 234, 252);
     background-color: rgba(147, 234, 252, 0.1);
+  }
+
+
+  .kb-profile{
+    width: 24px;
+    height: 24px;
+    border-radius: 24px;
   }

@@ -23,28 +23,27 @@ function ShareDialog(props){
     const [confirmed,setConfirmed] = useState(false);
     const [email,setEmail] = useState("");
 
-    const [loadingUsers,setLoadingUsers] = useState(true);
+    const [loading,setLoading] = useState(false);
 
     useEffect(()=>{
-        if(props.display) fetchNote();setConfirmed(false);
+        if(props.display) setConfirmed(false);
     },[props.display])
 
     useEffect(()=>{
         if(props.noteId) fetchNote();
     },[props.noteId])
 
-    const [note,setNote] = useState(null);
 
     function fetchNote(){
-        databases.getDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,props.noteId)
-        .then((res)=>{
-            setNote(res);
-            reloadSharedUsers(note);
-            setIsPublished(note.$permissions.includes(Permission.read(Role.any())))
-        })
-        .catch(()=>{
+        if(props.reloadUsers) props.reloadUsers();
+        // databases.getDocument(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID,props.noteId)
+        // .then((res)=>{
+        //     setNote(res);
+        //     setIsPublished(note.$permissions.includes(Permission.read(Role.any())))
+        // })
+        // .catch(()=>{
 
-        })
+        // })
     }
 
 
@@ -87,7 +86,9 @@ function ShareDialog(props){
 
     function removeUserSharing(email){
 
-      setLoadingUsers(true);
+      if(!user.current || !props.noteId) return;
+
+      setLoading(true);
       const headers= {
         'Content-Type': 'application/json'
       };
@@ -95,7 +96,7 @@ function ShareDialog(props){
       const dataToPost = {
         ownerId: user.current.$id,
         sessionId: user.current.sessionId,
-        noteId: note.$id,
+        noteId: props.noteId,
         email: email
       };
 
@@ -110,15 +111,18 @@ function ShareDialog(props){
         ).then((res)=>{
           console.log(res)
           fetchNote();
+          setLoading(false)
         })
         .catch(()=>{
-          setLoadingUsers(false)
+          setLoading(false)
         })
     }
 
       function shareNoteWithUser(email){
 
-        setLoadingUsers(true);
+        if(!user.current || !props.noteId) return;
+
+        setLoading(true);
 
         const headers= {
           'Content-Type': 'application/json'
@@ -127,7 +131,7 @@ function ShareDialog(props){
         const dataToPost = {
           ownerId: user.current.$id,
           sessionId: user.current.sessionId,
-          noteId: note.$id,
+          noteId: props.noteId,
           email: email
         };
 
@@ -141,38 +145,13 @@ function ShareDialog(props){
           headers
           ).then((res)=>{
             fetchNote();
+            setEmail("");
+            setLoading(false)
           })
           .catch(()=>{
-            setLoadingUsers(false);
+            setLoading(false);
           })
         
-      }
-
-
-      const [sharedUsers,setSharedUsers] = useState([]);
-
-    function reloadSharedUsers(note){
-
-        setLoadingUsers(true);
-
-        const query = `?ownerId=${user.current.$id}&sessionId=${user.current.sessionId}&noteId=${note.$id}`
-
-        functions.createExecution(
-          '65a6f370b6b21d9a78d2',
-          '',
-          false,
-          '/'+query,
-          'GET'
-          ).then((res)=>{
-              setSharedUsers(JSON.parse(res.responseBody));
-              setLoadingUsers(false);
-              setEmail("");
-          })
-          .catch(()=>{
-            setSharedUsers([]);
-            setLoadingUsers(false);
-          })
-
       }
 
 
@@ -187,7 +166,7 @@ function ShareDialog(props){
           'Content-Type': 'application/json',
         };
 
-        const query = `?ownerId=${user.current.$id}&sessionId=${user.current.sessionId}&noteId=${note.$id}`
+        const query = `?ownerId=${user.current.$id}&sessionId=${user.current.sessionId}&noteId=${props.noteId}`
 
         window.open("https://664dfd51e4a386f7c001.appwrite.global"+query,"_blank");
 
@@ -236,12 +215,12 @@ function ShareDialog(props){
                     <div className='sh-search'>
                         <input placeholder={lang.tr("Enter the email to share with")}
                         value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-                         {loadingUsers ? <Loader/> : <button className="share-btn" onClick={()=>{shareNoteWithUser(email);}}>{lang.tr("Add")}</button>}
+                         {loading || props.loadingUsers ? <Loader/> : <button className="share-btn" onClick={()=>{shareNoteWithUser(email);}}>{lang.tr("Add")}</button>}
                     </div>
                     <div className='shared-list'>
-                      {loadingUsers ? <></> : sharedUsers.length == 0 ? 
+                      {loading || props.loadingUsers ? <></> : props.sharedUsers.length == 0 ? 
                         <p>{lang.tr("You haven´t shared this note with anyone yet.")}</p>
-                       : sharedUsers.map((u,index)=>{
+                       : props.sharedUsers.map((u,index)=>{
                         return <div className='sh-list-item' key={"sh-lu-" + index}>
                                   <img className="sh-profile" src={avatars.getInitials(u.name)}/>
                                   <p>{u.name + " (" + u.email + ")"}</p>

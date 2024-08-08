@@ -115,7 +115,7 @@ def generate_pdf(json_data,pdf_file):
     document.title = title
     
     styles = getSampleStyleSheet()
-    story = [Paragraph('<b>' + title + '</b>', styles['Title']), Spacer(1, 0.5 * inch)]
+    story = [Paragraph('<b>' + html.escape(title) + '</b>', styles['Title']), Spacer(1, 0.5 * inch)]
 
     for item in data:
         elements = []  # Collect elements for this section

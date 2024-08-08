@@ -391,11 +391,10 @@ hr.rounded {
   display: flex;
   place-content: center;
   place-items: center;
-  padding:2px 8px; 
-  padding:0;
   gap:6px;
   padding:6px 10px;
   cursor: pointer;
+  font-size: 15px;
 }
 
 .share-icon{
@@ -408,11 +407,12 @@ hr.rounded {
   padding: 0;
   margin: 0;
   font-weight: 500;
+  font-size: inherit;
 }
 
 .share-icon > img{
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }
 
 .share-icon:hover{
@@ -431,12 +431,13 @@ hr.rounded {
   font-weight: 500;
   padding: 0;
   margin: 0;
+  font-size: inherit;
 }
 
 
 .edit-icon > img{
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }
 
 
@@ -638,4 +639,70 @@ opacity: 0.6;
   height: 80%;
   width: 100%;
   background-color: rgb(6, 8, 6);
+}
+
+
+@keyframes scale-in-fade {
+  0%{
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100%{
+    transform: scale(1);
+    opacity: 1;
+  }
+  
+}
+
+.shared-users{
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+  place-items: center;
+  border-radius: 8px;
+  max-width: 65px;
+  height: 24px;
+  padding: 4px;
+  animation: scale-in-fade 0.4s;
+}
+
+.shared-users > p{
+  place-content: center;
+  font-size: 15px;
+  color: rgba(255, 168, 168, 0.633)
+}
+
+.shared-users-sm{
+  display: flex;
+  flex-direction: row;
+  padding: 4px;
+  border-radius: 8px;
+  min-width: 16px;
+  max-width: 40px;
+  height: 26px;
+}
+
+/*overflow images on top of eachother with some offest between them*/
+.shared-users-sm > img{
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  border: 2px solid rgb(6, 8, 6);
+  transition: 0.4s;
+  background-color: rgb(6, 8, 6);
+  transform: translate(-8px,0px);
+}
+
+.shared-users-sm > img:nth-child(1){
+  z-index: 2;
+  opacity: 1;
+  filter:drop-shadow(0 0 4px rgba(0, 0, 0, 0.4));
+  transform: translate(-8px,0px);
+}
+
+.shared-users-sm > img:nth-child(2){
+  z-index: 1;
+  opacity: 0.8;
+  transform: translate(8px,0px);
 }
