@@ -135,6 +135,14 @@
             "Download PDF":"Transferir PDF",
             "This feature allows you to download your note as a PDF to share, print, or simply enjoy on paper.": "Esta funcionalidade permite-te transferir a tua nota como PDF para partilhar, imprimir ou simplesmente desfrutar em papel."
         },
+        "TaskDialog":{
+            "Me": "Eu",
+            "Description": "Descrição",
+            "Due Date": "Prazo",
+            "Add a description...": "Adicionar uma descrição...",
+            "Assignee": "Atribuido a",
+            "Delete Task": "Eliminar Tarefa"
+        },
         "Toast":{
             "We're sorry but an error occured!": "Pedimos desculpa mas ocorreu um erro!"
         },

@@ -27,7 +27,6 @@ function TaskDialog(props){
     const[saving,setSaving] = useState(false);
 
     const[currentAssignee,setCurrentAssignee] = useState(user.current);
-    const[description,setDescription] = useState(props.description || "");
 
 
     function handleClose(){
@@ -56,7 +55,7 @@ function TaskDialog(props){
                             <br></br>
                                 <button
                                 className='tkd-delete-btn'
-                                onClick={()=>{props.onDelete();handleClose();}}>Delete Task</button>
+                                onClick={()=>{props.onDelete();handleClose();}}>{lang.tr("Delete Task")}</button>
                             </div>
                     </div>
 
@@ -74,14 +73,14 @@ function TaskDialog(props){
                                 <div className='tkd-cur-assignee'>
                                     <div key={currentAssignee} className='tkd-user'>
                                             <img src={avatars.getInitials(currentAssignee.name)} />
-                                            <p>{user.current.email == currentAssignee.email ? <>{lang.tr("You")}</> :  <>{(currentAssignee.name + " (" + currentAssignee.email + ")")}</>}</p>
+                                            <p>{ user.current.email == currentAssignee.email ? <>{lang.tr("Me") + " (" + currentAssignee.name + ")"}</> :  <>{(currentAssignee.name + " (" + currentAssignee.email + ")")}</>}</p>
                                         </div>
                                 </div>
                 
                                 {props.sharedUsers ? <div className='tkd-assignees'>
                                     {user.current && <div key={user.current.name} className='tkd-user' onClick={()=>{setCurrentAssignee(user.current)}}>
                                             <img src={avatars.getInitials(user.current.name)} />
-                                            <p><>{lang.tr("You")}</></p>
+                                            <p><>{lang.tr("Me") + " (" + user.current.name + ")"}</></p>
                                         </div>}
                                     {props.sharedUsers.map(l => {
                                         return <div key={l.name} className='tkd-user' onClick={()=>{setCurrentAssignee({

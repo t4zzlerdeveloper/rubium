@@ -248,7 +248,7 @@ function NoteEditor(props){
 
         const offset = 282;
 
-        if(rect.top > window.innerHeight -offset){
+        if(rect.top > window.innerHeight - (offset + 50 )){
             //!fix size to dynamic
             setCrtBlockStyle(
                 {

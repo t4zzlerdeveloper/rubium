@@ -40,7 +40,7 @@ function NoteApp() {
   const navigate = useNavigate();
   const lang = new LangTranslator("NoteApp",user);
 
-  const [editable, setEditable] = useState(false)
+  const [editable, setEditable] = useState(true)
   const [charPosLog,setCharPosLog] = useState(0)
   const [links,setLinks] = useState([]);
   const [note,setNote] = useState("");
@@ -194,7 +194,7 @@ function NoteApp() {
  
   }
 
-  function switchToNote(newNote,edit = false){
+  function switchToNote(newNote,edit = true){
     if(!newNote) return;
 
     navigate("./"+newNote.$id)
