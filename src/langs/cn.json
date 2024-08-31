@@ -132,6 +132,14 @@
         "Download PDF":"下载 PDF",
         "This feature allows you to download your note as a PDF to share, print, or simply enjoy on paper.": "此功能允许您将笔记下载为 PDF 以便分享、打印或仅在纸上欣赏。"
     },
+    "TaskDialog":{
+        "Me": "我",
+        "Description": "描述",
+        "Due Date": "截止日期",
+        "Add a description...": "添加描述...",
+        "Assignee": "分配给",
+        "Delete Task": "删除任务"
+    },
     "Toast":{
         "We're sorry but an error occured!": "对不起，出现了一个错误！"
     },

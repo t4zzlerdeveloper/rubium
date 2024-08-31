@@ -138,7 +138,7 @@
         "TaskDialog":{
             "Me": "Eu",
             "Description": "Descrição",
-            "Due Date": "Prazo",
+            "Due Date": "Prazo de Entrega",
             "Add a description...": "Adicionar uma descrição...",
             "Assignee": "Atribuido a",
             "Delete Task": "Eliminar Tarefa"
