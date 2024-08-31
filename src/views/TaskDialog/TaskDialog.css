@@ -1,6 +1,6 @@
 .task-dialog{
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7) !important;
     left:0;
     top:0;
     width: 100vw;
@@ -9,7 +9,8 @@
     display: flex;
     place-content: center;
     place-items: center;
-    z-index: 2001;
+    
+    z-index: 1001;
 
     animation: sh2-fade-in 0.3s;
 }
@@ -125,30 +126,107 @@
 
 
 
-.tkd-assignees{
+
+
+
+
+.tkd-selector-div {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
-    gap: 15px;
+    align-items: center; /* align items to center */
+    position: relative; /* make it relative to contain absolute positioned dropdown */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+.tkd-selector-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%; /* Ensures the dropdown and button take full width of the parent */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
+.tkd-cur-assignee {
+    border: 1px solid #f45b6887;
+    border-radius: 8px;
+    color: white;
+    background-color: rgba(20, 0, 10, 0.7);
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: 0.4s;
+    width: 100%; /* Ensures it takes up full width of the parent */
+    min-height: 40px;
+    z-index: 1003;
+    padding: 0px 10px; /* Padding inside the selected item */
+    box-sizing: border-box; /* Includes padding and border in element's total width/height */
+    max-width: 20vw;
+}
 
-.tkd-assignees > div{
+.tkd-cur-assignee > .tkd-user:hover {
+    background-color: transparent;
+}
+
+.tkd-cur-assignee:hover {
+    background-color: rgba(26, 26, 26, 0.7);
+    border: 1px solid #f45b68bc;
+}
+
+.tkd-assignees {
+    display: none; /* hide the dropdown by default */
+    flex-direction: column;
+    margin-left: 0; /* align with the main selector */
+    padding: 10px;
+    overflow-y: auto; /* change to auto to hide scrollbar if not needed */
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid #f45b6836;
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    max-height: 10vw;
+    position: absolute;
+    top: 95%; /* position right below the button */
+    left: 0; /* align to the left of the parent */
+    z-index: 1002;
+    transition: max-height 0.4s ease; /* smooth dropdown opening */
+    width: 100%; /* Ensures the dropdown has the same width as the button */
+    box-sizing: border-box; /* Includes padding and border in element's total width/height */
+    filter: drop-shadow(0px 0px 10px rgba(188, 96, 96, 0.233)); /* add shadow to dropdown */
+    border-top: none;
+}
+
+.tkd-selector-div:hover .tkd-assignees {
+    display: flex; /* show dropdown on hover */
+}
+
+.tkd-user {
     display: flex;
     flex-direction: row;
-    place-items: center;
+    align-items: center; /* center align the content */
     gap: 10px;
+    transition: 0.2s;
+    padding: 8px 4px;
 }
 
-.tkd-assignees > div > img{
+.tkd-user:hover {
+    background-color: rgba(26, 26, 26, 0.7);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.tkd-user > img {
     width: 24px;
     height: 24px;
     border-radius: 8px;
 }
 
-.tkd-assignees > div > p{
-    margin:0;
-    padding:0;
-    color:rgba(255, 255, 255, 0.7);
+.tkd-user > p {
+    margin: 0;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 14px;
 }

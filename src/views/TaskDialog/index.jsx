@@ -26,6 +26,9 @@ function TaskDialog(props){
 
     const[saving,setSaving] = useState(false);
 
+    const[currentAssignee,setCurrentAssignee] = useState(user.current);
+    const[description,setDescription] = useState(props.description || "");
+
 
     function handleClose(){
         props.onClose();setConfirmed(true)
@@ -48,6 +51,13 @@ function TaskDialog(props){
                         onChange={(e)=>{props.onDescriptionChange(e.target.value)}}
                         placeholder={lang.tr("Add a description...")}
                         value={props.description}/>
+
+                        <div>
+                            <br></br>
+                                <button
+                                className='tkd-delete-btn'
+                                onClick={()=>{props.onDelete();handleClose();}}>Delete Task</button>
+                            </div>
                     </div>
 
                     <div>
@@ -59,15 +69,33 @@ function TaskDialog(props){
 
             
         
-                            <h5>{lang.tr("Assignees")}</h5>
-                            {props.sharedUsers ? <div className='tkd-assignees'>
-                                {props.sharedUsers.map(l => {
-                                    return <div key={l.name} className='tkd-user'>
-                                        <img src={avatars.getInitials(l.name)} />
-                                        <p>{l.email}</p>
-                                    </div>
-                                })}
-                            </div> : <Loader/>}
+                            <h5>{lang.tr("Assignee")}</h5>
+                            <div className='tkd-selector-div'>
+                                <div className='tkd-cur-assignee'>
+                                    <div key={currentAssignee} className='tkd-user'>
+                                            <img src={avatars.getInitials(currentAssignee.name)} />
+                                            <p>{user.current.email == currentAssignee.email ? <>{lang.tr("You")}</> :  <>{(currentAssignee.name + " (" + currentAssignee.email + ")")}</>}</p>
+                                        </div>
+                                </div>
+                
+                                {props.sharedUsers ? <div className='tkd-assignees'>
+                                    {user.current && <div key={user.current.name} className='tkd-user' onClick={()=>{setCurrentAssignee(user.current)}}>
+                                            <img src={avatars.getInitials(user.current.name)} />
+                                            <p><>{lang.tr("You")}</></p>
+                                        </div>}
+                                    {props.sharedUsers.map(l => {
+                                        return <div key={l.name} className='tkd-user' onClick={()=>{setCurrentAssignee({
+                                            name:l.name,
+                                            email:l.email
+                                        })}}>
+                                            <img src={avatars.getInitials(l.name)} />
+                                            <p>{l.name + " (" + l.email + ")"}</p>
+                                        </div>
+                                    })}
+                                </div> : <Loader/>}
+                            </div>
+
+                           
         
                   
                     </div>
@@ -75,11 +103,7 @@ function TaskDialog(props){
                 </div>
                 
             
-            <div>
-                <button
-                className='tkd-delete-btn'
-                 onClick={()=>{props.onDelete();handleClose();}}>Delete Task</button>
-            </div>
+           
                 
             {/* <div className='tkd-right'>
               {saving ? <Loader/> : 
