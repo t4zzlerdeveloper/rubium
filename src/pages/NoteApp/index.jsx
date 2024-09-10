@@ -519,11 +519,13 @@ useEffect(()=>{
           
             <div className={'sv-to-cloud ' + (synced ? "" : "gray")}>
                 <p>{computeTokensLeft() == 0 ? lang.tr("Token Limit reached :(") : synced ? lang.tr("Saved to the Cloud") : lang.tr("Saving...")}</p>
-                {computeTokensLeft() > 0 && <><img 
+                {computeTokensLeft() > 0 && <>
+                <img 
                 className={synced ? "" :  "sync-rotate"} style={synced ? {display: "none"} : null}
-                src={syncedIcon} /><img 
+                src={syncingIcon} />
+                <img 
                 className={synced ? "" :  "sync-rotate"} style={synced ? null : {display: "none"}}
-                src={syncingIcon}/></>}
+                src={syncedIcon}/></>}
             </div>
 
             {editable && <div className='rem-tokens'>
