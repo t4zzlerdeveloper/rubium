@@ -111,7 +111,7 @@ function NoteApp() {
   function loadNotes(last = false){
     setLoadingNotes(true);
 
-    var queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions","emoji","pin"]),Query.orderDesc("$updatedAt")] : [Query.select(["$id","$updatedAt","title","$permissions","emoji","pin"]),Query.orderDesc("$updatedAt")]
+    var queries = searchQuery.length > 0 ? [Query.search("title",searchQuery),Query.select(["$id","$updatedAt","title","$permissions","emoji","pin"]),Query.orderDesc("$updatedAt"),Query.limit(100)] : [Query.select(["$id","$updatedAt","title","$permissions","emoji","pin"]),Query.orderDesc("$updatedAt"),Query.limit(100)]
     databases.listDocuments(import.meta.env.VITE_DATABASE_ID,import.meta.env.VITE_NOTES_COLLECTION_ID, queries)
     .then((res)=>{
       setNotes(res.documents);
