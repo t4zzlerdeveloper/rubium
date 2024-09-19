@@ -3,7 +3,7 @@ import { Client, Account, Databases, Functions,Avatars,Locale,Storage} from 'app
 export const client = new Client();
 
 client
-    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setEndpoint(import.meta.env.APPWRITE_URL)
     .setProject(import.meta.env.VITE_PROJECT_ID);
 
 export const locale = new Locale(client);
