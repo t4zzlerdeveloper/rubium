@@ -44,7 +44,7 @@ Rubium, currently in Alpha, is a powerful note-taking application designed to be
 - (...)
 
 ## 😍 Usage
-[Go to rubium.cloud →](https://rubium.cloud)
+[Go to rubium.vercel.app →](https://rubium.vercel.app)
 
 * **Creating Notes:** We will get you started on creating your first note, but after that you can click the ➕ button on the top left corner of the sidebar.
 
